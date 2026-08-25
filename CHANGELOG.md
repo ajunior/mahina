@@ -7,6 +7,7 @@ existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
 ## Unreleased
 
+- **Fix** `MahinaExtras` did not compile at all — `SyntaxHighlighter`'s header forward-declared `QQuickTextDocument` while exposing it as a `Q_PROPERTY` pointer type, and the metatype moc generates for such a property static-asserts that the pointed-to type is complete. The library has never built since it was introduced in 0.44.8; the header now includes `<QQuickTextDocument>`
 - **New** IRC components — `IrcTextView` (message pane: mIRC control codes, per-nick colouring, highlights, clickable URLs, unread marker, cross-line selection), `IrcNickList` (virtualised, mode-sorted roster) and `IrcInput` (Tab-cycle nick/command completion, send history), sharing colour rules via the new `IrcPalette` singleton
 - **Docs** `ModelTable`'s model contract is now documented — models must expose `display` and `isNull` roles; added `example/DemoTableModel` as a minimal conforming `QAbstractTableModel`
 - **Fix** Example app failed to start — `SchemaBrowser` in `example/main.qml` still used the removed `schema` prop; migrated to `schemas`
