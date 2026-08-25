@@ -7,7 +7,8 @@ qt_add_library(MahinaExtras STATIC)
 qt_add_qml_module(MahinaExtras
     URI MahinaExtras
     VERSION 1.0
-    OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/MahinaExtras"
+    # CURRENT, not CMAKE_BINARY_DIR — see the note in ../CMakeLists.txt.
+    OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/MahinaExtras"
     SOURCES
         src/syntaxhighlighter.h
         src/syntaxhighlighter.cpp

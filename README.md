@@ -52,6 +52,22 @@ target_link_libraries(MyApp PRIVATE
 )
 ```
 
+### Build options
+
+When Mahina is consumed by another project (FetchContent or `add_subdirectory`),
+it builds the library and nothing else — the demo app is skipped and no install
+rules are generated, so `cmake --install` on the parent project stays clean.
+Both default to `ON` only when Mahina is the top-level project.
+
+| Option | Default | Effect |
+| --- | --- | --- |
+| `MAHINA_EXAMPLE` | top-level only | Build the `MahinaExample` demo app |
+| `MAHINA_INSTALL` | top-level only | Generate Mahina's install rules |
+| `MAHINA_EXTRAS`  | `OFF` | Build the [MahinaExtras](#mahinaextras) C++ companion library |
+
+Override either explicitly, e.g. `-DMAHINA_INSTALL=ON` in a superbuild that
+really does want to install Mahina alongside its own targets.
+
 ### As an installed package
 
 ```bash
