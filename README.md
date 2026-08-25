@@ -31,7 +31,7 @@ No installation required — CMake downloads and builds Mahina automatically:
 include(FetchContent)
 FetchContent_Declare(Mahina
     GIT_REPOSITORY https://github.com/ajunior/mahina.git
-    GIT_TAG        v0.45.1
+    GIT_TAG        v0.45.2
 )
 FetchContent_MakeAvailable(Mahina)
 
