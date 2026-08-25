@@ -47,7 +47,7 @@ Window {
             Sidebar {
                 Layout.fillHeight: true
                 title:        "Kitchen Sink"
-                subtitle:     "Mahina UI v0.44.8"
+                subtitle:     "Mahina UI v0.45.0"
                 footerText:   "Press D for dark mode"
                 currentIndex: _stack.currentIndex
                 model: [

@@ -14,7 +14,7 @@ DemoTableModel::DemoTableModel(QObject *parent)
     // present-but-empty one. ModelTable renders the two differently, which is
     // the distinction the "isNull" role exists to carry.
     m_rows = {
-        { QStringLiteral("mahina"),         QStringLiteral("QML / C++"),     QStringLiteral("0.44.8"), QVariant() },
+        { QStringLiteral("mahina"),         QStringLiteral("QML / C++"),     QStringLiteral("0.45.0"), QVariant() },
         { QStringLiteral("qub"),            QStringLiteral("QML / C++"),     QVariant(),              QStringLiteral("SQL client") },
         { QStringLiteral("Inter"),          QStringLiteral("Variable font"), QStringLiteral("4.0"),   QStringLiteral("bundled") },
         { QStringLiteral("JetBrains Mono"), QStringLiteral("Variable font"), QStringLiteral("2.3"),   QStringLiteral("bundled") },

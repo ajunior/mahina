@@ -3,8 +3,10 @@
 #include <QTextCharFormat>
 #include <QRegularExpression>
 #include <QtQml/qqml.h>
-
-class QQuickTextDocument;
+// Complete type, not a forward declaration: moc builds a metatype for the
+// QQuickTextDocument* property below, and QMetaType static-asserts that a
+// pointed-to type is fully defined.
+#include <QQuickTextDocument>
 
 class SyntaxHighlighter : public QSyntaxHighlighter
 {
