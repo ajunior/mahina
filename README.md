@@ -31,13 +31,41 @@ No installation required — CMake downloads and builds Mahina automatically:
 include(FetchContent)
 FetchContent_Declare(Mahina
     GIT_REPOSITORY https://github.com/ajunior/mahina.git
-    GIT_TAG        v0.45.0
+    GIT_TAG        v0.45.1
 )
 FetchContent_MakeAvailable(Mahina)
 
 target_link_libraries(MyApp PRIVATE
     Qt6::Quick Mahina Mahinaplugin Mahinaplugin_init)
 ```
+
+### Declare the QML dependency
+
+Linking is enough to *run*, but not enough for the tooling. Qt builds the import
+path it hands `qmlcachegen` and `qmllint` from your target's QML module
+dependencies — so unless you declare Mahina as one, neither can resolve a single
+Mahina type. Nothing fails: the build succeeds, the app runs, and every binding
+that touches `Theme`, `Button` or any other Mahina type quietly drops out of
+ahead-of-time compilation and falls back to the interpreter.
+
+```cmake
+qt_policy(SET QTP0005 NEW)   # lets DEPENDENCIES take a target, not just a URI
+
+qt_add_qml_module(MyApp
+    URI MyApp
+    VERSION 1.0
+    DEPENDENCIES TARGET Mahina
+    QML_FILES ...
+)
+```
+
+`TARGET` is the part that matters: given a bare URI, Qt cannot locate the
+module's directory in your build tree and adds nothing to the import path. It
+requires policy `QTP0005` (Qt 6.8+).
+
+Check the result with the `all_aotstats` target — it prints the share of
+bindings compiled ahead of time per module. In one real application this single
+declaration moved the app's own module from 22% to 70%.
 
 ### As a subdirectory (source build)
 
