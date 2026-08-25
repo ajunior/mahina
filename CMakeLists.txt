@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
-project(Mahina VERSION 0.45.0 LANGUAGES CXX)
+project(Mahina VERSION 0.45.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -299,12 +299,31 @@ set_source_files_properties(
     PROPERTIES QT_QML_SINGLETON_TYPE TRUE
 )
 
+# Qt6QmlMacros reads the OUTPUT_DIRECTORY argument *before* it looks at
+# QT_QML_OUTPUT_DIRECTORY, so passing one unconditionally silently overrides a
+# consumer who set the latter. That variable is the documented way to gather
+# every QML module in a build under one import path, and it is what lets a
+# consumer's qmllint and qmlcachegen resolve Mahina's types at all -- without it
+# they cannot, and every binding touching a Mahina type drops out of
+# ahead-of-time compilation. So defer to it whenever it is set.
+#
+# When it is not, place the module under our own build directory. Qt's default
+# for a library is a bare CMAKE_CURRENT_BINARY_DIR, which assumes the source
+# directory is itself named after the URI; ours is the repository root, and an
+# output directory not ending in the target path makes Qt warn that tooling may
+# misbehave.
+if(QT_QML_OUTPUT_DIRECTORY)
+    set(_mahina_output_dir "")
+else()
+    set(_mahina_output_dir OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Mahina")
+endif()
+
 qt_add_qml_module(Mahina
     URI Mahina
     VERSION 1.0
     # CURRENT, not CMAKE_BINARY_DIR: as a subproject the latter is the consumer's
     # top-level build dir, and Mahina has no business writing there.
-    OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Mahina"
+    ${_mahina_output_dir}
     QML_FILES
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/Theme.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/Icons.qml"
@@ -609,8 +628,13 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Mahinaplugin_init.cpp"
 )
 
 # 2. QML module support files (qmldir, .qmltypes) for IDEs and qmllint
+# Ask the target where its module actually landed -- with QT_QML_OUTPUT_DIRECTORY
+# in play it is not under our build directory, and a hardcoded path would install
+# nothing while still reporting success.
+get_target_property(_mahina_qml_dir Mahina QT_QML_MODULE_OUTPUT_DIRECTORY)
+
 install(
-    DIRECTORY   "${CMAKE_CURRENT_BINARY_DIR}/Mahina/"
+    DIRECTORY   "${_mahina_qml_dir}/"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/qt6/qml/Mahina"
     FILES_MATCHING
         PATTERN "qmldir"

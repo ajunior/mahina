@@ -5,6 +5,12 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.1
+
+- **Fix** Mahina overrode the consumer's `QT_QML_OUTPUT_DIRECTORY` — it passed `OUTPUT_DIRECTORY` to `qt_add_qml_module` unconditionally, and Qt reads that argument before consulting the variable, so a consumer collecting every QML module in their build under one directory was silently ignored. Both `Mahina` and `MahinaExtras` now defer to it when set, and fall back to their previous location when it is not
+- **Fix** The QML module install rule pointed at a hardcoded build path rather than asking the target where its module was written; with `QT_QML_OUTPUT_DIRECTORY` in play it would have installed nothing while still reporting success
+- **Docs** README now covers declaring Mahina as a QML module dependency (`DEPENDENCIES TARGET Mahina` under policy `QTP0005`). Linking alone leaves `qmlcachegen` and `qmllint` unable to resolve any Mahina type, silently dropping every binding that touches one out of ahead-of-time compilation — worth ~48 percentage points of AOT coverage in a real consumer
+
 ## 0.45.0
 
 - **Break** Mahina no longer builds the example app or generates install rules when it is consumed as a subproject (FetchContent / `add_subdirectory`) — new `MAHINA_EXAMPLE` and `MAHINA_INSTALL` options, both defaulting to `${PROJECT_IS_TOP_LEVEL}`. A standalone build is unaffected; a superbuild that relied on Mahina installing itself must now pass `-DMAHINA_INSTALL=ON`
