@@ -5,8 +5,10 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
-## Unreleased
+## 0.45.0
 
+- **Break** Mahina no longer builds the example app or generates install rules when it is consumed as a subproject (FetchContent / `add_subdirectory`) — new `MAHINA_EXAMPLE` and `MAHINA_INSTALL` options, both defaulting to `${PROJECT_IS_TOP_LEVEL}`. A standalone build is unaffected; a superbuild that relied on Mahina installing itself must now pass `-DMAHINA_INSTALL=ON`
+- **Fix** QML module output no longer lands in the consumer's top-level build directory — `Mahina`, `MahinaExtras` and the example app used `CMAKE_BINARY_DIR` where they meant `CMAKE_CURRENT_BINARY_DIR`
 - **Fix** `MahinaExtras` did not compile at all — `SyntaxHighlighter`'s header forward-declared `QQuickTextDocument` while exposing it as a `Q_PROPERTY` pointer type, and the metatype moc generates for such a property static-asserts that the pointed-to type is complete. The library has never built since it was introduced in 0.44.8; the header now includes `<QQuickTextDocument>`
 - **New** IRC components — `IrcTextView` (message pane: mIRC control codes, per-nick colouring, highlights, clickable URLs, unread marker, cross-line selection), `IrcNickList` (virtualised, mode-sorted roster) and `IrcInput` (Tab-cycle nick/command completion, send history), sharing colour rules via the new `IrcPalette` singleton
 - **Docs** `ModelTable`'s model contract is now documented — models must expose `display` and `isNull` roles; added `example/DemoTableModel` as a minimal conforming `QAbstractTableModel`
