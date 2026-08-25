@@ -6,7 +6,7 @@ A comprehensive QML component library for Qt 6 desktop applications — fully th
 
 ## Features
 
-- **257 components** covering layout, navigation, data display, forms, charts, overlays, editors and more
+- **262 components** covering layout, navigation, data display, forms, charts, overlays, editors and more
 - **Single design token source** — every component reads from the `Theme` singleton; swap colours, radii and typography in one place
 - **AOT-safe** — all QML passes `qmlsc` strict-mode compilation; no runtime type errors
 - **Desktop-first** — interactions are designed for keyboard and mouse; no mobile-only patterns
@@ -170,7 +170,7 @@ Theme.dark = !Theme.dark
 
 ## Components
 
-Mahina ships 258 components across nine categories.
+Mahina ships 262 components across nine categories.
 Full documentation with descriptions, usage notes, best-fit scenarios, and a properties reference table is available in [`docs/index.html`](docs/index.html).
 
 | Category | Count | Examples |
