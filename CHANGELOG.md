@@ -12,7 +12,7 @@ existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 - **Fix** Example app failed to start — `SchemaBrowser` in `example/main.qml` still used the removed `schema` prop; migrated to `schemas`
 - **Fix** Example `ModelTable` demo rendered empty — it used QML `TableModel`, which cannot supply the required `isNull` role; replaced with `DemoTableModel`
 
-## 0.44.08 (first public release)
+## 0.44.8 (first public release)
 
 - **New** `ModelTable` component — themed table backed by `QAbstractItemModel`; rows stay in the C++ model with no JS array copy, uses Qt Quick's native `TableView` for virtualized rendering
 - **New** `MahinaExtras` companion library — optional C++ extensions including `SyntaxHighlighter` for `CodeEditor` (13 languages)
