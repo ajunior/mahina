@@ -7,7 +7,7 @@ Rectangle {
 
     // ── API ──────────────────────────────────────────────────────────────────
     property string title: ""
-    property alias  trailing: _trailing.data
+    default property alias trailing: _trailing.data
 
     // ── Sizing ───────────────────────────────────────────────────────────────
     implicitHeight: 60

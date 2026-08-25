@@ -9,15 +9,15 @@ Window {
     title:   "Mahina — Kitchen Sink"
     color:   Theme.background
 
-    Item {
-        anchors.fill: parent
-        focus: true
-        Keys.onPressed: (e) => { if (e.text === "d") Theme.dark = !Theme.dark }
-    }
-
     ColumnLayout {
         anchors.fill: parent
         spacing: 0
+
+        // Key handling lives on the content root so it is an ancestor of every
+        // focusable item: unhandled keys bubble up here, while a focused text
+        // field still consumes "d" normally.
+        focus: true
+        Keys.onPressed: (e) => { if (e.text === "d") Theme.dark = !Theme.dark }
 
         // ── NavBar ────────────────────────────────────────────────────────────
         NavBar {
