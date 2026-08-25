@@ -39,7 +39,10 @@ Item {
     // Panel
     Rectangle {
         id:     _panel
-        anchors { top: parent.top; bottom: parent.bottom; right: parent.right }
+        // Deliberately not anchored right: a right anchor overrides the x
+        // binding below, pinning the panel to the edge so it can never slide
+        // out and the close button appears to do nothing.
+        anchors { top: parent.top; bottom: parent.bottom }
         width:  root.panelWidth
         x:      root.panelOpen ? parent.width - width : parent.width
         Behavior on x { NumberAnimation { duration: Theme.durationNormal; easing.type: Easing.OutCubic } }
