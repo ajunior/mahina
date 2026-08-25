@@ -115,7 +115,7 @@ Item {
             // Sector labels
             if (root.showLabels) {
                 ctx.fillStyle = Qt.color(Theme.textSecondary).toString()
-                ctx.font      = "11px system-ui"
+                ctx.font      = "11px '" + Theme.fontFamily + "'"
                 ctx.textAlign = "center"
                 for (var li = 0; li < n && li < root.labels.length; li++) {
                     var la = startAngle + li * angleStep
@@ -128,7 +128,7 @@ Item {
             // Legend
             if (root.showLegend && root.series.length > 0) {
                 var lx = 8, ly = height - legendH + 4
-                ctx.font = "10px system-ui"
+                ctx.font = "10px '" + Theme.fontFamily + "'"
                 for (var lgi = 0; lgi < root.series.length; lgi++) {
                     var lserie = root.series[lgi]
                     var lc = Qt.color(lserie.color || Theme.primary)

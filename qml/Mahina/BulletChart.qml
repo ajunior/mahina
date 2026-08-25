@@ -103,13 +103,13 @@ Item {
                         // Label
                         ctx.fillStyle   = Qt.color(Theme.textPrimary).toString()
                         ctx.textAlign   = "right"
-                        ctx.font        = "11px system-ui"
+                        ctx.font        = "11px '" + Theme.fontFamily + "'"
                         ctx.fillText(_rq1.modelData.label || "", bx - 8, by + bh/2 + 4)
 
                         // Value text
                         ctx.fillStyle   = Qt.color(Theme.textSecondary).toString()
                         ctx.textAlign   = "left"
-                        ctx.font        = "10px system-ui"
+                        ctx.font        = "10px '" + Theme.fontFamily + "'"
                         ctx.fillText((_rq1.modelData.value || 0) + root.suffix, bx + bw + 6, by + bh/2 + 4)
                     }
                 }

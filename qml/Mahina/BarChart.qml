@@ -69,7 +69,7 @@ Item {
 
             // Grid + Y axis labels
             if (root.showGrid) {
-                ctx.font      = "10px system-ui"
+                ctx.font      = "10px '" + Theme.fontFamily + "'"
                 ctx.textAlign = "right"
                 for (var g = 0; g <= 4; g++) {
                     var gv = (g / 4) * yMax
@@ -106,7 +106,7 @@ Item {
             if (root.xLabels.length > 0) {
                 ctx.fillStyle = Theme.textDisabled.toString()
                 ctx.textAlign = "center"
-                ctx.font = "10px system-ui"
+                ctx.font = "10px '" + Theme.fontFamily + "'"
                 for (var xi = 0; xi < root.xLabels.length; xi++)
                     ctx.fillText(root.xLabels[xi], padL + xi * groupW + groupW / 2, padT + plotH + 16)
             }

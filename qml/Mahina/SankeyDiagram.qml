@@ -143,7 +143,7 @@ Item {
 
                 // Label
                 ctx.fillStyle = Qt.color(Theme.textPrimary).toString()
-                ctx.font = "11px system-ui"
+                ctx.font = "11px '" + Theme.fontFamily + "'"
                 if (nr.x < width / 2) {
                     ctx.textAlign = "right"
                     ctx.fillText(nr.label, nr.x - 6, nr.y + nr.h/2 + 4)

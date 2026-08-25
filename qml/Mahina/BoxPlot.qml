@@ -93,7 +93,7 @@ Item {
                     var gy = fy(gv)
                     ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(padL + plotW, gy); ctx.stroke()
                     ctx.fillStyle  = Qt.color(Theme.textDisabled).toString()
-                    ctx.font       = "10px system-ui"
+                    ctx.font       = "10px '" + Theme.fontFamily + "'"
                     ctx.textAlign  = "right"
                     ctx.fillText(gv.toFixed(0), padL - 4, gy + 4)
                 }
@@ -153,7 +153,7 @@ Item {
 
                 // X label
                 ctx.fillStyle  = Qt.color(Theme.textSecondary).toString()
-                ctx.font       = "10px system-ui"
+                ctx.font       = "10px '" + Theme.fontFamily + "'"
                 ctx.textAlign  = "center"
                 ctx.fillText(root.series[i].label ?? "", cx, height - 6)
             }

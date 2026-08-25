@@ -63,7 +63,7 @@ Item {
             // Day labels
             if (root.showDayLabels) {
                 ctx.fillStyle   = Qt.color(Theme.textDisabled).toString()
-                ctx.textAlign   = "right"; ctx.font = "8px system-ui"
+                ctx.textAlign   = "right"; ctx.font = "8px '" + Theme.fontFamily + "'"
                 for (var d = 0; d < 7; d++) {
                     if (dayLabels[d] !== "")
                         ctx.fillText(dayLabels[d], labW - 4, labH + d * stride + cs * 0.75)
@@ -103,7 +103,7 @@ Item {
                             lastMonth = m
                             var mNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
                             ctx.fillStyle   = Qt.color(Theme.textDisabled).toString()
-                            ctx.textAlign   = "left"; ctx.font = "8px system-ui"
+                            ctx.textAlign   = "left"; ctx.font = "8px '" + Theme.fontFamily + "'"
                             ctx.fillText(mNames[m], cx, labH - 5)
                         }
                     }

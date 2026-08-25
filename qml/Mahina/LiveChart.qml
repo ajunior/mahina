@@ -74,7 +74,7 @@ Item {
                     var gy = padT + g * plotH / 4
                     ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(padL + plotW, gy); ctx.stroke()
                     ctx.fillStyle   = Qt.color(Theme.textDisabled).toString()
-                    ctx.textAlign   = "right"; ctx.font = "9px system-ui"
+                    ctx.textAlign   = "right"; ctx.font = "9px '" + Theme.fontFamily + "'"
                     var gv = mx - (mx - mn) * g / 4
                     ctx.fillText(gv.toFixed(1), padL - 4, gy + 3)
                 }
@@ -115,7 +115,7 @@ Item {
             // Latest value label
             if (pts.length > 0) {
                 ctx.fillStyle = lc.toString()
-                ctx.textAlign = "left"; ctx.font = "bold 10px system-ui"
+                ctx.textAlign = "left"; ctx.font = "bold 10px '" + Theme.fontFamily + "'"
                 ctx.fillText(pts[pts.length-1].toFixed(1), padL + plotW + 2, py(pts[pts.length-1]) + 4)
             }
 
@@ -125,7 +125,7 @@ Item {
                 ctx.translate(10, padT + plotH/2)
                 ctx.rotate(-Math.PI/2)
                 ctx.fillStyle   = Qt.color(Theme.textSecondary).toString()
-                ctx.textAlign   = "center"; ctx.font = "10px system-ui"
+                ctx.textAlign   = "center"; ctx.font = "10px '" + Theme.fontFamily + "'"
                 ctx.fillText(root.yLabel, 0, 0)
                 ctx.restore()
             }

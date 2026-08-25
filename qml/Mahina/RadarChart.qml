@@ -84,7 +84,7 @@ Item {
             }
 
             // Axis labels
-            ctx.font      = Theme.textXs + "px system-ui"
+            ctx.font      = Theme.textXs + "px '" + Theme.fontFamily + "'"
             ctx.fillStyle = Theme.textSecondary.toString()
             ctx.textAlign = "center"
             ctx.textBaseline = "middle"

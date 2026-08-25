@@ -68,7 +68,7 @@ Item {
                 var gy = padT + g * plotH / 4
                 ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(padL + plotW, gy); ctx.stroke()
                 ctx.fillStyle   = Qt.color(Theme.textDisabled).toString()
-                ctx.textAlign   = "right"; ctx.font = "9px system-ui"
+                ctx.textAlign   = "right"; ctx.font = "9px '" + Theme.fontFamily + "'"
                 ctx.fillText((hi - (hi - lo) * g / 4).toFixed(0), padL - 2, gy + 3)
             }
 
@@ -97,7 +97,7 @@ Item {
                 // Label
                 if (root.showLabels && c.label) {
                     ctx.fillStyle   = Qt.color(Theme.textDisabled).toString()
-                    ctx.textAlign   = "center"; ctx.font = "9px system-ui"
+                    ctx.textAlign   = "center"; ctx.font = "9px '" + Theme.fontFamily + "'"
                     ctx.fillText(c.label, cx, height - 8)
                 }
             }

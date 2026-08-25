@@ -72,20 +72,20 @@ Item {
 
                     // Value text
                     ctx.fillStyle = Math.abs(v) > 0.5 ? "rgba(255,255,255,0.9)" : Qt.color(Theme.textPrimary).toString()
-                    ctx.textAlign = "center"; ctx.font = "bold " + Math.max(9, Math.min(13, cw*0.3)) + "px system-ui"
+                    ctx.textAlign = "center"; ctx.font = "bold " + Math.max(9, Math.min(13, cw*0.3)) + "px '" + Theme.fontFamily + "'"
                     ctx.fillText(v.toFixed(2), padL + c*cw + cw/2, padT + r*ch + ch/2 + 4)
                 }
             }
 
             // Row labels (left)
             ctx.fillStyle = Qt.color(Theme.textSecondary).toString()
-            ctx.textAlign  = "right"; ctx.font = "11px system-ui"
+            ctx.textAlign  = "right"; ctx.font = "11px '" + Theme.fontFamily + "'"
             for (var ri = 0; ri < n; ri++)
                 ctx.fillText(root.matrixLabels[ri] || "", padL - 6, padT + ri*ch + ch/2 + 4)
 
             // Column labels (top, rotated)
             ctx.fillStyle = Qt.color(Theme.textSecondary).toString()
-            ctx.font = "11px system-ui"; ctx.textAlign = "left"
+            ctx.font = "11px '" + Theme.fontFamily + "'"; ctx.textAlign = "left"
             for (var ci = 0; ci < n; ci++) {
                 ctx.save()
                 ctx.translate(padL + ci*cw + cw/2, padT - 6)

@@ -95,7 +95,7 @@ Item {
                         prevMonth = d.getMonth()
                         var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
                         ctx.fillStyle = Qt.color(Theme.textDisabled).toString()
-                        ctx.font = "9px system-ui"
+                        ctx.font = "9px '" + Theme.fontFamily + "'"
                         ctx.textAlign = "left"
                         ctx.fillText(months[d.getMonth()], x, offY - 3)
                     }
@@ -105,7 +105,7 @@ Item {
             // Day-of-week labels (Mon / Wed / Fri)
             var days = ["","M","","W","","F",""]
             ctx.fillStyle = Qt.color(Theme.textDisabled).toString()
-            ctx.font = "9px system-ui"
+            ctx.font = "9px '" + Theme.fontFamily + "'"
             ctx.textAlign = "right"
             for (var dw = 0; dw < 7; dw++) {
                 if (days[dw] !== "") {
@@ -115,7 +115,7 @@ Item {
 
             if (root.label !== "") {
                 ctx.fillStyle = Qt.color(Theme.textDisabled).toString()
-                ctx.font = "10px system-ui"
+                ctx.font = "10px '" + Theme.fontFamily + "'"
                 ctx.textAlign = "left"
                 ctx.fillText(root.label, offX, height - 4)
             }
