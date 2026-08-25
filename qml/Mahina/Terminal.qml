@@ -174,9 +174,14 @@ Item {
         }
     }
 
+    // Only claim keyboard focus while actually on screen. Taking it
+    // unconditionally at construction lets a Terminal sitting on a hidden
+    // page of a StackLayout swallow every keystroke in the application.
+    onVisibleChanged: if (visible) _cmdInput.forceActiveFocus()
+
     Component.onCompleted: {
         appendLine("Mahina Terminal  —  type a command and press Enter")
         appendLine('Type "clear" to clear the log.')
-        _cmdInput.forceActiveFocus()
+        if (visible) _cmdInput.forceActiveFocus()
     }
 }
