@@ -8,7 +8,9 @@ qt_add_qml_module(MahinaExample
 )
 
 set_target_properties(MahinaExample PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/example/bin"
+    # Resolves to <build>/example/bin as before when Mahina is top-level, but
+    # stays inside our own build tree when it is not.
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/bin"
 )
 
 target_link_libraries(MahinaExample PRIVATE Qt6::Quick Mahina Mahinaplugin Mahinaplugin_init)

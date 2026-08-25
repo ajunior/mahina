@@ -8,6 +8,13 @@ find_package(Qt6 REQUIRED COMPONENTS Quick)
 
 qt_standard_project_setup(REQUIRES 6.5)
 
+# Mahina is normally consumed by another project (FetchContent / add_subdirectory).
+# A consumer wants the library and nothing else: building the demo app costs them
+# time, and Mahina's install rules would leak into their `cmake --install`.
+# Both therefore default to ON only when Mahina is the top-level project.
+option(MAHINA_EXAMPLE "Build the MahinaExample demo app" ${PROJECT_IS_TOP_LEVEL})
+option(MAHINA_INSTALL "Generate Mahina's install rules"  ${PROJECT_IS_TOP_LEVEL})
+
 qt_add_library(Mahina STATIC)
 
 set(MAHINA_QML_SOURCES
@@ -295,7 +302,9 @@ set_source_files_properties(
 qt_add_qml_module(Mahina
     URI Mahina
     VERSION 1.0
-    OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/Mahina"
+    # CURRENT, not CMAKE_BINARY_DIR: as a subproject the latter is the consumer's
+    # top-level build dir, and Mahina has no business writing there.
+    OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Mahina"
     QML_FILES
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/Theme.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/Icons.qml"
@@ -576,6 +585,8 @@ qt_add_qml_module(Mahina
 target_link_libraries(Mahina PUBLIC Qt6::Quick)
 
 # ── Install rules ────────────────────────────────────────────────────────────
+if(MAHINA_INSTALL)
+
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
@@ -599,7 +610,7 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/Mahinaplugin_init.cpp"
 
 # 2. QML module support files (qmldir, .qmltypes) for IDEs and qmllint
 install(
-    DIRECTORY   "${CMAKE_BINARY_DIR}/Mahina/"
+    DIRECTORY   "${CMAKE_CURRENT_BINARY_DIR}/Mahina/"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/qt6/qml/Mahina"
     FILES_MATCHING
         PATTERN "qmldir"
@@ -626,7 +637,11 @@ install(FILES
     DESTINATION "${MAHINA_INSTALL_CMAKEDIR}"
 )
 
-add_subdirectory(example)
+endif() # MAHINA_INSTALL
+
+if(MAHINA_EXAMPLE)
+    add_subdirectory(example)
+endif()
 
 # ── MahinaExtras (optional C++ extensions) ───────────────────────────────────
 # Provides SyntaxHighlighter and other native-backed QML types.
