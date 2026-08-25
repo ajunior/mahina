@@ -71,7 +71,7 @@ Item {
             function fy(v) { return padT + plotH - ((v - yMin) / range) * plotH }
 
             // Grid
-            ctx.font = "10px system-ui"; ctx.textAlign = "right"
+            ctx.font = "10px '" + Theme.fontFamily + "'"; ctx.textAlign = "right"
             for (var g = 0; g <= 4; g++) {
                 var gv = yMin + (g / 4) * range
                 var gy = fy(gv)

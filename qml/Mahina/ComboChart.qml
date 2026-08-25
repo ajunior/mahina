@@ -84,7 +84,7 @@ Item {
                     var gy = padT + plotH - g * plotH / 4
                     ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(padL + plotW, gy); ctx.stroke()
                     ctx.fillStyle   = Qt.color(Theme.textDisabled).toString()
-                    ctx.textAlign   = "right"; ctx.font = "10px system-ui"
+                    ctx.textAlign   = "right"; ctx.font = "10px '" + Theme.fontFamily + "'"
                     var labVal = barMin + (barMax - barMin) * g / 4
                     ctx.fillText(labVal.toFixed(0), padL - 4, gy + 4)
                     // Right axis labels (lines)
@@ -106,7 +106,7 @@ Item {
             }
 
             ctx.fillStyle   = Qt.color(Theme.textSecondary).toString()
-            ctx.textAlign   = "center"; ctx.font = "10px system-ui"
+            ctx.textAlign   = "center"; ctx.font = "10px '" + Theme.fontFamily + "'"
             for (var xi = 0; xi < n; xi++) {
                 var midX = padL + xi * (plotW/n) + plotW/n/2
                 ctx.fillText(root.labels[xi] || "", midX, padT + plotH + 14)
@@ -152,7 +152,7 @@ Item {
 
             // Legend
             if (root.showLegend) {
-                var lx2 = padL; ctx.textAlign = "left"; ctx.font = "10px system-ui"
+                var lx2 = padL; ctx.textAlign = "left"; ctx.font = "10px '" + Theme.fontFamily + "'"
                 var allSeries = root.bars.concat(root.lines)
                 for (var ai = 0; ai < allSeries.length; ai++) {
                     var ac = Qt.color(allSeries[ai].color || Theme.primary)

@@ -58,7 +58,7 @@ Item {
 
             var fontStr = root.fontWeight >= Font.Bold ? "bold " : ""
             fontStr += root.fontSize + "px "
-            fontStr += "'" + (root.fontFamily || "system-ui") + "'"
+            fontStr += "'" + (root.fontFamily || Theme.fontFamily) + "'"
             ctx.font = fontStr
 
             var grad = ctx.createLinearGradient(0, 0, width, 0)

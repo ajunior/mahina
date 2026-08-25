@@ -74,7 +74,7 @@ Item {
             function fy(c) { return padT + plotH - (c / maxC) * plotH }
 
             // Y grid
-            ctx.font = "10px system-ui"; ctx.textAlign = "right"
+            ctx.font = "10px '" + Theme.fontFamily + "'"; ctx.textAlign = "right"
             for (var g = 0; g <= 4; g++) {
                 var gv = Math.round((g / 4) * maxC)
                 var gy = fy(gv)

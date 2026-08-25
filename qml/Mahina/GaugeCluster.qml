@@ -76,17 +76,17 @@ Item {
 
                         // Value text
                         ctx.fillStyle   = Qt.color(Theme.textPrimary).toString()
-                        ctx.textAlign   = "center"; ctx.font = "bold 16px system-ui"
+                        ctx.textAlign   = "center"; ctx.font = "bold 16px '" + Theme.fontFamily + "'"
                         ctx.fillText(parent.gaugeVal.toFixed(parent.modelData.decimals || 0), cx, cy + 6)
 
                         // Unit
                         ctx.fillStyle   = Qt.color(Theme.textDisabled).toString()
-                        ctx.font        = "10px system-ui"
+                        ctx.font        = "10px '" + Theme.fontFamily + "'"
                         ctx.fillText(parent.modelData.unit || "", cx, cy + 20)
 
                         // Min / Max ticks
                         ctx.fillStyle   = Qt.color(Theme.textDisabled).toString()
-                        ctx.textAlign   = "center"; ctx.font = "9px system-ui"
+                        ctx.textAlign   = "center"; ctx.font = "9px '" + Theme.fontFamily + "'"
                         var mnA = startA + 0.02
                         ctx.fillText((parent.modelData.min || 0).toString(),
                                      cx + (r+14)*Math.cos(mnA), cy + (r+14)*Math.sin(mnA))

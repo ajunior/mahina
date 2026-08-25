@@ -74,7 +74,7 @@ Item {
             if (root.showGrid) {
                 ctx.strokeStyle = Qt.color(Theme.border).toString()
                 ctx.lineWidth   = 0.8
-                ctx.font        = "10px system-ui"
+                ctx.font        = "10px '" + Theme.fontFamily + "'"
                 ctx.fillStyle   = Qt.color(Theme.textDisabled).toString()
 
                 for (var g = 0; g <= 4; g++) {
@@ -101,7 +101,7 @@ Item {
             // Axis labels
             if (root.xLabel !== "") {
                 ctx.fillStyle = Qt.color(Theme.textSecondary).toString()
-                ctx.textAlign = "center"; ctx.font = "11px system-ui"
+                ctx.textAlign = "center"; ctx.font = "11px '" + Theme.fontFamily + "'"
                 ctx.fillText(root.xLabel, padL + plotW/2, height - 4)
             }
             if (root.yLabel !== "") {
@@ -109,7 +109,7 @@ Item {
                 ctx.translate(12, padT + plotH/2)
                 ctx.rotate(-Math.PI/2)
                 ctx.fillStyle = Qt.color(Theme.textSecondary).toString()
-                ctx.textAlign = "center"; ctx.font = "11px system-ui"
+                ctx.textAlign = "center"; ctx.font = "11px '" + Theme.fontFamily + "'"
                 ctx.fillText(root.yLabel, 0, 0)
                 ctx.restore()
             }
@@ -117,7 +117,7 @@ Item {
             // Legend
             if (root.showLegend) {
                 var lx = padL; var ly = 4
-                ctx.font = "10px system-ui"; ctx.textAlign = "left"
+                ctx.font = "10px '" + Theme.fontFamily + "'"; ctx.textAlign = "left"
                 for (var li = 0; li < root.series.length; li++) {
                     var lc = Qt.color(root.series[li].color || Theme.primary)
                     ctx.fillStyle = lc.toString()

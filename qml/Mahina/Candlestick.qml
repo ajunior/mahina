@@ -66,7 +66,7 @@ Item {
             var cw = (plotW / n) - root.candleGap
 
             // Y axis grid
-            ctx.font      = "10px system-ui"
+            ctx.font      = "10px '" + Theme.fontFamily + "'"
             ctx.fillStyle = Theme.textSecondary.toString()
             ctx.textAlign = "right"
             for (var g = 0; g <= 4; g++) {
