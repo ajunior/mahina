@@ -19,20 +19,38 @@ Item {
     implicitWidth:  640
     implicitHeight: 400
 
-    // Minimal markdown → HTML converter for preview
-    function _toHtml(md) {
-        var lines = md.split("\n")
+    // The preview is a Text.RichText document, so every character of the source
+    // has to be escaped before any markup is wrapped around it. Qt's rich text
+    // does not run scripts, but it does fetch remote resources: an unescaped
+    // <img src="http://..."> in a document is a tracking beacon that fires on
+    // render, and an <a href> is a phishing link wearing whatever text it likes.
+    function _escape(s: string): string {
+        return String(s)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+    }
+
+    // Minimal markdown → HTML converter for preview.
+    // Block prefixes are matched on the raw line -- escaping first would turn
+    // "> quote" into "&gt; quote" and the test would miss -- and only the body
+    // that survives the prefix is escaped and emitted.
+    function _toHtml(md: string): string {
+        var lines = String(md).split("\n")
         var out   = []
         for (var i = 0; i < lines.length; i++) {
-            var l = lines[i]
-            if (/^### /.test(l))      l = "<h3>" + l.substring(4) + "</h3>"
-            else if (/^## /.test(l))  l = "<h2>" + l.substring(3) + "</h2>"
-            else if (/^# /.test(l))   l = "<h1>" + l.substring(2) + "</h1>"
-            else if (/^> /.test(l))   l = "<blockquote>" + l.substring(2) + "</blockquote>"
-            else if (/^- /.test(l))   l = "<li>" + l.substring(2) + "</li>"
-            else if (l === "")        l = "<br/>"
-            else                      l = "<p>" + l + "</p>"
-            // inline
+            var raw = lines[i]
+            var l
+            if (/^### /.test(raw))      l = "<h3>" + root._escape(raw.substring(4)) + "</h3>"
+            else if (/^## /.test(raw))  l = "<h2>" + root._escape(raw.substring(3)) + "</h2>"
+            else if (/^# /.test(raw))   l = "<h1>" + root._escape(raw.substring(2)) + "</h1>"
+            else if (/^> /.test(raw))   l = "<blockquote>" + root._escape(raw.substring(2)) + "</blockquote>"
+            else if (/^- /.test(raw))   l = "<li>" + root._escape(raw.substring(2)) + "</li>"
+            else if (raw === "")        l = "<br/>"
+            else                        l = "<p>" + root._escape(raw) + "</p>"
+            // Inline runs, applied to already-escaped text: the only < and > in
+            // the string at this point are the tags emitted just above.
             l = l.replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
             l = l.replace(/\*([^*]+)\*/g,   "<i>$1</i>")
             l = l.replace(/`([^`]+)`/g,      "<code>$1</code>")
