@@ -1906,7 +1906,7 @@ Window {
                                 { kind: "message", time: "12:03", nick: "bob",   prefix: "@", text: "morning all" },
                                 { kind: "message", time: "12:03", nick: "alice", text: "morning! pushed the AOT fixes last night" },
                                 { kind: "action",  time: "12:04", nick: "carol", text: "waves from the couch" },
-                                { kind: "message", time: "12:04", nick: "carol", text: "docs are at https://github.com/adjamilton-junior/mahina" },
+                                { kind: "message", time: "12:04", nick: "carol", text: "docs are at https://github.com/ajunior/mahina" },
                                 { kind: "message", time: "12:05", nick: "dave",  text: "\x02bold\x02, \x1Funderline\x1F, \x0304red\x03, \x0309,01green on black\x03" },
                                 { kind: "message", time: "12:06", nick: "bob",   text: "alice: can you cut the release today?" },
                                 { kind: "notice",  time: "12:07", nick: "NickServ", text: "This nickname is registered." },

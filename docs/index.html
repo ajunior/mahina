@@ -178,7 +178,7 @@ footer{text-align:center;padding:2rem;font-size:.8rem;color:var(--fg3);border-to
       <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
     </svg>
   </button>
-  <a href="https://github.com/adjamilton-junior/mahina" target="_blank" rel="noopener" class="gh-link" aria-label="GitHub">
+  <a href="https://github.com/ajunior/mahina" target="_blank" rel="noopener" class="gh-link" aria-label="GitHub">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836a9.59 9.59 0 0 1 2.504.337c1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.744 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
   </a>
 </nav>
@@ -201,7 +201,7 @@ footer{text-align:center;padding:2rem;font-size:.8rem;color:var(--fg3);border-to
   <p>Components are registered as a proper QML module (<code>import Mahina</code>) so they drop into any Qt 6 project with a single <code>find_package</code> call. No JavaScript runtime, no web view, no third-party dependencies — just native Qt rendering at full GPU speed.</p>
 
   <h2 style="margin-top:2rem">Motivation</h2>
-  <p>Mahina started as the UI layer for <a href="https://github.com/adjamilton-junior/qub" target="_blank" rel="noopener">Qub</a>, a desktop SQL editor built with Qt 6. The goal was a consistent, well-functioning interface — something that felt cohesive rather than a collection of one-off widgets. Qt's built-in <code>QtQuick.Controls</code> covers the basics, but a real application quickly exposes the gaps: no data grid, no command palette, no chart primitives, no diff viewer, no sidebar sections.</p>
+  <p>Mahina started as the UI layer for <a href="https://github.com/ajunior/qubeditor" target="_blank" rel="noopener">Qub</a>, a desktop SQL editor built with Qt 6. The goal was a consistent, well-functioning interface — something that felt cohesive rather than a collection of one-off widgets. Qt's built-in <code>QtQuick.Controls</code> covers the basics, but a real application quickly exposes the gaps: no data grid, no command palette, no chart primitives, no diff viewer, no sidebar sections.</p>
   <p>After building enough components for Qub, the potential became clear. Other projects were already in mind that would need the same foundations, so the scope grew deliberately — from a handful of purpose-built widgets into a library that could serve as the UI layer for any desktop application.</p>
   <p>The result is shared here because others building with Qt 6 are likely running into the same gaps. Mahina won't be the right fit for every project, but if you are looking for a single, coherent component set — one that covers everything from a humble <code>Badge</code> to a full <code>SpreadsheetGrid</code>, all sharing the same theme tokens, interaction conventions and AOT-safe QML patterns — it might save you from reimplementing the same primitives from scratch.</p>
   <p>The library was built iteratively with AI assistance. The <em>AI-made</em> column in the component table confirms which components were AI-generated. The <em>Human-reviewed</em> column tracks which ones have been manually verified in a running application.</p>
@@ -214,7 +214,7 @@ footer{text-align:center;padding:2rem;font-size:.8rem;color:var(--fg3);border-to
   <p>No local setup required — CMake fetches and builds Mahina automatically at configure time:</p>
   <pre><code>include(FetchContent)
 FetchContent_Declare(Mahina
-    GIT_REPOSITORY https://github.com/adjamilton-junior/mahina.git
+    GIT_REPOSITORY https://github.com/ajunior/mahina.git
     GIT_TAG        v0.1.0
 )
 FetchContent_MakeAvailable(Mahina)
@@ -625,7 +625,7 @@ Theme.load({ fontFamily: "Geist", fontFamilyMono: "Fira Code" })</code></pre>
   <p>The repository ships a self-contained kitchen-sink app that renders live instances of the components against a real Qt runtime. It is the fastest way to see how everything looks and behaves together, and to verify that your build environment is set up correctly.</p>
 
   <h3>Building</h3>
-  <pre><code>git clone https://github.com/adjamilton-junior/mahina.git
+  <pre><code>git clone https://github.com/ajunior/mahina.git
 cd mahina
 cmake -B build -DCMAKE_PREFIX_PATH=/path/to/Qt/6.x/gcc_64
 cmake --build build -j$(nproc)
@@ -2833,7 +2833,7 @@ function toggleTheme(){
   }
 })();
 
-fetch("https://api.github.com/repos/adjamilton-junior/mahina/releases/latest")
+fetch("https://api.github.com/repos/ajunior/mahina/releases/latest")
   .then(r => r.ok ? r.json() : null)
   .then(d => { if(d?.tag_name) document.getElementById("stat-version").textContent = d.tag_name; })
   .catch(()=>{});
