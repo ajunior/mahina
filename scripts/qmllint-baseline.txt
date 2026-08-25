@@ -1,0 +1,11 @@
+# qmllint warning ceilings, one per category. Regenerate with:
+#     bash scripts/ci-check.sh --update-baseline
+#
+# A category may shrink freely; growing one fails CI. The counts are tied
+# to the Qt version CI pins, since qmllint gains checks between releases.
+missing-enum-entry 1
+missing-property 167
+property-override 5
+Quick.layout-positioning 194
+Quick.property-changes-parsed 3
+unqualified 1371

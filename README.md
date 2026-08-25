@@ -2,13 +2,15 @@
 
 A comprehensive QML component library for Qt 6 desktop applications — fully themed, AOT-compiled, and keyboard-friendly.
 
+[![CI](https://github.com/ajunior/mahina/actions/workflows/ci.yml/badge.svg)](https://github.com/ajunior/mahina/actions/workflows/ci.yml)
+
 ![Mahina preview](screenshot.png)
 
 ## Features
 
 - **262 components** covering layout, navigation, data display, forms, charts, overlays, editors and more
 - **Single design token source** — every component reads from the `Theme` singleton; swap colours, radii and typography in one place
-- **AOT-safe** — all QML passes `qmlsc` strict-mode compilation; no runtime type errors
+- **AOT-compiled** — over 80% of the library's bindings and functions are compiled ahead of time to C++ rather than interpreted; CI reports the figure on every change
 - **Desktop-first** — interactions are designed for keyboard and mouse; no mobile-only patterns
 - **Zero external dependencies** — plain Qt 6, no web engine, no JavaScript runtime
 - **Bundled fonts** — [Inter](https://rsms.me/inter/) (UI), [JetBrains Mono](https://www.jetbrains.com/lp/mono/) (mono), and [Phosphor Icons](https://phosphoricons.com) (900+ glyphs, six weights) shipped as embedded Qt resources
@@ -177,6 +179,35 @@ cmake -B build -DCMAKE_PREFIX_PATH=/path/to/Qt/6.x/gcc_64
 cmake --build build -j$(nproc)
 ./build/example/bin/MahinaExample
 ```
+
+## Development
+
+Every check CI runs lives in `scripts/ci-check.sh`, so a red pipeline is
+reproduced locally with one command rather than by reading YAML:
+
+```bash
+CMAKE_PREFIX_PATH=/path/to/Qt/6.x/gcc_64 bash scripts/ci-check.sh
+```
+
+It builds the library, the extras and the demo app, boots the demo app on Qt's
+offscreen platform plugin, and runs `qmllint` over every QML file. Three notes
+on what the gates actually assert:
+
+- **The boot gate demands silence, not survival.** The demo app instantiates
+  roughly 250 of Mahina's components, which makes starting it the closest thing
+  the repo has to a test suite — but Qt reports a broken binding as a warning on
+  stderr and carries on, so an exit code proves nothing. Any output at all fails
+  the gate.
+- **The lint gate is a ratchet.** `scripts/qmllint-baseline.txt` records a
+  ceiling per warning category. A category may shrink freely; growing one, or
+  introducing a new one, fails. Clear part of the backlog and lock the win in
+  with `bash scripts/ci-check.sh --update-baseline`.
+- **AOT coverage is printed, never enforced.** The number moves with the Qt
+  version, so a threshold would fail for reasons unrelated to the change under
+  review — but a change that quietly halves it is visible in its own run.
+
+The baseline counts are tied to the Qt version CI pins, since `qmllint` gains
+checks between releases; bump the two together.
 
 ## Theme
 

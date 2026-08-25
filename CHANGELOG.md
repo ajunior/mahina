@@ -5,6 +5,12 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## Unreleased
+
+- **Docs** The repo now has a build gate: `scripts/ci-check.sh` compiles the library, the extras and the demo app, boots the demo app on the offscreen platform plugin, and runs `qmllint` over every QML file — the same script CI runs, so a red pipeline reproduces locally with one command. The boot gate fails on *any* stderr output rather than on the exit code, because Qt reports a broken binding as a warning and carries on; the lint gate is a ratchet over `scripts/qmllint-baseline.txt`, so the existing backlog is frozen while a regression fails. AOT coverage is printed but never enforced
+- **Fix** The demo app did not declare Mahina as a QML module dependency — the exact omission the README warns consumers about since 0.45.1. `qmllint` could not resolve a single Mahina type in `example/main.qml` (3168 spurious warnings, drowning the real signal) and `qmlcachegen` dropped nearly every binding in it: the app's own module compiled **184 of 2677** bindings ahead of time, 6.9%. With `DEPENDENCIES TARGET Mahina` it compiles **2352 of 2677**, 87.9%, moving the whole project from 68.6% to 81.9%
+- **Docs** README no longer claims all QML passes `qmlsc` strict-mode compilation with no runtime type errors — it does not. The measured figure (just over 80% of the library's bindings) is stated instead, and a new *Development* section documents the gate
+
 ## 0.45.2
 
 - **Fix** `FormulaInput` evaluated its input with `eval()`. The expression is reachable from whatever an application binds `formulaText` to, and QML's `eval` runs in the component's scope, so a hostile expression could reach `Qt` and through it `Qt.createQmlObject` and `Qt.openUrlExternally` — arbitrary QML, confirmed executing. Values in `formulaVars` were interpolated into that string unquoted, so a string value was a second injection point. Replaced with a tokeniser and recursive-descent parser that accepts only numbers, arithmetic operators, and names resolved against `formulaVars` and a fixed function/constant table; `formulaVars` values are now coerced with `Number()`. Nothing in the input reaches the JS engine as code
