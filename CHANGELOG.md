@@ -5,6 +5,13 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.2
+
+- **Fix** `FormulaInput` evaluated its input with `eval()`. The expression is reachable from whatever an application binds `formulaText` to, and QML's `eval` runs in the component's scope, so a hostile expression could reach `Qt` and through it `Qt.createQmlObject` and `Qt.openUrlExternally` — arbitrary QML, confirmed executing. Values in `formulaVars` were interpolated into that string unquoted, so a string value was a second injection point. Replaced with a tokeniser and recursive-descent parser that accepts only numbers, arithmetic operators, and names resolved against `formulaVars` and a fixed function/constant table; `formulaVars` values are now coerced with `Number()`. Nothing in the input reaches the JS engine as code
+- **Fix** `MarkdownEditor`'s preview converter built its HTML without escaping the source, injecting any markup the document contained into a `Text.RichText` view. Qt's rich text runs no scripts, but it does fetch remote resources on render — an `<img src="http://…">` is a tracking beacon, and an `<a href>` a phishing link. Source text is now escaped before any markup is wrapped around it
+- **Fix** `MarkdownView` forwarded every activated link to `Qt.openUrlExternally`, handing the desktop handler whatever scheme the document asked for, `file://` included. Links are now filtered against a new `allowedLinkSchemes` property (`http`, `https`, `mailto` by default); a blocked link raises the new `linkBlocked` signal instead
+- **Feat** `FormulaInput` gained `asin`, `acos`, `atan`, `atan2`, `cbrt`, `exp`, `log2`, `log10`, `trunc`, `sign`, `hypot`, variadic `min`/`max`, the `%` operator and the `tau` constant. **Break** a `formulaVars` key now shadows a same-named constant, where `pi` and `e` previously won by textual substitution; and an expression that is not pure arithmetic — anything that leaned on the old `eval` — is now a syntax error
+
 ## 0.45.1
 
 - **Fix** Mahina overrode the consumer's `QT_QML_OUTPUT_DIRECTORY` — it passed `OUTPUT_DIRECTORY` to `qt_add_qml_module` unconditionally, and Qt reads that argument before consulting the variable, so a consumer collecting every QML module in their build under one directory was silently ignored. Both `Mahina` and `MahinaExtras` now defer to it when set, and fall back to their previous location when it is not
