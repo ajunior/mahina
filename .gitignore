@@ -1,0 +1,23 @@
+# Build output
+build/
+build-*/
+cmake-build-*/
+
+# CMake / tooling
+CMakeUserPresets.json
+compile_commands.json
+.cache/
+*.qmlc
+*.jsc
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS
+.DS_Store
+
+# Stray local screenshots (not part of the docs)
+Screenshot From *.png

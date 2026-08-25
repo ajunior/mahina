@@ -1,0 +1,46 @@
+@PACKAGE_INIT@
+
+include(CMakeFindDependencyMacro)
+find_dependency(Qt6 REQUIRED COMPONENTS Quick)
+
+set_and_check(_mahina_lib_dir  "@PACKAGE_CMAKE_INSTALL_LIBDIR@")
+set_and_check(_mahina_data_dir "@PACKAGE_CMAKE_INSTALL_DATADIR@/Mahina")
+
+# Locate the installed archives
+find_library(_mahina_backing NAMES Mahina       PATHS "${_mahina_lib_dir}" REQUIRED NO_DEFAULT_PATH)
+find_library(_mahina_plugin  NAMES Mahinaplugin PATHS "${_mahina_lib_dir}" REQUIRED NO_DEFAULT_PATH)
+
+# Backing library
+if(NOT TARGET Mahina::Mahina)
+    add_library(Mahina::Mahina STATIC IMPORTED)
+    set_target_properties(Mahina::Mahina PROPERTIES
+        IMPORTED_LOCATION    "${_mahina_backing}"
+        INTERFACE_LINK_LIBRARIES "Qt6::Quick"
+    )
+endif()
+
+# QML plugin
+if(NOT TARGET Mahina::Mahinaplugin)
+    add_library(Mahina::Mahinaplugin STATIC IMPORTED)
+    set_target_properties(Mahina::Mahinaplugin PROPERTIES
+        IMPORTED_LOCATION    "${_mahina_plugin}"
+        INTERFACE_LINK_LIBRARIES "Mahina::Mahina"
+    )
+endif()
+
+# Path to the Q_IMPORT_PLUGIN shim — add to your executable's sources for
+# static builds that do NOT use qt_add_executable / qt_import_qml_plugins.
+set(MAHINA_PLUGIN_INIT_FILE "${_mahina_data_dir}/Mahinaplugin_init.cpp")
+
+# Convenience target: links the library + plugin and adds the init shim
+if(NOT TARGET Mahina::All)
+    add_library(Mahina::All INTERFACE IMPORTED)
+    set_target_properties(Mahina::All PROPERTIES
+        INTERFACE_LINK_LIBRARIES
+            "Mahina::Mahina;Mahina::Mahinaplugin"
+        INTERFACE_SOURCES
+            "${MAHINA_PLUGIN_INIT_FILE}"
+    )
+endif()
+
+check_required_components(Mahina)
