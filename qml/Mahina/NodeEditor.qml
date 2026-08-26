@@ -235,7 +235,7 @@ Item {
                     border.color: _zmH.hovered ? Theme.primary : Theme.border; border.width: 1
                     Behavior on color { ColorAnimation { duration: 80 } }
                     HoverHandler { id: _zmH }
-                    Text { anchors.centerIn: parent; text: _rq3.modelData.label; color: _zmH.hovered ? "#fff" : Theme.textPrimary; font.pixelSize: 14 }
+                    Text { anchors.centerIn: parent; text: _rq3.modelData.label; color: _zmH.hovered ? Theme.textOnPrimary : Theme.textPrimary; font.pixelSize: 14 }
                     MouseArea {
                         anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                         onClicked: {

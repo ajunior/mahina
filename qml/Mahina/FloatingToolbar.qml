@@ -80,14 +80,14 @@ Item {
                         id:     _btn
                         anchors { fill: parent; leftMargin: (_rq1.index > 0 && _rq1.index % 4 === 0) ? 4 : 0 }
                         radius: Theme.radiusSm
-                        color:  _btnH.containsMouse ? Theme.panel : "transparent"
+                        color:  _btnH.hovered ? Theme.panel : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _btnH }
 
                         Text {
                             anchors.centerIn: parent
                             text:           _rq1.modelData.icon || ""
-                            color:          _btnH.containsMouse ? Theme.textPrimary : Theme.textSecondary
+                            color:          _btnH.hovered ? Theme.textPrimary : Theme.textSecondary
                             font.family:    Theme.fontFamily
                             font.pixelSize: Theme.textBase
                             Behavior on color { ColorAnimation { duration: Theme.durationFast } }

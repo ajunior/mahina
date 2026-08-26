@@ -44,7 +44,7 @@ CheckBox {
         border.color: root.hasError   ? Theme.error
                     : !root.enabled   ? Theme.border
                     : root.checked || partiallyChecked ? Theme.primary
-                    : _hover.containsMouse ? Theme.borderStrong
+                    : _hover.hovered ? Theme.borderStrong
                     : Theme.border
         border.width: root.activeFocus ? 2 : 1
 

@@ -124,7 +124,7 @@ Item {
                 Rectangle {
                     visible: _input.text !== ""
                     width: 20; height: 20; radius: 10
-                    color: _clH.containsMouse ? Theme.border : "transparent"
+                    color: _clH.hovered ? Theme.border : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _clH }
                     MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: { _input.text = ""; _popup.close() } }
@@ -189,7 +189,7 @@ Item {
                     width:  _popup.width - Theme.sp2
                     height: root._desc(modelData) !== "" ? 50 : 36
                     radius: Theme.radiusSm
-                    color:  _sH.containsMouse ? Theme.panel : "transparent"
+                    color:  _sH.hovered ? Theme.panel : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _sH }
 

@@ -65,7 +65,7 @@ Item {
             border.width: _field.activeFocus ? 2 : 1
             border.color: root.hasError        ? Theme.error
                         : _field.activeFocus   ? Theme.primary
-                        : _boxHover.containsMouse ? Theme.borderStrong
+                        : _boxHover.hovered ? Theme.borderStrong
                         : Theme.border
             clip:         true
 
@@ -81,7 +81,7 @@ Item {
                 Rectangle {
                     width:  root._fieldH
                     height: parent.height
-                    color:  !root.disabled && _dHover.containsMouse ? Theme.panel : "transparent"
+                    color:  !root.disabled && _dHover.hovered ? Theme.panel : "transparent"
                     enabled: !root.disabled && root.value > root.min
 
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
@@ -150,7 +150,7 @@ Item {
                 Rectangle {
                     width:  root._fieldH
                     height: parent.height
-                    color:  !root.disabled && _iHover.containsMouse ? Theme.panel : "transparent"
+                    color:  !root.disabled && _iHover.hovered ? Theme.panel : "transparent"
                     enabled: !root.disabled && root.value < root.max
 
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }

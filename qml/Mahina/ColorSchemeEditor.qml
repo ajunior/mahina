@@ -51,7 +51,7 @@ Item {
                         color: _expH.hovered ? Theme.primary : Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.12)
                         Behavior on color { ColorAnimation { duration: 80 } }
                         HoverHandler { id: _expH }
-                        Text { anchors.centerIn: parent; text: "Export"; color: _expH.hovered ? "#ffffff" : Theme.primary; font.family: Theme.fontFamily; font.pixelSize: Theme.textSm }
+                        Text { anchors.centerIn: parent; text: "Export"; color: _expH.hovered ? Theme.textOnPrimary : Theme.primary; font.family: Theme.fontFamily; font.pixelSize: Theme.textSm }
                         MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.schemeExported(root.colorTokens) }
                     }
                 }

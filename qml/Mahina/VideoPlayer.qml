@@ -93,7 +93,7 @@ Item {
                     // Play/Pause
                     Rectangle {
                         width: 32; height: 32; radius: 16
-                        color: _ppHover.containsMouse ? Qt.rgba(1,1,1,0.15) : "transparent"
+                        color: _ppHover.hovered ? Qt.rgba(1,1,1,0.15) : "transparent"
                         HoverHandler { id: _ppHover }
                         Text {
                             anchors.centerIn: parent
@@ -149,7 +149,7 @@ Item {
                     // Fullscreen
                     Rectangle {
                         width: 28; height: 28; radius: 14
-                        color: _fsHover.containsMouse ? Qt.rgba(1,1,1,0.15) : "transparent"
+                        color: _fsHover.hovered ? Qt.rgba(1,1,1,0.15) : "transparent"
                         HoverHandler { id: _fsHover }
                         Text {
                             anchors.centerIn: parent

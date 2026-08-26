@@ -83,7 +83,7 @@ Item {
                         Text {
                             anchors.centerIn: parent
                             text:  "+ Install"
-                            color: _instH.hovered ? "#ffffff" : Theme.primary
+                            color: _instH.hovered ? Theme.textOnPrimary : Theme.primary
                             font.family:    Theme.fontFamily
                             font.pixelSize: Theme.textSm
                             font.weight:    Font.Medium

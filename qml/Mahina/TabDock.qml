@@ -92,7 +92,7 @@ Item {
                             color: _xH.hovered ? Theme.error : "transparent"
                             Behavior on color { ColorAnimation { duration: 80 } }
                             HoverHandler { id: _xH }
-                            Text { anchors.centerIn: parent; text: "✕"; color: _xH.hovered ? "white" : Theme.textDisabled; font.pixelSize: 8 }
+                            Text { anchors.centerIn: parent; text: "✕"; color: _xH.hovered ? Theme.textOnPrimary : Theme.textDisabled; font.pixelSize: 8 }
                             MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: (mouse) => { mouse.accepted = true; root.tabClosed(_rq1.index) } }
                         }
                     }

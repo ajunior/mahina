@@ -100,7 +100,7 @@ Item {
                     // Collapse toggle
                     Rectangle {
                         width: 28; height: 28; radius: 14
-                        color: _chH.containsMouse ? Theme.panel : "transparent"
+                        color: _chH.hovered ? Theme.panel : "transparent"
                         anchors.verticalCenter: parent.verticalCenter
                         HoverHandler { id: _chH }
                         Text {
@@ -115,7 +115,7 @@ Item {
                     // Dismiss
                     Rectangle {
                         width: 28; height: 28; radius: 14
-                        color: _dH2.containsMouse ? Theme.panel : "transparent"
+                        color: _dH2.hovered ? Theme.panel : "transparent"
                         anchors.verticalCenter: parent.verticalCenter
                         HoverHandler { id: _dH2 }
                         Text { anchors.centerIn: parent; text: "✕"; color: Theme.textDisabled; font.pixelSize: 10 }
@@ -139,7 +139,7 @@ Item {
                         required property var  modelData
                         required property int  index
                         width:  parent.width; height: 44
-                        color:  _tH.containsMouse ? Theme.panel : "transparent"
+                        color:  _tH.hovered ? Theme.panel : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _tH }
 

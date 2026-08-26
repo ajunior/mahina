@@ -41,16 +41,16 @@ AbstractButton {
         if (!enabled)              return Theme.surfaceVariant
         if (variant === Button.Variant.Filled) {
             if (pressed)           return Theme.primaryActive
-            if (hovered)           return Theme.primaryHover
+            if (_hovered)          return Theme.primaryHover
             return Theme.primary
         }
         if (variant === Button.Variant.Danger) {
             if (pressed)           return Qt.darker(Theme.error, 1.15)
-            if (hovered)           return Qt.darker(Theme.error, 1.07)
+            if (_hovered)          return Qt.darker(Theme.error, 1.07)
             return Theme.error
         }
         if (pressed)               return Theme.primarySubtle
-        if (hovered)               return Theme.primarySubtle
+        if (_hovered)              return Theme.primarySubtle
         return Qt.rgba(Theme.primarySubtle.r, Theme.primarySubtle.g, Theme.primarySubtle.b, 0)
     }
 
@@ -58,13 +58,13 @@ AbstractButton {
         if (!enabled)                              return Theme.textDisabled
         if (variant === Button.Variant.Filled)     return Theme.textOnPrimary
         if (variant === Button.Variant.Danger)     return Theme.textOnPrimary
-        if (hovered || pressed)                    return Theme.primary
+        if (_hovered || pressed)                   return Theme.primary
         return variant === Button.Variant.Outlined ? Theme.primary : Theme.textPrimary
     }
 
     readonly property color _border: {
         if (!enabled)                              return Theme.border
-        if (variant === Button.Variant.Outlined)   return hovered ? Theme.primaryHover : Theme.primary
+        if (variant === Button.Variant.Outlined)   return _hovered ? Theme.primaryHover : Theme.primary
         return "transparent"
     }
 
@@ -75,7 +75,13 @@ AbstractButton {
     focusPolicy: Qt.TabFocus
     enabled: !loading
 
-    HoverHandler { cursorShape: Qt.PointingHandCursor }
+    // Hover comes from a HoverHandler, not AbstractButton's own `hovered`:
+    // that property is gated on Qt.styleHints.useHoverEffects, which is false on
+    // some platforms (Qt's own vnc and offscreen plugins among them), and Button
+    // was the one component in the library whose highlight could silently vanish
+    // while every HoverHandler-based component kept working.
+    HoverHandler { id: _hover; cursorShape: Qt.PointingHandCursor }
+    readonly property bool _hovered: _hover.hovered
 
     // ── Background ────────────────────────────────────────────────────────────
     background: Rectangle {

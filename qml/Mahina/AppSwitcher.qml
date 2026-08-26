@@ -53,7 +53,7 @@ Item {
                     y: Math.floor(index / root.columns) * (root.tileSize + Theme.sp2)
                     width: root.tileSize; height: root.tileSize
                     radius: Theme.radiusLg
-                    color: _tH.containsMouse ? Theme.panel : "transparent"
+                    color: _tH.hovered ? Theme.panel : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _tH }
 

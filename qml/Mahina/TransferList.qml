@@ -105,7 +105,7 @@ Item {
                     Text {
                         anchors.centerIn: parent
                         text:  _rq2.modelData.label
-                        color: _btnH.hovered ? "#ffffff" : Theme.textPrimary
+                        color: _btnH.hovered ? Theme.textOnPrimary : Theme.textPrimary
                         font.pixelSize: 16
                     }
                     MouseArea {

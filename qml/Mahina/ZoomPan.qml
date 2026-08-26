@@ -104,7 +104,7 @@ Item {
                         width:  (parent.width - 4) / 3
                         height: parent.height
                         radius: Theme.radiusSm
-                        color:  _btnH.containsMouse ? Theme.panel : "transparent"
+                        color:  _btnH.hovered ? Theme.panel : "transparent"
                         HoverHandler { id: _btnH }
                         Text {
                             anchors.centerIn: parent

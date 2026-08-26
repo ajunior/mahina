@@ -80,7 +80,7 @@ Item {
             border.width: root._open ? 2 : 1
             border.color: root.hasError   ? Theme.error
                         : root._open      ? Theme.primary
-                        : _hover.containsMouse ? Theme.borderStrong
+                        : _hover.hovered ? Theme.borderStrong
                         : Theme.border
 
             Behavior on border.color { ColorAnimation { duration: Theme.durationFast } }

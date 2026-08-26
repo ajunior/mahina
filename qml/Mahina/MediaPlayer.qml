@@ -231,7 +231,7 @@ Item {
                 // Play / Pause
                 Rectangle {
                     width: 40; height: 40; radius: 20
-                    color: _ppH.containsMouse ? Theme.primaryHover : Theme.primary
+                    color: _ppH.hovered ? Theme.primaryHover : Theme.primary
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _ppH }
                     MouseArea {

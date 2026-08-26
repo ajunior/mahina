@@ -104,7 +104,7 @@ Item {
                         anchors.fill: parent
                         radius: Theme.radiusSm
                         color: _rq1.isDisabled ? "transparent"
-                             : _h.containsMouse ? (_rq1.isDanger ? Theme.errorSubtle : Theme.panel)
+                             : _h.hovered ? (_rq1.isDanger ? Theme.errorSubtle : Theme.panel)
                              : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _h; enabled: !_rq1.isDisabled && !_rq1.isDivider }

@@ -33,7 +33,7 @@ Switch {
         radius:         root._trackH / 2
 
         color: root.enabled
-               ? (root.checked ? Theme.primary : (_hover.containsMouse ? Theme.borderStrong : Theme.border))
+               ? (root.checked ? Theme.primary : (_hover.hovered ? Theme.borderStrong : Theme.border))
                : Theme.panel
 
         Behavior on color { ColorAnimation { duration: Theme.durationNormal } }

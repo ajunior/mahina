@@ -4,7 +4,7 @@
 # A category may shrink freely; growing one fails CI. The counts are tied
 # to the Qt version CI pins, since qmllint gains checks between releases.
 missing-enum-entry 1
-missing-property 140
+missing-property 36
 property-override 4
 Quick.layout-positioning 188
 Quick.property-changes-parsed 3

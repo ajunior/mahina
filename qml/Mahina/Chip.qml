@@ -51,7 +51,7 @@ Item {
             case Chip.Color.Warning: return Theme.warningSubtle
             case Chip.Color.Error:   return Theme.errorSubtle
             case Chip.Color.Info:    return Theme.infoSubtle
-            default:                 return _hover.containsMouse && root.interactive
+            default:                 return _hover.hovered && root.interactive
                                             ? Theme.panel : Theme.surfaceVariant
         }
     }

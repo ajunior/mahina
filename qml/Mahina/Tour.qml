@@ -225,7 +225,7 @@ Item {
                     visible:  root.steps.length > 1
                     implicitHeight: 32; radius: Theme.radiusMd
                     implicitWidth:  _skipTxt.implicitWidth + Theme.sp3 * 2
-                    color:    _skipH.containsMouse ? Theme.panel : "transparent"
+                    color:    _skipH.hovered ? Theme.panel : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _skipH }
                     MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.stop() }
@@ -246,7 +246,7 @@ Item {
                     visible: root.currentStep > 0
                     implicitHeight: 32; radius: Theme.radiusMd
                     implicitWidth:  _prevTxt.implicitWidth + Theme.sp3 * 2
-                    color:   _prevH.containsMouse ? Theme.panel : Theme.panel
+                    color:   _prevH.hovered ? Theme.surfaceVariant : Theme.panel
                     border.color: Theme.border; border.width: 1
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _prevH }
@@ -266,7 +266,7 @@ Item {
                 Rectangle {
                     implicitHeight: 32; radius: Theme.radiusMd
                     implicitWidth:  _nextTxt.implicitWidth + Theme.sp4 * 2
-                    color:        _nextH.containsMouse ? Qt.darker(Theme.primary, 1.1) : Theme.primary
+                    color:        _nextH.hovered ? Qt.darker(Theme.primary, 1.1) : Theme.primary
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _nextH }
                     MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.next() }

@@ -115,7 +115,7 @@ Item {
         Rectangle {
             visible:  root.dismissible
             width:    24; height: 24; radius: Theme.radiusSm
-            color:    _dxHov.containsMouse ? Qt.rgba(root._accent.r, root._accent.g, root._accent.b, 0.15) : "transparent"
+            color:    _dxHov.hovered ? Qt.rgba(root._accent.r, root._accent.g, root._accent.b, 0.15) : "transparent"
             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
             HoverHandler { id: _dxHov }
             MouseArea {

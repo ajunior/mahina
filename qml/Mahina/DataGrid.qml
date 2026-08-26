@@ -72,7 +72,7 @@ Item {
                         required property var  modelData
                         required property int  index
                         width:  modelData.width || 100; height: root.headerH
-                        color:  _hH.containsMouse ? Theme.surfaceVariant : Theme.panel
+                        color:  _hH.hovered ? Theme.surfaceVariant : Theme.panel
                         HoverHandler { id: _hH }
                         Rectangle { width: 1; height: parent.height; anchors.right: parent.right; color: Theme.border; opacity: 0.5 }
 
@@ -133,7 +133,7 @@ Item {
 
                         width:  root._totalW; height: root.rowH
                         color:  isSelected          ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.1)
-                              : _rowH.containsMouse ? Theme.panel
+                              : _rowH.hovered ? Theme.panel
                               : index % 2 === 0    ? Theme.surface
                               : Theme.background
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }

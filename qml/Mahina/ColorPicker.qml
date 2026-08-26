@@ -109,7 +109,7 @@ Item {
             radius:       Theme.radiusSm
             border.color: root.hasError          ? Theme.error
                         : _pop.opened            ? Theme.primary
-                        : _trigH.containsMouse   ? Theme.borderStrong
+                        : _trigH.hovered   ? Theme.borderStrong
                         : Theme.border
             border.width: _pop.opened ? 2 : 1
             enabled:      !root.disabled
