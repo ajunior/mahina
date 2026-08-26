@@ -5123,25 +5123,30 @@ Window {
                             font.weight: Font.Bold
                         }
 
-                        // ── TabView ─────────────────────────────────────────
-                        Text { text: "TabView"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textLg; font.weight: Theme.weightSemibold }
-                        TabView {
-                            width:  parent.width - Theme.sp6 * 2
-                            height: 160
-                            tabs:   ["Overview", "Activity", "Settings"]
-
+                        // ── Tabs, panels supplied as a list ─────────────────
+                        // The form the retired TabView existed for: panels that
+                        // already exist elsewhere, handed over as a list. Tabs
+                        // reparents them into its StackLayout.
+                        Text { text: "Tabs (panels as a list)"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textLg; font.weight: Theme.weightSemibold }
+                        Item {
+                            id: _r11Pool
+                            visible: false   // emptied at completion; keeps the Column from spacing it
                             Rectangle {
+                                id: _r11PanelA
                                 color: Theme.panel; radius: Theme.radiusMd
                                 Text { anchors.centerIn: parent; text: "Overview panel"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textSm }
                             }
                             Rectangle {
+                                id: _r11PanelB
                                 color: Theme.panel; radius: Theme.radiusMd
                                 Text { anchors.centerIn: parent; text: "Activity panel"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textSm }
                             }
-                            Rectangle {
-                                color: Theme.panel; radius: Theme.radiusMd
-                                Text { anchors.centerIn: parent; text: "Settings panel"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textSm }
-                            }
+                        }
+                        Tabs {
+                            width:   parent.width - Theme.sp6 * 2
+                            height:  160
+                            model:   ["Overview", "Activity"]
+                            content: [_r11PanelA, _r11PanelB]
                         }
 
                         // ── TabBar ──────────────────────────────────────────

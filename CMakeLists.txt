@@ -162,7 +162,6 @@ set(MAHINA_QML_SOURCES
     MegaMenu.qml
     StickySection.qml
     AppSwitcher.qml
-    TabView.qml
     TestimonialCard.qml
     FeatureGrid.qml
     KeyboardShortcutsPanel.qml
@@ -469,7 +468,6 @@ qt_add_qml_module(Mahina
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/MegaMenu.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/StickySection.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/AppSwitcher.qml"
-        "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/TabView.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/TestimonialCard.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/FeatureGrid.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/KeyboardShortcutsPanel.qml"
