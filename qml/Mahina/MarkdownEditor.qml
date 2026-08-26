@@ -88,7 +88,7 @@ Item {
                         id: _tbBtn
                         required property var modelData
                         width: 28; height: 24; radius: Theme.radiusSm
-                        color: _tbHover.hovered ? Theme.surfaceVariant : "transparent"
+                        color: _tbHover.hovered ? Theme.hover : "transparent"
                         HoverHandler { id: _tbHover }
                         Text {
                             anchors.centerIn: parent
@@ -113,7 +113,7 @@ Item {
             Rectangle {
                 anchors { right: parent.right; rightMargin: Theme.sp2; verticalCenter: parent.verticalCenter }
                 width: 80; height: 24; radius: Theme.radiusSm
-                color: _pvHover.hovered ? Theme.surfaceVariant : "transparent"
+                color: _pvHover.hovered ? Theme.hover : "transparent"
                 HoverHandler { id: _pvHover }
                 Text {
                     anchors.centerIn: parent

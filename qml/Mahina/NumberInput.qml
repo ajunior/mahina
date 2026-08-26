@@ -81,7 +81,7 @@ Item {
                 Rectangle {
                     width:  root._fieldH
                     height: parent.height
-                    color:  !root.disabled && _dHover.hovered ? Theme.panel : "transparent"
+                    color:  !root.disabled && _dHover.hovered ? Theme.hover : "transparent"
                     enabled: !root.disabled && root.value > root.min
 
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
@@ -150,7 +150,7 @@ Item {
                 Rectangle {
                     width:  root._fieldH
                     height: parent.height
-                    color:  !root.disabled && _iHover.hovered ? Theme.panel : "transparent"
+                    color:  !root.disabled && _iHover.hovered ? Theme.hover : "transparent"
                     enabled: !root.disabled && root.value < root.max
 
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }

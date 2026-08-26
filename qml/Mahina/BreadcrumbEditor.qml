@@ -67,7 +67,7 @@ Item {
                         height: 22
                         width:  _segTxt.implicitWidth + 8
                         radius: Theme.radiusSm
-                        color:  _segH.hovered ? Theme.panel : "transparent"
+                        color:  _segH.hovered ? Theme.hover : "transparent"
                         Behavior on color { ColorAnimation { duration: 80 } }
                         HoverHandler { id: _segH }
 

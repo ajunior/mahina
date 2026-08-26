@@ -77,7 +77,7 @@ Item {
             Rectangle {
                 visible: root.keybinding !== "" && !root.recording
                 width: 16; height: 16; radius: 8
-                color: _kbClH.hovered ? Theme.panel : "transparent"
+                color: _kbClH.hovered ? Theme.hover : "transparent"
                 Behavior on color { ColorAnimation { duration: 80 } }
                 HoverHandler { id: _kbClH }
                 Text { anchors.centerIn: parent; text: "✕"; color: Theme.textDisabled; font.pixelSize: 8 }

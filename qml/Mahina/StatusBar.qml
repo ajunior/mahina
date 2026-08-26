@@ -54,7 +54,7 @@ Item {
                         required property int index
                         height: root.implicitHeight
                         width:  _lir.implicitWidth + Theme.sp3 * 2
-                        color:  _lbh.hovered ? Theme.surfaceVariant : "transparent"
+                        color:  _lbh.hovered ? Theme.hover : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _lbh }
                         MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.itemClicked("left", _rq1.index) }
@@ -82,7 +82,7 @@ Item {
                         required property int index
                         height: root.implicitHeight
                         width:  _cir.implicitWidth + Theme.sp3 * 2
-                        color:  _cbh.hovered ? Theme.surfaceVariant : "transparent"
+                        color:  _cbh.hovered ? Theme.hover : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _cbh }
                         MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.itemClicked("center", _rq2.index) }
@@ -110,7 +110,7 @@ Item {
                         required property int index
                         height: root.implicitHeight
                         width:  _rir.implicitWidth + Theme.sp3 * 2
-                        color:  _rbh.hovered ? Theme.surfaceVariant : "transparent"
+                        color:  _rbh.hovered ? Theme.hover : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _rbh }
                         MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.itemClicked("right", _rq3.index) }

@@ -159,7 +159,7 @@ Item {
             height: parent ? parent.height : 44
             radius: Theme.radiusSm
             property var actionData: parent ? (parent as Loader).actionData : ({})
-            color: _rbH.hovered ? Theme.panel : "transparent"
+            color: _rbH.hovered ? Theme.hover : "transparent"
             Behavior on color { ColorAnimation { duration: 80 } }
             HoverHandler { id: _rbH }
             border.color: _rbH.hovered ? Theme.border : "transparent"; border.width: 1

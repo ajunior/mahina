@@ -50,7 +50,7 @@ Item {
         Rectangle {
             id:     _btn
             width:  36; height: 36; radius: Theme.radiusSm
-            color:  _bH.hovered ? Theme.panel : "transparent"
+            color:  _bH.hovered ? Theme.hover : "transparent"
             HoverHandler { id: _bH }
             MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.open = !root.open }
             Text { anchors.centerIn: parent; text: "🐛"; font.pixelSize: 16 }

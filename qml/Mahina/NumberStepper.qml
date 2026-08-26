@@ -40,7 +40,7 @@ Item {
             id:     _decBtn
             anchors { left: parent.left; top: parent.top; bottom: parent.bottom }
             width:  32
-            color:  _decH.hovered ? Theme.panel : "transparent"
+            color:  _decH.hovered ? Theme.hover : "transparent"
             Behavior on color { ColorAnimation { duration: 80 } }
             HoverHandler { id: _decH }
 
@@ -89,7 +89,7 @@ Item {
             id:    _incBtn
             anchors { right: parent.right; top: parent.top; bottom: parent.bottom }
             width: 32
-            color: _incH.hovered ? Theme.panel : "transparent"
+            color: _incH.hovered ? Theme.hover : "transparent"
             Behavior on color { ColorAnimation { duration: 80 } }
             HoverHandler { id: _incH }
 

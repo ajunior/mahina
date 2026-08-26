@@ -95,7 +95,7 @@ Item {
                 }
                 Rectangle {
                     width: 20; height: 20; radius: 4
-                    color: _closeH.hovered ? Theme.panel : "transparent"
+                    color: _closeH.hovered ? Theme.hover : "transparent"
                     HoverHandler { id: _closeH }
                     Text { anchors.centerIn: parent; text: "✕"; color: Theme.textSecondary; font.pixelSize: 10 }
                     MouseArea { anchors.fill: parent; onClicked: root.isOpen = false }

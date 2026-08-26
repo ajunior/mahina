@@ -136,7 +136,7 @@ Item {
                         id:    _ipRowR
                         width: parent ? parent.width : 0; height: 30
                         property var prop: (parent as Loader) ? (parent as Loader).rowData.prop : ({})
-                        color: _ipH.hovered ? Theme.panel : "transparent"
+                        color: _ipH.hovered ? Theme.hover : "transparent"
                         HoverHandler { id: _ipH }
                         Rectangle { anchors { left: parent.left; right: parent.right; bottom: parent.bottom } height: 1; color: Theme.border }
 

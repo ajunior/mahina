@@ -29,7 +29,7 @@ Rectangle {
     implicitHeight: _inner.implicitHeight + Theme.sp3 * 2
 
     radius: Theme.radiusMd
-    color:  _mah.hovered ? Theme.panel : "transparent"
+    color:  _mah.hovered ? Theme.hover : "transparent"
     Behavior on color { ColorAnimation { duration: 120 } }
 
     HoverHandler { id: _mah }

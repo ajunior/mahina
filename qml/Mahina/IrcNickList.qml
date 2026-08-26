@@ -255,7 +255,7 @@ Item {
                     width:  _list.width
                     height: root.rowHeight
                     color:  _selected ? root._selectionBg
-                                      : (_hover.hovered ? Theme.surfaceVariant : "transparent")
+                                      : (_hover.hovered ? Theme.hover : "transparent")
 
                     HoverHandler { id: _hover }
 

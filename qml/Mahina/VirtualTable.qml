@@ -64,7 +64,7 @@ Item {
                             required property var  modelData
                             required property int  index
                             width:  modelData.width || 100; height: root.headerHeight
-                            color:  _hdrH.hovered ? Theme.panel : "transparent"
+                            color:  _hdrH.hovered ? Theme.hover : "transparent"
                             HoverHandler { id: _hdrH }
                             Rectangle { anchors { right: parent.right; top: parent.top; bottom: parent.bottom } width: 1; color: Theme.border }
 

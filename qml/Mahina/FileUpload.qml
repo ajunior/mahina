@@ -91,7 +91,7 @@ Item {
                 anchors.fill:  parent
                 radius:        Theme.radiusMd
                 color:         _drop.containsDrag ? Theme.primarySubtle
-                             : _zoneH.hovered ? Theme.panel
+                             : _zoneH.hovered ? Theme.hover
                              : "transparent"
                 border.color:  _drop.containsDrag ? Theme.primary : Theme.border
                 border.width:  _drop.containsDrag ? 2 : 1

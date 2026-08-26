@@ -120,7 +120,7 @@ Item {
                                         width: 26; height: root.rowHeight
                                         color: offset === root.selectedOffset
                                                ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.15)
-                                               : (_hvH.hovered && valid ? Theme.panel : "transparent")
+                                               : (_hvH.hovered && valid ? Theme.hover : "transparent")
                                         HoverHandler { id: _hvH }
                                         Text {
                                             anchors.centerIn: parent

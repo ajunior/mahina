@@ -33,7 +33,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         radius: Theme.radiusSm
-        color:  _bellH.hovered ? Theme.panel : "transparent"
+        color:  _bellH.hovered ? Theme.hover : "transparent"
         Behavior on color { ColorAnimation { duration: 100 } }
         HoverHandler { id: _bellH }
 

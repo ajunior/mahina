@@ -225,7 +225,7 @@ Item {
                     visible:  root.steps.length > 1
                     implicitHeight: 32; radius: Theme.radiusMd
                     implicitWidth:  _skipTxt.implicitWidth + Theme.sp3 * 2
-                    color:    _skipH.hovered ? Theme.panel : "transparent"
+                    color:    _skipH.hovered ? Theme.hover : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _skipH }
                     MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.stop() }

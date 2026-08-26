@@ -56,7 +56,7 @@ Item {
                 Rectangle {
                     width: 32; height: 32; radius: 16
                     anchors.verticalCenter: parent.verticalCenter
-                    color: _prevH.hovered ? Theme.surfaceVariant : "transparent"
+                    color: _prevH.hovered ? Theme.hover : "transparent"
                     HoverHandler { id: _prevH }
                     MouseArea {
                         anchors.fill: parent; cursorShape: Qt.PointingHandCursor
@@ -82,7 +82,7 @@ Item {
                 Rectangle {
                     width: 32; height: 32; radius: 16
                     anchors.verticalCenter: parent.verticalCenter
-                    color: _nextH.hovered ? Theme.surfaceVariant : "transparent"
+                    color: _nextH.hovered ? Theme.hover : "transparent"
                     HoverHandler { id: _nextH }
                     MouseArea {
                         anchors.fill: parent; cursorShape: Qt.PointingHandCursor
@@ -150,7 +150,7 @@ Item {
                         anchors { fill: parent; margins: 1 }
                         radius:  Theme.radiusSm
                         color:   _dg.isToday ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.1)
-                                         : _cellH.hovered && _dg.valid ? Theme.panel : "transparent"
+                                         : _cellH.hovered && _dg.valid ? Theme.hover : "transparent"
                         border.color: _dg.isToday ? Theme.primary : "transparent"
                         border.width: 1
                         Behavior on color { ColorAnimation { duration: 80 } }

@@ -108,7 +108,7 @@ Item {
 
                 Rectangle {
                     width: 32; height: 32; radius: Theme.radiusSm
-                    color: _eyeH.hovered ? Theme.panel : "transparent"
+                    color: _eyeH.hovered ? Theme.hover : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _eyeH }
                     MouseArea {

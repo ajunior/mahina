@@ -62,7 +62,7 @@ Item {
                 color:  modelData.path === root.selectedPath
                         ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g,
                                   Qt.color(Theme.primary).b, 0.1)
-                        : (_fH.hovered ? Theme.panel : "transparent")
+                        : (_fH.hovered ? Theme.hover : "transparent")
                 Behavior on color { ColorAnimation { duration: 80 } }
                 HoverHandler { id: _fH }
 

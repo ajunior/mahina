@@ -182,7 +182,7 @@ Item {
                 // Prev month
                 Rectangle {
                     width: 28; height: 28; radius: Theme.radiusSm
-                    color: _pmH.hovered ? Theme.panel : "transparent"
+                    color: _pmH.hovered ? Theme.hover : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _pmH }
                     MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor
@@ -207,7 +207,7 @@ Item {
                 // Next month
                 Rectangle {
                     width: 28; height: 28; radius: Theme.radiusSm
-                    color: _nmH.hovered ? Theme.panel : "transparent"
+                    color: _nmH.hovered ? Theme.hover : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _nmH }
                     MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor
@@ -276,7 +276,7 @@ Item {
                             radius: 14
                             anchors.centerIn: parent
                             color:  _dg._selected ? Theme.primary
-                                  : _hov.hovered && !_dg._disabled && !_dg._empty ? Theme.panel
+                                  : _hov.hovered && !_dg._disabled && !_dg._empty ? Theme.hover
                                   : "transparent"
                             border.color: _dg._today && !_dg._selected ? Theme.primary : "transparent"
                             border.width: 1

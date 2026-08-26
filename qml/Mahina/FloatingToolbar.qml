@@ -80,7 +80,7 @@ Item {
                         id:     _btn
                         anchors { fill: parent; leftMargin: (_rq1.index > 0 && _rq1.index % 4 === 0) ? 4 : 0 }
                         radius: Theme.radiusSm
-                        color:  _btnH.hovered ? Theme.panel : "transparent"
+                        color:  _btnH.hovered ? Theme.hover : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _btnH }
 

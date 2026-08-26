@@ -191,7 +191,7 @@ Item {
                     width:  parent ? parent.width : 0; height: 32
                     color:  _dg.checked.indexOf(modelData) >= 0
                             ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.12)
-                            : (_tpH.hovered ? Theme.panel : "transparent")
+                            : (_tpH.hovered ? Theme.hover : "transparent")
                     HoverHandler { id: _tpH }
                     Row {
                         anchors { left: parent.left; leftMargin: Theme.sp3; verticalCenter: parent.verticalCenter }

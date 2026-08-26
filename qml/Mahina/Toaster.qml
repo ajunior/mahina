@@ -160,7 +160,7 @@ Item {
                     Rectangle {
                         visible: _toast.copyable
                         width:  24; height: 24; radius: Theme.radiusSm
-                        color:  _copyHov.hovered ? Theme.border : "transparent"
+                        color:  _copyHov.hovered ? Theme.hover : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
 
                         Icon {
@@ -195,7 +195,7 @@ Item {
                     // Dismiss button
                     Rectangle {
                         width:  24; height: 24; radius: Theme.radiusSm
-                        color:  _xHov.hovered ? Theme.border : "transparent"
+                        color:  _xHov.hovered ? Theme.hover : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
 
                         Text { anchors.centerIn: parent; text: "×"; color: Theme.textSecondary; font.pixelSize: 16 }

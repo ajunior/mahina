@@ -44,7 +44,7 @@ Item {
 
                 Rectangle {
                     anchors.fill: parent
-                    color:  _rq1.isActive ? Theme.primary : (_mbH.hovered ? Theme.panel : "transparent")
+                    color:  _rq1.isActive ? Theme.primary : (_mbH.hovered ? Theme.hover : "transparent")
                     radius: Theme.radiusSm
                     Behavior on color { ColorAnimation { duration: 80 } }
                 }
@@ -95,7 +95,7 @@ Item {
                                     visible: !_rq2.modelData.separator
                                     anchors.fill: parent
                                     radius: Theme.radiusSm
-                                    color:  _itH.hovered ? Theme.panel : "transparent"
+                                    color:  _itH.hovered ? Theme.hover : "transparent"
                                     HoverHandler { id: _itH }
 
                                     Row {

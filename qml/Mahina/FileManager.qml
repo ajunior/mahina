@@ -79,7 +79,7 @@ Item {
                     // Back button
                     Rectangle {
                         width: 28; height: 28; radius: Theme.radiusSm
-                        color: _backH.hovered ? Theme.panel : "transparent"
+                        color: _backH.hovered ? Theme.hover : "transparent"
                         border.color: _backH.hovered ? Theme.border : "transparent"; border.width: 1
                         HoverHandler { id: _backH }
                         Text { anchors.centerIn: parent; text: "←"; color: Theme.textSecondary; font.pixelSize: 14 }
@@ -143,7 +143,7 @@ Item {
                     // Refresh
                     Rectangle {
                         width: 28; height: 28; radius: Theme.radiusSm
-                        color: _rfH.hovered ? Theme.panel : "transparent"
+                        color: _rfH.hovered ? Theme.hover : "transparent"
                         border.color: _rfH.hovered ? Theme.border : "transparent"; border.width: 1
                         HoverHandler { id: _rfH }
                         Text { anchors.centerIn: parent; text: "⟳"; color: Theme.textSecondary; font.pixelSize: 14 }
@@ -155,7 +155,7 @@ Item {
                         width: 28; height: 28; radius: Theme.radiusSm
                         color: root.showHidden
                                ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.12)
-                               : (_hidH.hovered ? Theme.panel : "transparent")
+                               : (_hidH.hovered ? Theme.hover : "transparent")
                         border.color: root.showHidden ? Theme.primary : (_hidH.hovered ? Theme.border : "transparent"); border.width: 1
                         HoverHandler { id: _hidH }
                         Text { anchors.centerIn: parent; text: "◌"; color: root.showHidden ? Theme.primary : Theme.textSecondary; font.pixelSize: 13 }
@@ -183,7 +183,7 @@ Item {
                             required property int  index
                             width:  modelData.width || (parent.width - 72 - 110)
                             height: parent.height
-                            color:  _colH.hovered ? Theme.panel : "transparent"
+                            color:  _colH.hovered ? Theme.hover : "transparent"
                             HoverHandler { id: _colH }
                             Row {
                                 anchors { left: parent.left; leftMargin: Theme.sp2; verticalCenter: parent.verticalCenter }
@@ -227,7 +227,7 @@ Item {
                     width:  parent ? parent.width : 0; height: 32
                     color:  root.selectedFiles.indexOf(modelData.name) >= 0
                             ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.12)
-                            : (_fmH.hovered ? Theme.panel : "transparent")
+                            : (_fmH.hovered ? Theme.hover : "transparent")
                     HoverHandler { id: _fmH }
                     Rectangle { anchors { left: parent.left; right: parent.right; bottom: parent.bottom } height: 1; color: Theme.border }
 

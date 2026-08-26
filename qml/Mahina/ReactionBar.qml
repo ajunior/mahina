@@ -135,7 +135,7 @@ Item {
                     id: _rq2
                     required property string modelData
                     width: 32; height: 32; radius: 6
-                    color: _ph.hovered ? Theme.panel : "transparent"
+                    color: _ph.hovered ? Theme.hover : "transparent"
                     HoverHandler { id: _ph }
                     Text {
                         anchors.centerIn: parent

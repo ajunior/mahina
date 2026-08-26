@@ -42,7 +42,7 @@ Rectangle {
             width:  parent.width
             height: 40
             radius: Theme.radiusSm
-            color:  _colH.hovered ? Theme.panel : "transparent"
+            color:  _colH.hovered ? Theme.hover : "transparent"
             Behavior on color { ColorAnimation { duration: 100 } }
             HoverHandler { id: _colH }
 
@@ -81,7 +81,7 @@ Rectangle {
                 color: isActive ? Qt.rgba(Qt.color(Theme.primary).r,
                                           Qt.color(Theme.primary).g,
                                           Qt.color(Theme.primary).b, 0.1)
-                                : (_itemH.hovered ? Theme.panel : "transparent")
+                                : (_itemH.hovered ? Theme.hover : "transparent")
                 Behavior on color { ColorAnimation { duration: 100 } }
 
                 HoverHandler { id: _itemH }

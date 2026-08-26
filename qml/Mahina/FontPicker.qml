@@ -244,7 +244,7 @@ Item {
 
                 Rectangle {
                     width:  28; height: parent.height
-                    color:  _szDecH.hovered ? Theme.panel : "transparent"
+                    color:  _szDecH.hovered ? Theme.hover : "transparent"
                     Behavior on color { ColorAnimation { duration: 80 } }
                     HoverHandler { id: _szDecH }
                     Text { anchors.centerIn: parent; text: "−"; color: Theme.textPrimary; font.pixelSize: 14 }
@@ -276,7 +276,7 @@ Item {
 
                 Rectangle {
                     width:  28; height: parent.height
-                    color:  _szIncH.hovered ? Theme.panel : "transparent"
+                    color:  _szIncH.hovered ? Theme.hover : "transparent"
                     Behavior on color { ColorAnimation { duration: 80 } }
                     HoverHandler { id: _szIncH }
                     Text { anchors.centerIn: parent; text: "+"; color: Theme.textPrimary; font.pixelSize: 14 }
