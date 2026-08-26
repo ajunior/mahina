@@ -65,7 +65,7 @@ Item {
             // Sender name (received only)
             Text {
                 id:             _nameText
-                visible:        _showName
+                visible:        _rq1._showName
                 anchors {
                     top:        parent.top
                     left:       parent.left
@@ -81,7 +81,7 @@ Item {
             // Avatar
             Rectangle {
                 id:      _avatar
-                visible: root.showAvatars && !_isSelf
+                visible: root.showAvatars && !_rq1._isSelf
                 anchors {
                     bottom: _bubble.bottom
                     left:   parent.left
@@ -92,7 +92,7 @@ Item {
 
                 Text {
                     anchors.centerIn: parent
-                    text:           _initials
+                    text:           _rq1._initials
                     color:          "#ffffff"
                     font.family:    Theme.fontFamily
                     font.pixelSize: Theme.textXs
@@ -104,20 +104,20 @@ Item {
             Rectangle {
                 id:      _bubble
                 anchors {
-                    top:        _showName ? _nameText.bottom : parent.top
-                    topMargin:  _showName ? Theme.sp1 : 0
-                    left:       _isSelf ? undefined : (root.showAvatars ? _avatar.right : parent.left)
-                    right:      _isSelf ? parent.right : undefined
-                    leftMargin: _isSelf ? 0 : Theme.sp2
-                    rightMargin: _isSelf ? Theme.sp3 : 0
+                    top:        _rq1._showName ? _nameText.bottom : parent.top
+                    topMargin:  _rq1._showName ? Theme.sp1 : 0
+                    left:       _rq1._isSelf ? undefined : (root.showAvatars ? _avatar.right : parent.left)
+                    right:      _rq1._isSelf ? parent.right : undefined
+                    leftMargin: _rq1._isSelf ? 0 : Theme.sp2
+                    rightMargin: _rq1._isSelf ? Theme.sp3 : 0
                 }
                 width:  Math.min(_msgText.implicitWidth + Theme.sp4 * 2,
-                                 _list.width * 0.72 - (root.showAvatars && !_isSelf ? 44 : Theme.sp3))
+                                 _list.width * 0.72 - (root.showAvatars && !_rq1._isSelf ? 44 : Theme.sp3))
                 height: _msgText.implicitHeight + Theme.sp3 * 2
                 radius: Theme.radiusLg
-                color:  _isSelf ? Theme.primary : Theme.surface
-                border.color: _isSelf ? "transparent" : Theme.border
-                border.width: _isSelf ? 0 : 1
+                color:  _rq1._isSelf ? Theme.primary : Theme.surface
+                border.color: _rq1._isSelf ? "transparent" : Theme.border
+                border.width: _rq1._isSelf ? 0 : 1
 
                 Text {
                     id:      _msgText
@@ -127,7 +127,7 @@ Item {
                         margins: Theme.sp3
                     }
                     text:           _rq1.modelData.text ?? ""
-                    color:          _isSelf ? "#ffffff" : Theme.textPrimary
+                    color:          _rq1._isSelf ? "#ffffff" : Theme.textPrimary
                     font.family:    Theme.fontFamily
                     font.pixelSize: Theme.textSm
                     wrapMode:       Text.Wrap
@@ -143,8 +143,8 @@ Item {
                 anchors {
                     top:         _bubble.bottom
                     topMargin:   2
-                    left:        _isSelf ? undefined : _bubble.left
-                    right:       _isSelf ? _bubble.right : undefined
+                    left:        _rq1._isSelf ? undefined : _bubble.left
+                    right:       _rq1._isSelf ? _bubble.right : undefined
                 }
                 text:           _rq1.modelData.timestamp ?? ""
                 color:          Theme.textDisabled

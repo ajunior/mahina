@@ -262,16 +262,16 @@ Item {
                         anchors { fill: parent; leftMargin: Theme.sp3; rightMargin: Theme.sp3 }
 
                         Text {
-                            text:             _label
-                            color:            _sel ? Theme.primary : Theme.textPrimary
+                            text:             _rq1._label
+                            color:            _rq1._sel ? Theme.primary : Theme.textPrimary
                             font.family:      Theme.fontFamily
                             font.pixelSize:   Theme.textSm
-                            font.weight:      _sel ? Theme.weightMedium : Theme.weightRegular
+                            font.weight:      _rq1._sel ? Theme.weightMedium : Theme.weightRegular
                             Layout.fillWidth: true
                         }
 
                         Icon {
-                            visible: _sel
+                            visible: _rq1._sel
                             name:    Icons.check; size: 14; color: Theme.primary
                         }
                     }

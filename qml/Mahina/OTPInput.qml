@@ -68,6 +68,7 @@ Item {
             Repeater {
                 model: root.length
                 delegate: Rectangle {
+                    id: _cell
                     required property int index
 
                     readonly property string _char: {
@@ -88,25 +89,29 @@ Item {
 
                     Text {
                         anchors.centerIn: parent
-                        text:           parent._char
+                        text:           _cell._char
                         color:          Theme.textPrimary
                         font.family:    Theme.fontFamily
                         font.pixelSize: Theme.textLg
                         font.weight:    Theme.weightSemibold
                     }
 
-                    // Cursor blink in active cell
+                    // Cursor blink in active cell. The animation has to name the
+                    // caret by id: `parent` inside an Animation resolves to the
+                    // enclosing *item's* parent, so `target: parent` was animating
+                    // the cell's container and the caret never blinked.
                     Rectangle {
-                        visible:  parent._active && _cursor.running
+                        id:       _caret
+                        visible:  _cell._active
                         anchors.centerIn: parent
                         width:    2; height: root.cellSize * 0.45
                         color:    Theme.primary
-                        property bool running: true
                         SequentialAnimation {
-                            running:  root._focused && parent.visible
+                            id:       _caretBlink
+                            running:  root._focused && _caret.visible
                             loops:    Animation.Infinite
-                            PropertyAnimation { target: parent; property: "opacity"; to: 0; duration: 500 }
-                            PropertyAnimation { target: parent; property: "opacity"; to: 1; duration: 500 }
+                            PropertyAnimation { target: _caret; property: "opacity"; to: 0; duration: 500 }
+                            PropertyAnimation { target: _caret; property: "opacity"; to: 1; duration: 500 }
                         }
                     }
 

@@ -52,12 +52,12 @@ Item {
                 // Tab body
                 Rectangle {
                     anchors.fill: parent
-                    color: isActive ? Theme.surface : (_tH.hovered ? Theme.panel : "transparent")
+                    color: _rq1.isActive ? Theme.surface : (_tH.hovered ? Theme.panel : "transparent")
                     Behavior on color { ColorAnimation { duration: 100 } }
 
                     // Bottom or top indicator
                     Rectangle {
-                        visible: isActive
+                        visible: _rq1.isActive
                         anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
                         height:  2; color: Theme.primary
                     }
@@ -66,7 +66,7 @@ Item {
                     Rectangle {
                         anchors { right: parent.right; top: parent.top; bottom: parent.bottom; topMargin: 6; bottomMargin: 6 }
                         width: 1; color: Theme.border
-                        visible: !isActive && _rq1.index < root.visibleTabs.length - 1
+                        visible: !_rq1.isActive && _rq1.index < root.visibleTabs.length - 1
                     }
 
                     HoverHandler { id: _tH }
@@ -78,10 +78,10 @@ Item {
                         Text {
                             id:             _tabLabel
                             text:           _rq1.modelData.label || ""
-                            color:          isActive ? Theme.textPrimary : Theme.textSecondary
+                            color:          _rq1.isActive ? Theme.textPrimary : Theme.textSecondary
                             font.family:    Theme.fontFamily
                             font.pixelSize: Theme.textSm
-                            font.weight:    isActive ? Font.Medium : Font.Normal
+                            font.weight:    _rq1.isActive ? Font.Medium : Font.Normal
                             Behavior on color { ColorAnimation { duration: 100 } }
                         }
 
@@ -93,7 +93,7 @@ Item {
                             Behavior on color { ColorAnimation { duration: 80 } }
                             HoverHandler { id: _xH }
                             Text { anchors.centerIn: parent; text: "✕"; color: _xH.hovered ? "white" : Theme.textDisabled; font.pixelSize: 8 }
-                            MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: { mouse.accepted = true; root.tabClosed(_rq1.index) } }
+                            MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: (mouse) => { mouse.accepted = true; root.tabClosed(_rq1.index) } }
                         }
                     }
 

@@ -223,8 +223,8 @@ Item {
                 // Skip
                 Rectangle {
                     visible:  root.steps.length > 1
-                    height:   32; radius: Theme.radiusMd
-                    width:    _skipTxt.implicitWidth + Theme.sp3 * 2
+                    implicitHeight: 32; radius: Theme.radiusMd
+                    implicitWidth:  _skipTxt.implicitWidth + Theme.sp3 * 2
                     color:    _skipH.containsMouse ? Theme.panel : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _skipH }
@@ -244,8 +244,8 @@ Item {
                 // Previous
                 Rectangle {
                     visible: root.currentStep > 0
-                    height:  32; radius: Theme.radiusMd
-                    width:   _prevTxt.implicitWidth + Theme.sp3 * 2
+                    implicitHeight: 32; radius: Theme.radiusMd
+                    implicitWidth:  _prevTxt.implicitWidth + Theme.sp3 * 2
                     color:   _prevH.containsMouse ? Theme.panel : Theme.panel
                     border.color: Theme.border; border.width: 1
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
@@ -264,8 +264,8 @@ Item {
 
                 // Next / Done
                 Rectangle {
-                    height:       32; radius: Theme.radiusMd
-                    width:        _nextTxt.implicitWidth + Theme.sp4 * 2
+                    implicitHeight: 32; radius: Theme.radiusMd
+                    implicitWidth:  _nextTxt.implicitWidth + Theme.sp4 * 2
                     color:        _nextH.containsMouse ? Qt.darker(Theme.primary, 1.1) : Theme.primary
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _nextH }

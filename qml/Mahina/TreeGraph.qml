@@ -66,14 +66,14 @@ Item {
 
                 // Connector line
                 Rectangle {
-                    visible: itemDepth > 0
-                    x:      (itemDepth - 1) * root.indentSize + 10
+                    visible: _rq1.itemDepth > 0
+                    x:      (_rq1.itemDepth - 1) * root.indentSize + 10
                     y:      0; width: 1; height: parent.height / 2
                     color:  root.connectorColor
                 }
                 Rectangle {
-                    visible: itemDepth > 0
-                    x:      (itemDepth - 1) * root.indentSize + 10
+                    visible: _rq1.itemDepth > 0
+                    x:      (_rq1.itemDepth - 1) * root.indentSize + 10
                     y:      parent.height / 2; width: root.indentSize - 4; height: 1
                     color:  root.connectorColor
                 }
@@ -88,8 +88,8 @@ Item {
 
                 // Expand toggle
                 Rectangle {
-                    visible: itemHasChildren
-                    x:       itemDepth * root.indentSize
+                    visible: _rq1.itemHasChildren
+                    x:       _rq1.itemDepth * root.indentSize
                     anchors.verticalCenter: parent.verticalCenter
                     width: 16; height: 16; radius: 4
                     color: Theme.surfaceVariant
@@ -97,7 +97,7 @@ Item {
 
                     Text {
                         anchors.centerIn: parent
-                        text:           itemExpanded ? "−" : "+"
+                        text:           _rq1.itemExpanded ? "−" : "+"
                         color:          Theme.textSecondary
                         font.pixelSize: 12
                         font.family:    Theme.fontFamily
@@ -105,13 +105,13 @@ Item {
                 }
 
                 Text {
-                    x:                    itemDepth * root.indentSize + (itemHasChildren ? 22 : 4)
+                    x:                    _rq1.itemDepth * root.indentSize + (_rq1.itemHasChildren ? 22 : 4)
                     anchors.verticalCenter: parent.verticalCenter
                     text:               _rq1.modelData.node.label || ""
                     color:              Theme.textPrimary
                     font.family:        Theme.fontFamily
                     font.pixelSize:     Theme.textBase
-                    font.weight:        itemHasChildren ? Font.Medium : Font.Normal
+                    font.weight:        _rq1.itemHasChildren ? Font.Medium : Font.Normal
                 }
 
                 MouseArea {

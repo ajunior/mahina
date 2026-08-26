@@ -207,7 +207,7 @@ Item {
                                     Behavior on color { ColorAnimation { duration: 80 } }
 
                                     HoverHandler {
-                                        onHoveredChanged: if (hovered) root.activeIdx = globalIdx
+                                        onHoveredChanged: if (hovered) root.activeIdx = _rq2.globalIdx
                                     }
 
                                     Row {

@@ -149,6 +149,7 @@ Item {
     }
 
     component CronField: Rectangle {
+        id: _field
         property string fieldLabel: "*"
         property string fieldValue: "*"
 
@@ -164,20 +165,20 @@ Item {
             anchors { fill: parent; leftMargin: Theme.sp3; rightMargin: Theme.sp3 }
             verticalAlignment: TextInput.AlignVCenter
             horizontalAlignment: TextInput.AlignHCenter
-            text:  fieldValue
+            text:  _field.fieldValue
             color: Theme.textPrimary
             font { family: Theme.fontFamilyMono; pixelSize: Theme.textSm }
             selectByMouse: true
             onTextChanged: {
-                if (text !== fieldValue) {
-                    fieldValue = text
+                if (text !== _field.fieldValue) {
+                    _field.fieldValue = text
                 }
             }
         }
 
         Text {
             anchors { bottom: parent.bottom; bottomMargin: -Theme.sp4; horizontalCenter: parent.horizontalCenter }
-            text:  fieldLabel
+            text:  _field.fieldLabel
             color: Theme.textDisabled
             font { family: Theme.fontFamily; pixelSize: 10 }
         }

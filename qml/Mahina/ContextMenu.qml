@@ -93,44 +93,44 @@ Item {
 
                     // ── Divider variant ──────────────────────────────────────
                     Rectangle {
-                        visible: isDivider
+                        visible: _rq1.isDivider
                         anchors.centerIn: parent
                         width:  parent.width; height: 1; color: Theme.border
                     }
 
                     // ── Row variant ───────────────────────────────────────────
                     Rectangle {
-                        visible: !isDivider
+                        visible: !_rq1.isDivider
                         anchors.fill: parent
                         radius: Theme.radiusSm
-                        color: isDisabled ? "transparent"
-                             : _h.containsMouse ? (isDanger ? Theme.errorSubtle : Theme.panel)
+                        color: _rq1.isDisabled ? "transparent"
+                             : _h.containsMouse ? (_rq1.isDanger ? Theme.errorSubtle : Theme.panel)
                              : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
-                        HoverHandler { id: _h; enabled: !isDisabled && !isDivider }
+                        HoverHandler { id: _h; enabled: !_rq1.isDisabled && !_rq1.isDivider }
 
                         RowLayout {
                             anchors { fill: parent; leftMargin: Theme.sp3; rightMargin: Theme.sp3 }
                             spacing: Theme.sp2
 
                             Icon {
-                                visible:  !isDivider && _rq1.modelData.icon !== undefined && _rq1.modelData.icon !== ""
-                                name:  !isDivider && _rq1.modelData.icon ? _rq1.modelData.icon : ""
+                                visible:  !_rq1.isDivider && _rq1.modelData.icon !== undefined && _rq1.modelData.icon !== ""
+                                name:  !_rq1.isDivider && _rq1.modelData.icon ? _rq1.modelData.icon : ""
                                 size:  15
-                                color: isDisabled ? Theme.textDisabled : isDanger ? Theme.error : Theme.textSecondary
+                                color: _rq1.isDisabled ? Theme.textDisabled : _rq1.isDanger ? Theme.error : Theme.textSecondary
                             }
 
                             Text {
-                                text:             !isDivider ? (_rq1.modelData.label ?? "") : ""
-                                color:            isDisabled ? Theme.textDisabled : isDanger ? Theme.error : Theme.textPrimary
+                                text:             !_rq1.isDivider ? (_rq1.modelData.label ?? "") : ""
+                                color:            _rq1.isDisabled ? Theme.textDisabled : _rq1.isDanger ? Theme.error : Theme.textPrimary
                                 font.family:      Theme.fontFamily
                                 font.pixelSize:   Theme.textSm
                                 Layout.fillWidth: true
                             }
 
                             Text {
-                                visible:        !isDivider && _rq1.modelData.shortcut !== undefined
-                                text:           !isDivider && _rq1.modelData.shortcut ? _rq1.modelData.shortcut : ""
+                                visible:        !_rq1.isDivider && _rq1.modelData.shortcut !== undefined
+                                text:           !_rq1.isDivider && _rq1.modelData.shortcut ? _rq1.modelData.shortcut : ""
                                 color:          Theme.textDisabled
                                 font.family:    Theme.fontFamily
                                 font.pixelSize: Theme.textXs
@@ -140,7 +140,7 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             cursorShape:  Qt.PointingHandCursor
-                            enabled:      !isDisabled && !isDivider
+                            enabled:      !_rq1.isDisabled && !_rq1.isDivider
                             onClicked:    { _popup.close(); root.triggered(_rq1.index, _rq1.modelData) }
                         }
                     }

@@ -133,6 +133,7 @@ Item {
                 }
 
                 delegate: Item {
+                    id: _dg
                     required property int modelData
                     property int  dayNum:  modelData
                     property bool valid:   dayNum > 0
@@ -148,9 +149,9 @@ Item {
                     Rectangle {
                         anchors { fill: parent; margins: 1 }
                         radius:  Theme.radiusSm
-                        color:   isToday ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.1)
-                                         : _cellH.containsMouse && valid ? Theme.panel : "transparent"
-                        border.color: isToday ? Theme.primary : "transparent"
+                        color:   _dg.isToday ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.1)
+                                         : _cellH.containsMouse && _dg.valid ? Theme.panel : "transparent"
+                        border.color: _dg.isToday ? Theme.primary : "transparent"
                         border.width: 1
                         Behavior on color { ColorAnimation { duration: 80 } }
 
@@ -161,24 +162,24 @@ Item {
                             spacing: 2
 
                             Text {
-                                visible: valid
-                                text:    dayNum > 0 ? dayNum : ""
-                                color:   isToday ? Theme.primary : Theme.textPrimary
+                                visible: _dg.valid
+                                text:    _dg.dayNum > 0 ? _dg.dayNum : ""
+                                color:   _dg.isToday ? Theme.primary : Theme.textPrimary
                                 font.family:    Theme.fontFamily
                                 font.pixelSize: Theme.textXs
-                                font.weight:    isToday ? Theme.weightBold : Theme.weightRegular
+                                font.weight:    _dg.isToday ? Theme.weightBold : Theme.weightRegular
                             }
 
                             // Event dots (up to 3)
                             Column {
                                 spacing: 2
-                                visible: dayEvts.length > 0
+                                visible: _dg.dayEvts.length > 0
                                 Repeater {
-                                    model: Math.min(dayEvts.length, 3)
+                                    model: Math.min(_dg.dayEvts.length, 3)
                                     delegate: Rectangle {
                                         required property int index
                                         width:  parent.width; height: 4; radius: 2
-                                        color:  index < dayEvts.length ? (dayEvts[index].color || Theme.primary) : Theme.primary
+                                        color:  index < _dg.dayEvts.length ? (_dg.dayEvts[index].color || Theme.primary) : Theme.primary
                                     }
                                 }
                             }
@@ -186,9 +187,9 @@ Item {
 
                         MouseArea {
                             anchors.fill: parent
-                            visible:      valid
+                            visible:      _dg.valid
                             cursorShape:  Qt.PointingHandCursor
-                            onClicked:    root.dayClicked(new Date(root.year, root.month, dayNum), dayEvts)
+                            onClicked:    root.dayClicked(new Date(root.year, root.month, _dg.dayNum), _dg.dayEvts)
                         }
                     }
                 }

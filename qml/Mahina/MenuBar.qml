@@ -44,7 +44,7 @@ Item {
 
                 Rectangle {
                     anchors.fill: parent
-                    color:  isActive ? Theme.primary : (_mbH.hovered ? Theme.panel : "transparent")
+                    color:  _rq1.isActive ? Theme.primary : (_mbH.hovered ? Theme.panel : "transparent")
                     radius: Theme.radiusSm
                     Behavior on color { ColorAnimation { duration: 80 } }
                 }
@@ -53,7 +53,7 @@ Item {
                     id:             _mbLbl
                     anchors.centerIn: parent
                     text:           _rq1.modelData.label || ""
-                    color:          isActive ? Theme.textOnPrimary : Theme.textPrimary
+                    color:          _rq1.isActive ? Theme.textOnPrimary : Theme.textPrimary
                     font.family:    Theme.fontFamily
                     font.pixelSize: Theme.textSm
                 }
@@ -67,7 +67,7 @@ Item {
 
                 // Dropdown panel
                 Rectangle {
-                    visible:  isActive && (_rq1.modelData.items || []).length > 0
+                    visible:  _rq1.isActive && (_rq1.modelData.items || []).length > 0
                     anchors { top: parent.bottom; left: parent.left; topMargin: 2 }
                     width:  220
                     height: _dropCol.implicitHeight + 8

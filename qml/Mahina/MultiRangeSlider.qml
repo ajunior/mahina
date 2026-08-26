@@ -78,7 +78,7 @@ Item {
                 id:     _lbl
                 anchors { bottom: parent.top; bottomMargin: 4; horizontalCenter: parent.horizontalCenter }
                 visible: _thumbMA.containsMouse || _thumbMA.drag.active
-                text:   _val.toFixed(root.decimals)
+                text:   _rq1._val.toFixed(root.decimals)
                 color:  Theme.textPrimary
                 font.family: Theme.fontFamilyMono
                 font.pixelSize: Theme.textXs

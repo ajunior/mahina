@@ -117,6 +117,7 @@ Item {
                     Repeater {
                         model: Math.max(0, _dataFlick._lastRow - _dataFlick._firstRow + 1)
                         delegate: Item {
+                            id: _dg
                             required property int index
                             property int rowIdx: _dataFlick._firstRow + index
                             x:      0
@@ -139,7 +140,7 @@ Item {
                                     required property int  index
                                     width:  modelData.width || 100
                                     height: root.rowHeight
-                                    color:  _cellH.hovered ? Theme.panel : (rowIdx % 2 === 0 ? "transparent" : Theme.surfaceVariant)
+                                    color:  _cellH.hovered ? Theme.panel : (_dg.rowIdx % 2 === 0 ? "transparent" : Theme.surfaceVariant)
                                     HoverHandler { id: _cellH }
                                     Rectangle { anchors { right: parent.right; top: parent.top; bottom: parent.bottom } width: 1; color: Theme.border; opacity: 0.5 }
 
@@ -147,7 +148,7 @@ Item {
                                         anchors { left: parent.left; right: parent.right; leftMargin: Theme.sp3; rightMargin: Theme.sp3; verticalCenter: parent.verticalCenter }
                                         text:  {
                                             if (!root.getCellData) return ""
-                                            var v = root.getCellData(rowIdx, _rq2.modelData.id || "")
+                                            var v = root.getCellData(_dg.rowIdx, _rq2.modelData.id || "")
                                             return v !== undefined && v !== null ? v.toString() : ""
                                         }
                                         color: Theme.textPrimary
@@ -157,7 +158,7 @@ Item {
 
                                     MouseArea {
                                         anchors.fill: parent; cursorShape: Qt.PointingHandCursor
-                                        onClicked: root.cellClicked(rowIdx, _rq2.modelData.id || "")
+                                        onClicked: root.cellClicked(_dg.rowIdx, _rq2.modelData.id || "")
                                     }
                                 }
                             }

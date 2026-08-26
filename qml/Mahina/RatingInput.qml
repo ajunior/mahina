@@ -46,10 +46,10 @@ Item {
 
                 Text {
                     anchors.centerIn: parent
-                    text:           isLit ? "★" : "☆"
+                    text:           _rq1.isLit ? "★" : "☆"
                     font.pixelSize: root.starSize * 0.85
                     color: {
-                        if (isLit) {
+                        if (_rq1.isLit) {
                             if (!root.readOnly && root.hoverRating > 0)
                                 return Qt.rgba(Qt.color(root.filledColor).r, Qt.color(root.filledColor).g,
                                                Qt.color(root.filledColor).b, 0.75)

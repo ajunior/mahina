@@ -134,6 +134,7 @@ Item {
     Repeater {
         model: root.nodePos.length
         delegate: Item {
+            id: _dg
             required property int index
             property var npos:  index < root.nodePos.length ? root.nodePos[index] : ({x:0, y:0})
             property var ndata: index < root.nodes.length   ? root.nodes[index]   : null
@@ -145,13 +146,13 @@ Item {
             Rectangle {
                 anchors.fill: parent
                 radius:       width / 2
-                color:        ndata && ndata.color ? ndata.color : Theme.primary
+                color:        _dg.ndata && _dg.ndata.color ? _dg.ndata.color : Theme.primary
                 border.color: Theme.background
                 border.width: 2
             }
             Text {
-                visible:        root.showLabels && ndata !== null
-                text:           ndata ? (ndata.label ?? "") : ""
+                visible:        root.showLabels && _dg.ndata !== null
+                text:           _dg.ndata ? (_dg.ndata.label ?? "") : ""
                 color:          Theme.textPrimary
                 font.family:    Theme.fontFamily
                 font.pixelSize: Theme.textXs
@@ -162,7 +163,7 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 cursorShape:  Qt.PointingHandCursor
-                onClicked:    if (ndata) root.nodeSelected(ndata)
+                onClicked:    if (_dg.ndata) root.nodeSelected(_dg.ndata)
             }
         }
     }

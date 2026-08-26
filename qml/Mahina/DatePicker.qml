@@ -257,6 +257,7 @@ Item {
                     model: root._days
 
                     delegate: Item {
+                        id: _dg
                         required property var modelData   // day number (0=empty)
                         required property int index
 
@@ -274,35 +275,35 @@ Item {
                             width:  28; height: 28
                             radius: 14
                             anchors.centerIn: parent
-                            color:  _selected ? Theme.primary
-                                  : _hov.containsMouse && !_disabled && !_empty ? Theme.panel
+                            color:  _dg._selected ? Theme.primary
+                                  : _hov.containsMouse && !_dg._disabled && !_dg._empty ? Theme.panel
                                   : "transparent"
-                            border.color: _today && !_selected ? Theme.primary : "transparent"
+                            border.color: _dg._today && !_dg._selected ? Theme.primary : "transparent"
                             border.width: 1
 
                             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
-                            HoverHandler { id: _hov; enabled: !_disabled && !_empty }
+                            HoverHandler { id: _hov; enabled: !_dg._disabled && !_dg._empty }
 
                             Text {
-                                visible:          !_empty
+                                visible:          !_dg._empty
                                 anchors.centerIn: parent
-                                text:             _day
-                                color:            _selected  ? Theme.textOnPrimary
-                                                : _disabled  ? Theme.textDisabled
-                                                : _today     ? Theme.primary
+                                text:             _dg._day
+                                color:            _dg._selected  ? Theme.textOnPrimary
+                                                : _dg._disabled  ? Theme.textDisabled
+                                                : _dg._today     ? Theme.primary
                                                 : Theme.textPrimary
                                 font.family:      Theme.fontFamily
                                 font.pixelSize:   Theme.textXs
-                                font.weight:      _selected || _today
+                                font.weight:      _dg._selected || _dg._today
                                                   ? Theme.weightSemibold : Theme.weightRegular
                             }
 
                             MouseArea {
                                 anchors.fill: parent
-                                enabled:      !_empty && !_disabled
+                                enabled:      !_dg._empty && !_dg._disabled
                                 cursorShape:  Qt.PointingHandCursor
                                 onClicked: {
-                                    root.selectedDate = new Date(root._viewYear, root._viewMonth, _day)
+                                    root.selectedDate = new Date(root._viewYear, root._viewMonth, _dg._day)
                                     root.dateSelected(root.selectedDate)
                                     _popup.close()
                                 }

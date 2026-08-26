@@ -83,7 +83,7 @@ Item {
                     Text {
                         text: _rq1.modelData.isDir
                               ? (_rq1.modelData.expanded ? "📂" : "📁")
-                              : _fileIcon(_rq1.modelData.node.name || "")
+                              : root._fileIcon(_rq1.modelData.node.name || "")
                         font.pixelSize: 13
                     }
 

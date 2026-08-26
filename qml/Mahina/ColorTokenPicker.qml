@@ -47,14 +47,14 @@ Item {
                 Rectangle {
                     width:  root.swatchSize; height: root.swatchSize; radius: root.swatchSize / 2
                     color:  _rq1.modelData.color || "transparent"
-                    border.color: isSelected ? Theme.textPrimary : (_swH.hovered ? Theme.textSecondary : "transparent")
+                    border.color: _rq1.isSelected ? Theme.textPrimary : (_swH.hovered ? Theme.textSecondary : "transparent")
                     border.width: 2
                     Behavior on border.color { ColorAnimation { duration: 100 } }
                     HoverHandler { id: _swH }
 
                     // Checkmark when selected
                     Text {
-                        visible: isSelected
+                        visible: _rq1.isSelected
                         anchors.centerIn: parent
                         text: "✓"; color: "white"
                         font.pixelSize: root.swatchSize * 0.35
@@ -79,10 +79,10 @@ Item {
                 Text {
                     anchors { top: parent.children[0].bottom; topMargin: 4; horizontalCenter: parent.horizontalCenter }
                     text:           _rq1.modelData.name || ""
-                    color:          isSelected ? Theme.textPrimary : Theme.textSecondary
+                    color:          _rq1.isSelected ? Theme.textPrimary : Theme.textSecondary
                     font.family:    Theme.fontFamily
                     font.pixelSize: 9
-                    font.weight:    isSelected ? Font.Medium : Font.Normal
+                    font.weight:    _rq1.isSelected ? Font.Medium : Font.Normal
                     horizontalAlignment: Text.AlignHCenter
                 }
             }

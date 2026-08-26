@@ -228,7 +228,7 @@ Item {
                                     id: _rq1
                                     required property var  modelData
                                     required property int  index
-                                    property int trackIdx: parent.index
+                                    property int trackIdx: _rq3.index
 
                                     x:      root._timeToPx(modelData.time) - 6
                                     y:      (root._trackH - 12) / 2
@@ -236,8 +236,8 @@ Item {
                                     radius: 2
                                     rotation: 45
                                     color:  _kfH.hovered ? "#ffffff"
-                                            : (parent.modelData.color || Theme.primary)
-                                    border.color: parent.modelData.color || Theme.primary
+                                            : (_rq3.modelData.color || Theme.primary)
+                                    border.color: _rq3.modelData.color || Theme.primary
                                     border.width: 2
                                     HoverHandler { id: _kfH }
 
@@ -250,7 +250,7 @@ Item {
                                         onReleased: {
                                             var newT = root._pxToTime(parent.x + 6)
                                             newT = Math.max(0, Math.min(root.duration, newT))
-                                            root.keyframeMoved(trackIdx, _rq1.index, newT)
+                                            root.keyframeMoved(_rq1.trackIdx, _rq1.index, newT)
                                         }
                                     }
                                 }

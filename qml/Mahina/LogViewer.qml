@@ -123,7 +123,7 @@ Item {
                             id:              _lt
                             anchors.centerIn: parent
                             text:            _rq2.modelData
-                            color:           _on ? root._levelColor(_rq2.modelData) : Theme.textDisabled
+                            color:           _rq2._on ? root._levelColor(_rq2.modelData) : Theme.textDisabled
                             font.family:     Theme.fontFamily
                             font.pixelSize:  Theme.textXs
                             font.weight:     Theme.weightMedium

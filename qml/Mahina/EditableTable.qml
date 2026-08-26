@@ -118,7 +118,7 @@ Item {
 
             // Highlight row border when any cell in this row is being edited
             Rectangle {
-                visible:      _isEditing
+                visible:      _rq1._isEditing
                 anchors.fill: parent
                 color:        "transparent"
                 border.color: Theme.primary; border.width: 1
@@ -130,12 +130,13 @@ Item {
                 Repeater {
                     model: root.columns
                     delegate: Item {
+                        id: _dg
                         required property var modelData
                         required property int index
 
                         readonly property string _colKey:    modelData.key ?? ""
                         readonly property bool   _editable:  modelData.editable !== false
-                        readonly property bool   _cellEdit:  root._editRow === parent.parent.index && root._editKey === _colKey
+                        readonly property bool   _cellEdit:  root._editRow === _rq1.index && root._editKey === _dg._colKey
 
                         width:  modelData.width ?? 120
                         height: 40
@@ -147,11 +148,11 @@ Item {
 
                         // Display text
                         Text {
-                            visible:        !_cellEdit
+                            visible:        !_dg._cellEdit
                             anchors { left: parent.left; right: parent.right; leftMargin: Theme.sp3; rightMargin: Theme.sp3; verticalCenter: parent.verticalCenter }
                             text:           {
-                                var row = parent.parent.parent.modelData
-                                row ? String(row[_colKey] ?? "") : ""
+                                var row = _rq1.modelData
+                                row ? String(row[_dg._colKey] ?? "") : ""
                             }
                             color:          Theme.textPrimary
                             font.family:    Theme.fontFamily
@@ -161,7 +162,7 @@ Item {
 
                         // Edit TextInput
                         Rectangle {
-                            visible:      _cellEdit
+                            visible:      _dg._cellEdit
                             anchors { left: parent.left; right: parent.right; leftMargin: Theme.sp2; rightMargin: Theme.sp2; verticalCenter: parent.verticalCenter }
                             height:       28
                             radius:       Theme.radiusSm
@@ -171,13 +172,13 @@ Item {
                             TextInput {
                                 id:         _ti
                                 anchors { left: parent.left; right: parent.right; leftMargin: Theme.sp2; rightMargin: Theme.sp2; verticalCenter: parent.verticalCenter }
-                                text:       _cellEdit ? root._editVal : ""
+                                text:       _dg._cellEdit ? root._editVal : ""
                                 color:      Theme.textPrimary
                                 font.family: Theme.fontFamily
                                 font.pixelSize: Theme.textSm
                                 clip:       true
 
-                                onTextChanged: if (_cellEdit) root._editVal = text
+                                onTextChanged: if (_dg._cellEdit) root._editVal = text
 
                                 Keys.onReturnPressed: _commitEdit()
                                 Keys.onEscapePressed: { root._editRow = -1; root._editKey = "" }
@@ -195,13 +196,12 @@ Item {
 
                         MouseArea {
                             anchors.fill: parent
-                            visible:      _editable && !_cellEdit
+                            visible:      _dg._editable && !_dg._cellEdit
                             cursorShape:  Qt.IBeamCursor
                             onClicked: {
-                                var outerDelegate = parent.parent.parent
-                                root._editRow = outerDelegate.index
-                                root._editKey = _colKey
-                                root._editVal = String((outerDelegate.modelData)[_colKey] ?? "")
+                                root._editRow = _rq1.index
+                                root._editKey = _dg._colKey
+                                root._editVal = String((_rq1.modelData)[_dg._colKey] ?? "")
                             }
                         }
                     }

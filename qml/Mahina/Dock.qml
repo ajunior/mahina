@@ -87,8 +87,8 @@ Item {
                 // Icon background
                 Rectangle {
                     id:     _iconBg
-                    width:  iconSize; height: iconSize
-                    radius: iconSize * 0.22
+                    width:  _rq1.iconSize; height: _rq1.iconSize
+                    radius: _rq1.iconSize * 0.22
                     color:  _rq1.modelData.color || Theme.primary
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom:           root.showLabels ? _label.top : parent.bottom
@@ -106,7 +106,7 @@ Item {
                         text:           _rq1.modelData.icon || ""
                         color:          "white"
                         font.family:    Theme.fontFamily
-                        font.pixelSize: iconSize * 0.52
+                        font.pixelSize: _rq1.iconSize * 0.52
                         Behavior on font.pixelSize { NumberAnimation { duration: 120 } }
                     }
                 }

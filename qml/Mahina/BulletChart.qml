@@ -47,7 +47,7 @@ Item {
                 readonly property real barRight:  16
                 readonly property real barW:      width - barLeft - barRight
                 readonly property real barH:      14
-                readonly property real barY:      (rowHeight - barH) / 2
+                readonly property real barY:      (root.rowHeight - barH) / 2
 
                 Canvas {
                     id:           _bc

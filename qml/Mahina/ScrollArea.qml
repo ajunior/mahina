@@ -32,8 +32,8 @@ Item {
         id:            _flick
         anchors.fill:  parent
         clip:          root.clip
-        contentWidth:  horizontal ? _inner.implicitWidth  : width
-        contentHeight: vertical   ? _inner.implicitHeight : height
+        contentWidth:  root.horizontal ? _inner.implicitWidth  : width
+        contentHeight: root.vertical   ? _inner.implicitHeight : height
         boundsBehavior: Flickable.StopAtBounds
 
         Item {

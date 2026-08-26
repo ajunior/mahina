@@ -118,7 +118,7 @@ Item {
                         Text {
                             id: _lt; anchors.centerIn: parent
                             text: _rq1.modelData
-                            color: _on ? root._levelColor(_rq1.modelData) : Theme.textDisabled
+                            color: _rq1._on ? root._levelColor(_rq1.modelData) : Theme.textDisabled
                             font.family: Theme.fontFamily; font.pixelSize: Theme.textXs; font.weight: Theme.weightMedium
                         }
                         MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor

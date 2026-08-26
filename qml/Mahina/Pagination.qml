@@ -110,22 +110,22 @@ Item {
                       : "transparent"
 
                 Behavior on color { ColorAnimation { duration: Theme.durationFast } }
-                HoverHandler { id: _pHov; enabled: !isCurrent && !isEllipsis }
+                HoverHandler { id: _pHov; enabled: !_rq1.isCurrent && !_rq1.isEllipsis }
 
                 Text {
                     anchors.centerIn: parent
-                    text:           isEllipsis ? "…" : String(_rq1.modelData)
-                    color:          isCurrent  ? Theme.textOnPrimary
-                                  : isEllipsis ? Theme.textDisabled
+                    text:           _rq1.isEllipsis ? "…" : String(_rq1.modelData)
+                    color:          _rq1.isCurrent  ? Theme.textOnPrimary
+                                  : _rq1.isEllipsis ? Theme.textDisabled
                                   : Theme.textPrimary
                     font.family:    Theme.fontFamily
                     font.pixelSize: Theme.textSm
-                    font.weight:    isCurrent ? Theme.weightSemibold : Theme.weightRegular
+                    font.weight:    _rq1.isCurrent ? Theme.weightSemibold : Theme.weightRegular
                 }
 
                 MouseArea {
                     anchors.fill: parent
-                    enabled:      !isCurrent && !isEllipsis
+                    enabled:      !_rq1.isCurrent && !_rq1.isEllipsis
                     cursorShape:  Qt.PointingHandCursor
                     onClicked:    root.pageChanged(_rq1.modelData)
                 }

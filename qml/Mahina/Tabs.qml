@@ -85,7 +85,7 @@ Item {
 
                     // Sliding pill indicator (pill variant)
                     Rectangle {
-                        visible:  root.variant === "pill" && _sel
+                        visible:  root.variant === "pill" && _rq1._sel
                         anchors { fill: parent; margins: Theme.sp1 }
                         radius:   Theme.radiusSm
                         color:    Theme.surface
@@ -94,7 +94,7 @@ Item {
 
                     // Underline indicator (underline variant)
                     Rectangle {
-                        visible: root.variant === "underline" && _sel
+                        visible: root.variant === "underline" && _rq1._sel
                         anchors { bottom: parent.bottom; left: parent.left; right: parent.right }
                         height: 2; color: Theme.primary
                         Behavior on opacity { NumberAnimation { duration: Theme.durationFast } }
@@ -102,7 +102,7 @@ Item {
 
                     // Card tab style
                     Rectangle {
-                        visible: root.variant === "card" && _sel
+                        visible: root.variant === "card" && _rq1._sel
                         anchors { fill: parent }
                         color:   Theme.surface
                         border.color: Theme.border; border.width: 1
@@ -115,20 +115,20 @@ Item {
                         spacing:          Theme.sp2
 
                         Icon {
-                            visible: _icon !== ""
+                            visible: _rq1._icon !== ""
                             anchors.verticalCenter: parent.verticalCenter
-                            name:  _icon; size: 14
-                            color: _sel ? Theme.primary : Theme.textSecondary
+                            name:  _rq1._icon; size: 14
+                            color: _rq1._sel ? Theme.primary : Theme.textSecondary
                             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         }
 
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
-                            text:           _label
-                            color:          _sel ? (root.variant === "underline" ? Theme.primary : Theme.textPrimary) : Theme.textSecondary
+                            text:           _rq1._label
+                            color:          _rq1._sel ? (root.variant === "underline" ? Theme.primary : Theme.textPrimary) : Theme.textSecondary
                             font.family:    Theme.fontFamily
                             font.pixelSize: Theme.textSm
-                            font.weight:    _sel ? Theme.weightSemibold : Theme.weightRegular
+                            font.weight:    _rq1._sel ? Theme.weightSemibold : Theme.weightRegular
                             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         }
                     }

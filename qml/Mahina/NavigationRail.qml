@@ -88,7 +88,7 @@ Rectangle {
 
                 // Left accent bar when active
                 Rectangle {
-                    visible: isActive
+                    visible: _rq1.isActive
                     width:   3; height: 22; radius: 2
                     anchors { left: parent.left; verticalCenter: parent.verticalCenter }
                     color: Theme.primary
@@ -103,7 +103,7 @@ Rectangle {
 
                     Text {
                         text:           _rq1.modelData.icon || ""
-                        color:          isActive ? Theme.primary : Theme.textSecondary
+                        color:          _rq1.isActive ? Theme.primary : Theme.textSecondary
                         font.family:    Theme.fontFamily
                         font.pixelSize: Theme.textBase
                         Behavior on color { ColorAnimation { duration: 100 } }
@@ -112,10 +112,10 @@ Rectangle {
                     Text {
                         visible:        !root.collapsed
                         text:           _rq1.modelData.label || ""
-                        color:          isActive ? Theme.primary : Theme.textSecondary
+                        color:          _rq1.isActive ? Theme.primary : Theme.textSecondary
                         font.family:    Theme.fontFamily
                         font.pixelSize: Theme.textSm
-                        font.weight:    isActive ? Font.Medium : Font.Normal
+                        font.weight:    _rq1.isActive ? Font.Medium : Font.Normal
                         opacity:        root.collapsed ? 0 : 1
                         Behavior on opacity { NumberAnimation { duration: 150 } }
                         Behavior on color   { ColorAnimation  { duration: 100 } }

@@ -43,11 +43,11 @@ Item {
         // Sliding active pill
         Rectangle {
             id:     _pill
-            x:      currentIndex < _row.children.length
-                    ? _row.children[currentIndex].x + _row.x : Theme.sp1
+            x:      root.currentIndex < _row.children.length
+                    ? _row.children[root.currentIndex].x + _row.x : Theme.sp1
             y:      Theme.sp1
-            width:  currentIndex < _row.children.length
-                    ? _row.children[currentIndex].width : 0
+            width:  root.currentIndex < _row.children.length
+                    ? _row.children[root.currentIndex].width : 0
             height: parent.height - Theme.sp1 * 2
             radius: Theme.radiusSm
             color:  Theme.surface
@@ -83,18 +83,18 @@ Item {
                         spacing:          Theme.sp1
 
                         Icon {
-                            visible: _icon !== ""
+                            visible: _rq1._icon !== ""
                             anchors.verticalCenter: parent.verticalCenter
-                            name:  _icon
+                            name:  _rq1._icon
                             size:  14
                             color: _rq1.index === root.currentIndex ? Theme.textPrimary : Theme.textSecondary
                             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         }
 
                         Text {
-                            visible:        _label !== ""
+                            visible:        _rq1._label !== ""
                             anchors.verticalCenter: parent.verticalCenter
-                            text:           _label
+                            text:           _rq1._label
                             color:          _rq1.index === root.currentIndex ? Theme.textPrimary : Theme.textSecondary
                             font.family:    Theme.fontFamily
                             font.pixelSize: Theme.textSm

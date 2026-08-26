@@ -411,7 +411,7 @@ Item {
                         width:               62
                         anchors.verticalCenter: parent.verticalCenter
                         text:                root._matchLabel
-                        color:               (_matches.length || !_findField.text) ? Theme.textSecondary : Theme.error
+                        color:               (root._matches.length || !_findField.text) ? Theme.textSecondary : Theme.error
                         font.family:         Theme.fontFamily
                         font.pixelSize:      Theme.textXs
                         horizontalAlignment: Text.AlignHCenter

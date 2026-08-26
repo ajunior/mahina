@@ -57,7 +57,7 @@ Item {
         fileMode:     root.multiple ? FileDialog.OpenFiles : FileDialog.OpenFile
         onAccepted: {
             var urls = root.multiple ? selectedFiles : [selectedFile]
-            for (var i = 0; i < urls.length; i++) _addUrl(urls[i])
+            for (var i = 0; i < urls.length; i++) root._addUrl(urls[i])
         }
     }
 
@@ -84,7 +84,7 @@ Item {
             onDropped: (drop) => {
                 if (!drop.hasUrls) return
                 var urls = drop.urls
-                for (var i = 0; i < urls.length; i++) _addUrl(urls[i])
+                for (var i = 0; i < urls.length; i++) root._addUrl(urls[i])
             }
 
             Rectangle {

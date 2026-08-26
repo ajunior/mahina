@@ -130,6 +130,7 @@ Item {
 
     // Internal panel component
     component TListPanel: Rectangle {
+        id: _dg
         property string panelLabel: ""
         property var    items:      []
         property var    checked:    []
@@ -154,21 +155,21 @@ Item {
                     anchors { left: parent.left; leftMargin: Theme.sp3; verticalCenter: parent.verticalCenter }
                     spacing: Theme.sp2
                     Text {
-                        text:  panelLabel
+                        text:  _dg.panelLabel
                         color: Theme.textPrimary
                         font.family:    Theme.fontFamily
                         font.pixelSize: Theme.textSm
                         font.weight:    Font.Medium
                     }
                     Rectangle {
-                        width:  items.length > 0 ? _cntTxt.implicitWidth + 8 : 0
+                        width:  _dg.items.length > 0 ? _cntTxt.implicitWidth + 8 : 0
                         height: 18; radius: Theme.radiusFull
-                        color:  Theme.primary; visible: items.length > 0
+                        color:  Theme.primary; visible: _dg.items.length > 0
                         anchors.verticalCenter: parent.verticalCenter
                         Text {
                             id:    _cntTxt
                             anchors.centerIn: parent
-                            text:  items.length.toString()
+                            text:  _dg.items.length.toString()
                             color: "#ffffff"
                             font.family:    Theme.fontFamily
                             font.pixelSize: 11
@@ -180,7 +181,7 @@ Item {
             ListView {
                 width:  parent.width
                 height: parent.parent.height - 32
-                model:  items
+                model:  _dg.items
                 clip:   true
                 QQC.ScrollBar.vertical: QQC.ScrollBar {}
                 delegate: Rectangle {
@@ -188,7 +189,7 @@ Item {
                     required property string modelData
                     required property int    index
                     width:  parent ? parent.width : 0; height: 32
-                    color:  checked.indexOf(modelData) >= 0
+                    color:  _dg.checked.indexOf(modelData) >= 0
                             ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.12)
                             : (_tpH.hovered ? Theme.panel : "transparent")
                     HoverHandler { id: _tpH }
@@ -197,13 +198,13 @@ Item {
                         spacing: Theme.sp2
                         Rectangle {
                             width: 16; height: 16; radius: 3
-                            color:   checked.indexOf(_rq1.modelData) >= 0 ? Theme.primary : "transparent"
-                            border.color: checked.indexOf(_rq1.modelData) >= 0 ? Theme.primary : Theme.border
+                            color:   _dg.checked.indexOf(_rq1.modelData) >= 0 ? Theme.primary : "transparent"
+                            border.color: _dg.checked.indexOf(_rq1.modelData) >= 0 ? Theme.primary : Theme.border
                             border.width: 1
                             anchors.verticalCenter: parent.verticalCenter
                             Text {
                                 anchors.centerIn: parent
-                                visible: checked.indexOf(_rq1.modelData) >= 0
+                                visible: _dg.checked.indexOf(_rq1.modelData) >= 0
                                 text: "✓"; color: "#ffffff"; font.pixelSize: 10; font.weight: Font.Bold
                             }
                         }
@@ -218,11 +219,11 @@ Item {
                     MouseArea {
                         anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                         onClicked: {
-                            var c = checked.slice()
+                            var c = _dg.checked.slice()
                             var idx = c.indexOf(_rq1.modelData)
                             if (idx >= 0) c.splice(idx, 1)
                             else c.push(_rq1.modelData)
-                            checkedUpdated(c)
+                            _dg.checkedUpdated(c)
                         }
                     }
                 }

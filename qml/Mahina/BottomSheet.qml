@@ -57,7 +57,7 @@ Item {
         id:     _panel
         width:  root.width
         height: Math.min(root.maxHeight, _col.implicitHeight + Theme.sp2)
-        y:      _closedY()
+        y:      root._closedY()
         color:  Theme.surface
 
         // Rounded top corners only

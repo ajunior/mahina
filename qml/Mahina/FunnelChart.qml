@@ -55,11 +55,11 @@ Item {
 
             // Bar
             Rectangle {
-                width:  parent.width * _frac
+                width:  parent.width * _rq1._frac
                 height: parent.height
                 anchors.horizontalCenter: parent.horizontalCenter
                 radius: Theme.radiusSm
-                color:  _col
+                color:  _rq1._col
 
                 Behavior on width { NumberAnimation { duration: Theme.durationSlow; easing.type: Easing.OutCubic } }
             }
@@ -91,7 +91,7 @@ Item {
             Text {
                 visible:        root.showPct
                 anchors { right: parent.right; rightMargin: Theme.sp3; verticalCenter: parent.verticalCenter }
-                text:           _pct + "%"
+                text:           _rq1._pct + "%"
                 color:          "#ffffff"
                 font.family:    Theme.fontFamily
                 font.pixelSize: Theme.textXs
