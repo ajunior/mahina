@@ -5,7 +5,7 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
-## Unreleased
+## 0.45.5
 
 - **Fix** `ModelTable` gave a row no hover feedback at all. It is the one table in the library driven by a `TableView` — its cells are delegates of the view rather than children of a row item — and hover was never wired into that delegate, so a grid of query results sat inert under the pointer while every list-shaped table beside it highlighted. Each cell now reports itself to a single row index held on the table, which is what makes a whole row light up together and what keeps the highlight from being dropped when the pointer crosses the boundary between two cells of the same row; a non-blocking handler on the view clears it when the pointer leaves
 - **Fix** `Table` repainted a hovered row in `Theme.panel`, replacing the zebra stripe underneath instead of layering over it, so odd and even rows hovered to visibly different colours and a striped table lost its striping under the pointer. Both tables now paint hover as a `Theme.hover` overlay above the row background — the one mechanism 0.45.4 introduced for exactly this, and the reason the striped tables could be left alone then but not now
