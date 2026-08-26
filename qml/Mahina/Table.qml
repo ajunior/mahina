@@ -214,10 +214,18 @@ Item {
                 // Row background
                 Rectangle {
                     anchors.fill: parent
-                    color: _rowHov.hovered    ? Theme.panel
-                         : root.striped && _rowItem.index % 2 === 1 ? Theme.surfaceVariant
-                         : "transparent"
+                    color: root.striped && _rowItem.index % 2 === 1
+                         ? Theme.surfaceVariant : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
+                }
+
+                // Row hover wash, layered over the stripe instead of replacing it:
+                // hovering an odd row used to repaint it in `panel` and lose the
+                // striping, so alternate rows hovered to visibly different colours.
+                Rectangle {
+                    anchors.fill: parent
+                    visible: _rowHov.hovered
+                    color:   Theme.hover
                 }
 
                 // Bottom border
