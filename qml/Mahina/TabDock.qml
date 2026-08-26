@@ -52,7 +52,7 @@ Item {
                 // Tab body
                 Rectangle {
                     anchors.fill: parent
-                    color: _rq1.isActive ? Theme.surface : (_tH.hovered ? Theme.panel : "transparent")
+                    color: _rq1.isActive ? Theme.surface : (_tH.hovered ? Theme.hover : "transparent")
                     Behavior on color { ColorAnimation { duration: 100 } }
 
                     // Bottom or top indicator
@@ -110,7 +110,7 @@ Item {
             visible: root.hiddenTabs.length > 0
             height: parent.height
             width:  _overflowLbl.implicitWidth + 16
-            color:  _ovH.hovered ? Theme.panel : "transparent"
+            color:  _ovH.hovered ? Theme.hover : "transparent"
             Behavior on color { ColorAnimation { duration: 100 } }
             HoverHandler { id: _ovH }
 
@@ -158,7 +158,7 @@ Item {
                     required property var  modelData
                     required property int  index
                     width: parent.width; height: 32; radius: Theme.radiusSm
-                    color: _ohH.hovered ? Theme.panel : "transparent"
+                    color: _ohH.hovered ? Theme.hover : "transparent"
                     HoverHandler { id: _ohH }
                     Text {
                         anchors { left: parent.left; leftMargin: 10; verticalCenter: parent.verticalCenter }

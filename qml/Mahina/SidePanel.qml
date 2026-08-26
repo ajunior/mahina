@@ -78,7 +78,7 @@ Item {
                     Rectangle {
                         anchors.verticalCenter: parent.verticalCenter
                         width: 28; height: 28; radius: Theme.radiusSm
-                        color: _closeH.hovered ? Theme.panel : "transparent"
+                        color: _closeH.hovered ? Theme.hover : "transparent"
                         Behavior on color { ColorAnimation { duration: 80 } }
                         HoverHandler { id: _closeH }
                         Text { anchors.centerIn: parent; text: "✕"; color: Theme.textSecondary; font.pixelSize: 12 }

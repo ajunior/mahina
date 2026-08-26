@@ -125,7 +125,7 @@ Item {
                         required property int  index
                         width:  (parent.width - 24 - Theme.sp2 * 4) / 5
                         height: 28; radius: Theme.radiusSm
-                        color:  _pstH.hovered ? Theme.panel : "transparent"
+                        color:  _pstH.hovered ? Theme.hover : "transparent"
                         border.color: Theme.border; border.width: 1
                         Behavior on color { ColorAnimation { duration: 80 } }
                         HoverHandler { id: _pstH }

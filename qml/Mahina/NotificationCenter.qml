@@ -163,7 +163,7 @@ Item {
                                 // Dismiss button
                                 Rectangle {
                                     width: 20; height: 20; radius: 10
-                                    color: _dH.hovered ? Theme.panel : "transparent"
+                                    color: _dH.hovered ? Theme.hover : "transparent"
                                     anchors.verticalCenter: parent.verticalCenter
                                     HoverHandler { id: _dH }
                                     Text { anchors.centerIn: parent; text: "✕"; color: Theme.textDisabled; font.pixelSize: 10 }

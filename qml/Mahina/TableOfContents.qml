@@ -65,7 +65,7 @@ Item {
                     height: 30
                     color: modelData.id === root.activeId
                            ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.10)
-                           : (_tocH.hovered ? Theme.panel : "transparent")
+                           : (_tocH.hovered ? Theme.hover : "transparent")
                     HoverHandler { id: _tocH }
 
                     Rectangle {

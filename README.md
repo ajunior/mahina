@@ -242,11 +242,16 @@ Toggle dark mode at runtime:
 Theme.dark = !Theme.dark
 ```
 
+`hover` is the tint an otherwise-transparent element takes while the pointer is
+over it. It is a translucent overlay (`#AARRGGBB`) rather than an opaque colour,
+so the same value reads correctly whether the element sits on `background`,
+`panel` or `surface` — change it once to retune hover across every component.
+
 **Available tokens**
 
 | Group | Tokens |
 |---|---|
-| Colours | `primary` `info` `success` `warning` `error` `panel` `surface` `surfaceVariant` `border` `textPrimary` `textSecondary` `textDisabled` |
+| Colours | `primary` `info` `success` `warning` `error` `panel` `surface` `surfaceVariant` `hover` `border` `textPrimary` `textSecondary` `textDisabled` |
 | Typography | `fontFamily` `fontFamilyMono` `textXs` `textSm` `textBase` `textLg` `textXl` |
 | Spacing | `sp1` … `sp16` |
 | Radii | `radiusSm` `radiusMd` `radiusLg` `radiusFull` |

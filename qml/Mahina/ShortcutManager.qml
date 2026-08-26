@@ -84,7 +84,7 @@ Item {
                     Rectangle {
                         width: 72; height: 32
                         radius: Theme.radiusSm
-                        color:  _rstH.hovered ? Theme.panel : "transparent"
+                        color:  _rstH.hovered ? Theme.hover : "transparent"
                         border.color: Theme.border; border.width: 1
                         Behavior on color { ColorAnimation { duration: 80 } }
                         HoverHandler { id: _rstH }
@@ -134,7 +134,7 @@ Item {
                         width:  parent ? parent.width : 0
                         height: 40
                         property var item: (parent as Loader) ? (parent as Loader).rowData.item : ({})
-                        color:  _scH.hovered ? Theme.panel : "transparent"
+                        color:  _scH.hovered ? Theme.hover : "transparent"
                         HoverHandler { id: _scH }
                         Rectangle { anchors { left: parent.left; right: parent.right; bottom: parent.bottom } height: 1; color: Theme.border }
 

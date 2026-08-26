@@ -156,7 +156,7 @@ Rectangle {
                 Rectangle {
                     visible: root.currentStep > 0
                     width: _backTxt.implicitWidth + 24; height: 34; radius: Theme.radiusMd
-                    color: _backH.hovered ? Theme.panel : "transparent"
+                    color: _backH.hovered ? Theme.hover : "transparent"
                     border.color: Theme.border; border.width: 1
                     Behavior on color { ColorAnimation { duration: 100 } }
                     HoverHandler { id: _backH }

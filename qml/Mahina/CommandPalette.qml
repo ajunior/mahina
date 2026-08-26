@@ -144,7 +144,7 @@ Item {
                 Rectangle {
                     visible: _search.text !== ""
                     width:   20; height: 20; radius: 10
-                    color:   _qHov.hovered ? Theme.border : "transparent"
+                    color:   _qHov.hovered ? Theme.hover : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _qHov }
                     MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: _search.text = "" }
@@ -174,7 +174,7 @@ Item {
                         radius:  Theme.radiusSm
                         color:   root._selectedIdx === index
                                  ? Theme.panel
-                                 : _iHov.hovered ? Theme.surfaceVariant
+                                 : _iHov.hovered ? Theme.hover
                                  : "transparent"
 
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }

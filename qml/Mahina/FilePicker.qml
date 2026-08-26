@@ -56,7 +56,7 @@ Item {
             visible: root.filePath !== ""
             anchors { right: parent.right; rightMargin: 6; verticalCenter: parent.verticalCenter }
             width: 18; height: 18; radius: 9
-            color: _fpClH.hovered ? Theme.panel : "transparent"
+            color: _fpClH.hovered ? Theme.hover : "transparent"
             Behavior on color { ColorAnimation { duration: 80 } }
             HoverHandler { id: _fpClH }
             Text { anchors.centerIn: parent; text: "✕"; color: Theme.textDisabled; font.pixelSize: 8 }

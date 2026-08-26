@@ -80,7 +80,7 @@ Item {
             Rectangle {
                 visible: root.showMinimize
                 width: 46; height: parent.height
-                color: _minH.hovered ? Theme.panel : "transparent"
+                color: _minH.hovered ? Theme.hover : "transparent"
                 Behavior on color { ColorAnimation { duration: 80 } }
                 HoverHandler { id: _minH }
                 Text { anchors.centerIn: parent; text: "─"; color: Theme.textSecondary; font.pixelSize: 13 }
@@ -91,7 +91,7 @@ Item {
             Rectangle {
                 visible: root.showMaximize
                 width: 46; height: parent.height
-                color: _maxH.hovered ? Theme.panel : "transparent"
+                color: _maxH.hovered ? Theme.hover : "transparent"
                 Behavior on color { ColorAnimation { duration: 80 } }
                 HoverHandler { id: _maxH }
                 Text {

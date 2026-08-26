@@ -70,7 +70,7 @@ Item {
                     required property int  index
                     width:    parent ? parent.width : 0
                     height:   root.activeToken === modelData.name ? 80 : 48
-                    color:    root.activeToken === modelData.name ? Theme.panel : (_cseH.hovered ? Theme.panel : "transparent")
+                    color:    root.activeToken === modelData.name ? Theme.panel : (_cseH.hovered ? Theme.hover : "transparent")
                     Behavior on height { NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
                     HoverHandler { id: _cseH }
                     Rectangle { anchors { left: parent.left; right: parent.right; bottom: parent.bottom } height: 1; color: Theme.border }

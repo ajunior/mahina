@@ -197,7 +197,7 @@ Item {
                             // ── Schema row ────────────────────────────────────
                             Rectangle {
                                 width:   parent.width; height: 30
-                                color:   _schHov.hovered ? Theme.panel : "transparent"
+                                color:   _schHov.hovered ? Theme.hover : "transparent"
                                 HoverHandler { id: _schHov }
                                 Rectangle { anchors { left: parent.left; right: parent.right; bottom: parent.bottom } height: 1; color: Theme.border }
 
@@ -260,7 +260,7 @@ Item {
                                             width:  parent.width; height: 32
                                             color:  _tDel._active
                                                     ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.10)
-                                                    : (_tblH.hovered ? Theme.panel : "transparent")
+                                                    : (_tblH.hovered ? Theme.hover : "transparent")
                                             HoverHandler { id: _tblH }
                                             Rectangle { anchors { left: parent.left; right: parent.right; bottom: parent.bottom } height: 1; color: Theme.border }
 
@@ -316,7 +316,7 @@ Item {
                                                     verticalCenter: parent.verticalCenter
                                                 }
                                                 width: 22; height: 22; radius: Theme.radiusSm
-                                                color: _statsHov.hovered ? Theme.panel : "transparent"
+                                                color: _statsHov.hovered ? Theme.hover : "transparent"
                                                 HoverHandler { id: _statsHov }
                                                 Icon { anchors.centerIn: parent; name: Icons.dotsThree; size: 13; color: Theme.textSecondary }
                                                 MouseArea {
@@ -374,7 +374,7 @@ Item {
                                                     width:  parent ? parent.width : 0; height: 26
 
                                                     readonly property var _sb: _tDel._sb
-                                                    color:  _colH.hovered ? Theme.panel : "transparent"
+                                                    color:  _colH.hovered ? Theme.hover : "transparent"
                                                     HoverHandler { id: _colH }
                                                     Rectangle { anchors { left: parent.left; right: parent.right; bottom: parent.bottom } height: 1; color: Theme.border; opacity: 0.5 }
 

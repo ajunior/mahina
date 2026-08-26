@@ -85,7 +85,7 @@ Item {
                     height: root.rowHeight
                     color:  modelData.id === root.activeLayerId
                             ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.12)
-                            : (_layH.hovered ? Theme.panel : "transparent")
+                            : (_layH.hovered ? Theme.hover : "transparent")
                     HoverHandler { id: _layH }
 
                     Row {
@@ -95,7 +95,7 @@ Item {
                         // Visibility eye
                         Rectangle {
                             width: 22; height: 22; radius: 4
-                            color: _eyeH.hovered ? Theme.panel : "transparent"
+                            color: _eyeH.hovered ? Theme.hover : "transparent"
                             HoverHandler { id: _eyeH }
                             Text {
                                 anchors.centerIn: parent
@@ -138,7 +138,7 @@ Item {
                         // Lock icon
                         Rectangle {
                             width: 22; height: 22; radius: 4
-                            color: _lkH.hovered ? Theme.panel : "transparent"
+                            color: _lkH.hovered ? Theme.hover : "transparent"
                             HoverHandler { id: _lkH }
                             Text {
                                 anchors.centerIn: parent

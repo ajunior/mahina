@@ -127,7 +127,7 @@ Item {
                     Rectangle {
                         visible: _rq1.modelData.dismissible || false
                         width:   20; height: 20; radius: 4
-                        color:   _dH.hovered ? Theme.panel : "transparent"
+                        color:   _dH.hovered ? Theme.hover : "transparent"
                         Behavior on color { ColorAnimation { duration: 80 } }
                         HoverHandler { id: _dH }
                         Text {

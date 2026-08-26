@@ -89,7 +89,7 @@ Rectangle {
                 required property var  modelData
                 required property int  index
                 width:  parent.width; height: 40
-                color:  _mH.hovered ? Theme.panel : "transparent"
+                color:  _mH.hovered ? Theme.hover : "transparent"
                 Behavior on color { ColorAnimation { duration: 80 } }
                 HoverHandler { id: _mH }
 

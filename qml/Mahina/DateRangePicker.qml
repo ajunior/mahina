@@ -126,7 +126,7 @@ Item {
 
                 Rectangle {
                     width: 28; height: 28; radius: 14
-                    color: prevA.hovered ? Theme.panel : "transparent"
+                    color: prevA.hovered ? Theme.hover : "transparent"
                     visible: _mg.showPrev
                     HoverHandler { id: prevA }
                     MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: _mg.prevClicked() }
@@ -146,7 +146,7 @@ Item {
                 Item { width: 1; height: 1 }
                 Rectangle {
                     width: 28; height: 28; radius: 14
-                    color: nextA.hovered ? Theme.panel : "transparent"
+                    color: nextA.hovered ? Theme.hover : "transparent"
                     visible: _mg.showNext
                     HoverHandler { id: nextA }
                     MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: _mg.nextClicked() }

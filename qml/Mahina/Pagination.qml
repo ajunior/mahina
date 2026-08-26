@@ -67,7 +67,7 @@ Item {
             height:  root._btnSz
             radius:  Theme.radiusSm
             color:   !_prevEn ? "transparent"
-                   : _prevHov.hovered ? Theme.panel : "transparent"
+                   : _prevHov.hovered ? Theme.hover : "transparent"
 
             readonly property bool _prevEn: root.currentPage > 1
 
@@ -106,7 +106,7 @@ Item {
                 radius: Theme.radiusSm
                 color:  isCurrent  ? Theme.primary
                       : isEllipsis ? "transparent"
-                      : _pHov.hovered ? Theme.panel
+                      : _pHov.hovered ? Theme.hover
                       : "transparent"
 
                 Behavior on color { ColorAnimation { duration: Theme.durationFast } }
@@ -138,7 +138,7 @@ Item {
             height: root._btnSz
             radius: Theme.radiusSm
             color:  !_nextEn ? "transparent"
-                  : _nextHov.hovered ? Theme.panel : "transparent"
+                  : _nextHov.hovered ? Theme.hover : "transparent"
 
             readonly property bool _nextEn: root.currentPage < root.totalPages
 

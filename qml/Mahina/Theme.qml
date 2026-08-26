@@ -38,6 +38,16 @@ QtObject {
     property color _surfaceDark:         "#1E2430"
     property color _surfaceVariantLight: "#F8F8FD"
     property color _surfaceVariantDark:  "#222A36"
+    // The tint an otherwise-transparent element takes while the pointer is over
+    // it — a translucent overlay rather than an opaque colour, so it reads the
+    // same wherever it lands. An opaque token cannot: `background` and `surface`
+    // are 18 values apart, so any single fill is near one and far from the other,
+    // and the library's previous hover (`panel`, measured off the running demo)
+    // came out 7 values from the page background and 11 from a card — faint in
+    // both places, and lightening in one while darkening in the other. 8% is the
+    // usual weight for a hover state and lands ~20 values from every base.
+    property color _hoverLight:          "#14000000"
+    property color _hoverDark:           "#14FFFFFF"
     property color _overlayLight:        "#1E203066"
     property color _overlayDark:         "#00000099"
     property color _borderLight:         "#E2E5F0"
@@ -58,6 +68,7 @@ QtObject {
     readonly property color panel:          dark ? _panelDark          : _panelLight
     readonly property color surface:        dark ? _surfaceDark        : _surfaceLight
     readonly property color surfaceVariant: dark ? _surfaceVariantDark : _surfaceVariantLight
+    readonly property color hover:          dark ? _hoverDark           : _hoverLight
     readonly property color overlay:        dark ? _overlayDark        : _overlayLight
     readonly property color border:         dark ? _borderDark         : _borderLight
     readonly property color borderStrong:   dark ? _borderStrongDark   : _borderStrongLight
@@ -161,6 +172,7 @@ QtObject {
         if (l.panel          !== undefined) root._panelLight          = l.panel
         if (l.surface        !== undefined) root._surfaceLight        = l.surface
         if (l.surfaceVariant !== undefined) root._surfaceVariantLight = l.surfaceVariant
+        if (l.hover          !== undefined) root._hoverLight          = l.hover
         if (l.overlay        !== undefined) root._overlayLight        = l.overlay
         if (l.border         !== undefined) root._borderLight         = l.border
         if (l.borderStrong   !== undefined) root._borderStrongLight   = l.borderStrong
@@ -174,6 +186,7 @@ QtObject {
         if (d.panel          !== undefined) root._panelDark          = d.panel
         if (d.surface        !== undefined) root._surfaceDark        = d.surface
         if (d.surfaceVariant !== undefined) root._surfaceVariantDark = d.surfaceVariant
+        if (d.hover          !== undefined) root._hoverDark          = d.hover
         if (d.overlay        !== undefined) root._overlayDark        = d.overlay
         if (d.border         !== undefined) root._borderDark         = d.border
         if (d.borderStrong   !== undefined) root._borderStrongDark   = d.borderStrong
@@ -209,6 +222,8 @@ QtObject {
         root._surfaceDark         = "#1E2430"
         root._surfaceVariantLight = "#F8F8FD"
         root._surfaceVariantDark  = "#222A36"
+        root._hoverLight          = "#14000000"
+        root._hoverDark           = "#14FFFFFF"
         root._overlayLight        = "#1E203066"
         root._overlayDark         = "#00000099"
         root._borderLight         = "#E2E5F0"

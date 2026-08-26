@@ -205,7 +205,7 @@ Item {
                     height: 36; radius: Theme.radiusSm
                     color:  _sel ? Theme.primarySubtle
                           : _dis ? "transparent"
-                          : _rH.hovered ? Theme.panel
+                          : _rH.hovered ? Theme.hover
                           : "transparent"
                     opacity: _dis ? 0.4 : 1.0
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }

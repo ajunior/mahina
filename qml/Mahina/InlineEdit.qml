@@ -33,7 +33,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         visible: !root.editing
-        color:   _dH.hovered ? Theme.panel : "transparent"
+        color:   _dH.hovered ? Theme.hover : "transparent"
         radius:  Theme.radiusSm
         border.color: _dH.hovered ? Theme.border : "transparent"
         border.width: 1

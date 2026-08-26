@@ -78,7 +78,7 @@ Item {
                             width:   parent.width - Theme.sp2 * 2
                             height:  root.itemHeight
                             radius:  Theme.radiusMd
-                            color:   _itemH.hovered ? Theme.panel : "transparent"
+                            color:   _itemH.hovered ? Theme.hover : "transparent"
                             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                             HoverHandler { id: _itemH }
 

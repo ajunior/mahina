@@ -81,7 +81,7 @@ Item {
                 // Hover background
                 Rectangle {
                     anchors.fill: parent
-                    color:  _rowH.hovered ? Theme.panel : "transparent"
+                    color:  _rowH.hovered ? Theme.hover : "transparent"
                     Behavior on color { ColorAnimation { duration: 100 } }
                     HoverHandler { id: _rowH }
                 }

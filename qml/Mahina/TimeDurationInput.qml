@@ -123,7 +123,7 @@ Item {
             // Up button
             Rectangle {
                 width:  parent.width; height: 14
-                color:  _upH.hovered ? Theme.panel : "transparent"
+                color:  _upH.hovered ? Theme.hover : "transparent"
                 radius: Theme.radiusSm
                 HoverHandler { id: _upH }
                 MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: _field.incremented() }
@@ -175,7 +175,7 @@ Item {
             // Down button
             Rectangle {
                 width:  parent.width; height: 14
-                color:  _downH.hovered ? Theme.panel : "transparent"
+                color:  _downH.hovered ? Theme.hover : "transparent"
                 radius: Theme.radiusSm
                 HoverHandler { id: _downH }
                 MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: _field.decremented() }

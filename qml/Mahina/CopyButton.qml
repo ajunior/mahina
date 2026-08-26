@@ -30,7 +30,7 @@ Item {
     Rectangle {
         anchors.fill:  parent
         radius:        Theme.radiusSm
-        color:         _hov.hovered ? Theme.surfaceVariant : "transparent"
+        color:         _hov.hovered ? Theme.hover : "transparent"
         border.color:  _hov.hovered ? Theme.border : "transparent"
         border.width:  1
         Behavior on color { ColorAnimation { duration: Theme.durationFast } }

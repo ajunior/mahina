@@ -93,7 +93,7 @@ Item {
                     color: {
                         if (_isPrimary) return _tbBH.hovered ? Theme.primaryHover          : Theme.primary
                         if (_isDanger)  return _tbBH.hovered ? Qt.darker(Theme.error, 1.1) : Theme.error
-                        return _tbBH.hovered ? Theme.panel : "transparent"
+                        return _tbBH.hovered ? Theme.hover : "transparent"
                     }
 
                     Behavior on color { ColorAnimation { duration: 80 } }

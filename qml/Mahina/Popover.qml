@@ -127,7 +127,7 @@ Item {
                     width:         24
                     height:        24
                     radius:        Theme.radiusSm
-                    color:         _xHover.hovered ? Theme.border : "transparent"
+                    color:         _xHover.hovered ? Theme.hover : "transparent"
 
                     Text {
                         anchors.centerIn: parent

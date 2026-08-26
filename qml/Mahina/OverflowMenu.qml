@@ -45,7 +45,7 @@ Item {
 
                 height:  34; width: _viLabel.implicitWidth + 16
                 radius:  Theme.radiusSm
-                color:   _viH.hovered ? Theme.panel : "transparent"
+                color:   _viH.hovered ? Theme.hover : "transparent"
                 border.color: Theme.border; border.width: 1
                 anchors.verticalCenter: parent.verticalCenter
                 Behavior on color { ColorAnimation { duration: 80 } }
@@ -78,7 +78,7 @@ Item {
             visible: root.hiddenItems.length > 0
             height:  34; width: _moreLabel.implicitWidth + 16
             radius:  Theme.radiusSm
-            color:   root.showPopup ? Theme.panel : (_moreH.hovered ? Theme.panel : "transparent")
+            color:   root.showPopup ? Theme.panel : (_moreH.hovered ? Theme.hover : "transparent")
             border.color: Theme.border; border.width: 1
             anchors.verticalCenter: parent.verticalCenter
             Behavior on color { ColorAnimation { duration: 80 } }
@@ -122,7 +122,7 @@ Item {
                     required property var  modelData
                     required property int  index
                     width: parent.width; height: 34; radius: Theme.radiusSm
-                    color: _piH.hovered ? Theme.panel : "transparent"
+                    color: _piH.hovered ? Theme.hover : "transparent"
                     HoverHandler { id: _piH }
                     Row {
                         anchors { left: parent.left; leftMargin: 10; verticalCenter: parent.verticalCenter }

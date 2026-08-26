@@ -108,7 +108,7 @@ Item {
                 Rectangle {
                     anchors.fill: parent
                     radius:       width / 2
-                    color:        _cHover.hovered ? Theme.border : "transparent"
+                    color:        _cHover.hovered ? Theme.hover : "transparent"
 
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                 }

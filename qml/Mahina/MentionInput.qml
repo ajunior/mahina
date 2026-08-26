@@ -121,7 +121,7 @@ Item {
                     width:  _popup.width - Theme.sp1 * 2
                     height: 36
                     radius: Theme.radiusSm
-                    color:  index === root.activeIdx ? Theme.primary : _sugH.hovered ? Theme.panel : "transparent"
+                    color:  index === root.activeIdx ? Theme.primary : _sugH.hovered ? Theme.hover : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _sugH }
 

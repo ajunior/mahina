@@ -59,7 +59,7 @@ Item {
                     height: 36; radius: Theme.radiusMd
                     color: isActive ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g,
                                               Qt.color(Theme.primary).b, 0.12)
-                                    : (_pvH.hovered ? Theme.panel : "transparent")
+                                    : (_pvH.hovered ? Theme.hover : "transparent")
                     Behavior on color { ColorAnimation { duration: 80 } }
                     HoverHandler { id: _pvH }
 
