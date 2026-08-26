@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -44,7 +45,7 @@ Item {
 
                     Connections {
                         target: root
-                        function onGaugesChanged() { _gc.requestPaint() }
+                        function onGaugesChanged(): void { _gc.requestPaint() }
                     }
 
                     property real _target: parent.normalised

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -55,8 +56,8 @@ Item {
         onSwChanged: requestPaint()
         Connections {
             target: root
-            function onColorChanged() { _canvas.requestPaint() }
-            function onSizeChanged()  { _canvas.requestPaint() }
+            function onColorChanged(): void { _canvas.requestPaint() }
+            function onSizeChanged(): void { _canvas.requestPaint() }
         }
 
         Component.onCompleted: requestPaint()

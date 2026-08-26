@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -27,7 +28,7 @@ Item {
     // Particle state (JS array, not QML model — faster)
     property var particles: []
 
-    function _initParticles() {
+    function _initParticles(): void {
         var pts = []
         for (var i = 0; i < root.particleCount; i++) {
             pts.push({
@@ -42,7 +43,7 @@ Item {
         root.particles = pts
     }
 
-    function _step() {
+    function _step(): void {
         var pts = root.particles.slice()
         var w = root.width, h = root.height
         for (var i = 0; i < pts.length; i++) {

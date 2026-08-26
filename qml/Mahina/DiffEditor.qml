@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic as QQC
 import Mahina
@@ -20,7 +21,7 @@ Item {
 
     property bool _syncingScroll: false
 
-    function _diffLines() {
+    function _diffLines(): var {
         var la = root.leftText.split("\n")
         var rb = root.rightText.split("\n")
         var maxLen = Math.max(la.length, rb.length)

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic as QQC
 import Mahina
@@ -19,7 +20,7 @@ Item {
     implicitHeight: 340
 
     // Flatten tree to rows
-    function _flatten(list, depth) {
+    function _flatten(list: var, depth: var): var {
         var out = []
         for (var i = 0; i < list.length; i++) {
             var item = list[i]
@@ -34,7 +35,7 @@ Item {
 
     readonly property var _rows: _flatten(root.layers, 0)
 
-    function _typeIcon(t) {
+    function _typeIcon(t: var): var {
         if (t === "group") return "▸"
         if (t === "text")  return "T"
         if (t === "image") return "⬜"

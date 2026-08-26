@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -29,10 +30,10 @@ Item {
 
         Connections {
             target: root
-            function onTextChanged()      { _canvas.requestPaint() }
-            function onDarkColorChanged() { _canvas.requestPaint() }
-            function onLightColorChanged(){ _canvas.requestPaint() }
-            function onSizeChanged()      { _canvas.requestPaint() }
+            function onTextChanged(): void { _canvas.requestPaint() }
+            function onDarkColorChanged(): void { _canvas.requestPaint() }
+            function onLightColorChanged(): void { _canvas.requestPaint() }
+            function onSizeChanged(): void { _canvas.requestPaint() }
         }
 
         onPaint: {
@@ -72,7 +73,7 @@ Item {
         }
 
         // ── QR encoder ───────────────────────────────────────────────────────
-        function _makeQR(str) {
+        function _makeQR(str: var): var {
             // Version table [size, dataCodewords, ecCodewords] for Level L
             var VER = [[21,19,7],[25,34,10],[29,55,15],[33,80,20]]
 

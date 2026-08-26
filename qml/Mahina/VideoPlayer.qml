@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -107,7 +108,7 @@ Item {
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
                         text: {
-                            function fmt(s) {
+                            function fmt(s: var): var {
                                 var m = Math.floor(s / 60), sec = Math.floor(s % 60)
                                 return m + ":" + (sec < 10 ? "0" : "") + sec
                             }

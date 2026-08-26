@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic as QQC
 import Mahina
@@ -36,7 +37,7 @@ Item {
         return out
     }
 
-    function _valueColor(type) {
+    function _valueColor(type: var): var {
         if (type === "number")  return Theme.info
         if (type === "boolean") return Theme.warning
         if (type === "color")   return Theme.success

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -46,7 +47,7 @@ Item {
 
                 // Drop indicator line above
                 Rectangle {
-                    visible: isDropTarget && root.dropIndex < root.draggedIndex
+                    visible: _rq1.isDropTarget && root.dropIndex < root.draggedIndex
                     anchors { left: parent.left; right: parent.right; top: parent.top }
                     height: 2; color: Theme.primary; radius: 1
                 }
@@ -54,12 +55,12 @@ Item {
                 Rectangle {
                     anchors { fill: parent; topMargin: 1; bottomMargin: 1 }
                     radius: Theme.radiusMd
-                    color:  isDragged
+                    color:  _rq1.isDragged
                             ? Theme.panel
-                            : (isDropTarget
+                            : (_rq1.isDropTarget
                                ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.07)
                                : Theme.surface)
-                    border.color: isDragged ? Theme.primary : Theme.border
+                    border.color: _rq1.isDragged ? Theme.primary : Theme.border
                     border.width: 1
                     Behavior on color { ColorAnimation { duration: 80 } }
 
@@ -128,7 +129,7 @@ Item {
 
                 // Drop indicator line below
                 Rectangle {
-                    visible: isDropTarget && root.dropIndex >= root.draggedIndex
+                    visible: _rq1.isDropTarget && root.dropIndex >= root.draggedIndex
                     anchors { left: parent.left; right: parent.right; bottom: parent.bottom }
                     height: 2; color: Theme.primary; radius: 1
                 }

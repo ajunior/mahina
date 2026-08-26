@@ -61,13 +61,13 @@ Item {
         Qt.callLater(() => _tv.forceLayout())
     }
 
-    function _relayout() { _tv.forceLayout() }
+    function _relayout(): void { _tv.forceLayout() }
 
     signal rowClicked(int row)
     signal cellClicked(int row, int column, string value)
     signal cellDoubleClicked(int row, int column, string value)
 
-    function clearSelection() {
+    function clearSelection(): void {
         _sel.clearSelection()
     }
 

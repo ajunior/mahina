@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -26,19 +27,19 @@ Item {
     property int rightYear:  leftMonth === 11 ? leftYear + 1 : leftYear
     property int rightMonth: (leftMonth + 1) % 12
 
-    function _isoDate(d) {
+    function _isoDate(d: var): var {
         if (!d) return ""
         return d.getFullYear() + "-"
             + String(d.getMonth()+1).padStart(2,"0") + "-"
             + String(d.getDate()).padStart(2,"0")
     }
 
-    function _sameDay(a, b) {
+    function _sameDay(a: var, b: var): var {
         if (!a || !b) return false
         return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate()
     }
 
-    function _inRange(d) {
+    function _inRange(d: var): var {
         if (!root.startDate || !d) return false
         var end = root.endDate || root.hoveredDate
         if (!end) return false
@@ -47,7 +48,7 @@ Item {
         return d >= lo && d <= hi
     }
 
-    function _handleClick(d) {
+    function _handleClick(d: var): void {
         if (!root.startDate || (root.startDate && root.endDate)) {
             root.startDate = d; root.endDate = null
         } else if (d < root.startDate) {
@@ -190,6 +191,7 @@ Item {
                     }
 
                     delegate: Item {
+                        id: _dg
                         required property var modelData
                         property var cellDate: modelData
                         width:  _mg.width / 7
@@ -204,35 +206,35 @@ Item {
                         Rectangle {
                             anchors.fill: parent
                             color: {
-                                if (isStart || isEnd) return Theme.primary
-                                if (inRange) return Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.12)
-                                if (isHovered && cellDate) return Theme.panel
+                                if (_dg.isStart || _dg.isEnd) return Theme.primary
+                                if (_dg.inRange) return Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.12)
+                                if (_dg.isHovered && _dg.cellDate) return Theme.panel
                                 return "transparent"
                             }
-                            radius: (isStart || isEnd) ? 15 : 4
+                            radius: (_dg.isStart || _dg.isEnd) ? 15 : 4
                             Behavior on color { ColorAnimation { duration: 80 } }
                         }
 
                         Text {
                             anchors.centerIn: parent
-                            visible: cellDate !== null
-                            text:    cellDate ? cellDate.getDate() : ""
+                            visible: _dg.cellDate !== null
+                            text:    _dg.cellDate ? _dg.cellDate.getDate() : ""
                             color: {
-                                if (isStart || isEnd) return Theme.textOnPrimary
-                                if (isToday) return Theme.primary
+                                if (_dg.isStart || _dg.isEnd) return Theme.textOnPrimary
+                                if (_dg.isToday) return Theme.primary
                                 return Theme.textPrimary
                             }
                             font.family:    Theme.fontFamily
                             font.pixelSize: Theme.textXs
-                            font.weight:    isToday ? Theme.weightSemibold : Theme.weightRegular
+                            font.weight:    _dg.isToday ? Theme.weightSemibold : Theme.weightRegular
                         }
 
-                        HoverHandler { onHoveredChanged: hovered ? _mg.dayHovered(cellDate) : _mg.dayUnhovered() }
+                        HoverHandler { onHoveredChanged: hovered ? _mg.dayHovered(_dg.cellDate) : _mg.dayUnhovered() }
                         MouseArea {
                             anchors.fill: parent
-                            visible:      cellDate !== null
+                            visible:      _dg.cellDate !== null
                             cursorShape:  Qt.PointingHandCursor
-                            onClicked:    if (cellDate) _mg.dayClicked(cellDate)
+                            onClicked:    if (_dg.cellDate) _mg.dayClicked(_dg.cellDate)
                         }
                     }
                 }

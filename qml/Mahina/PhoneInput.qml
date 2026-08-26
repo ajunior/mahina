@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -27,17 +28,17 @@ Item {
         return "(" + d.substring(0,3) + ") " + d.substring(3,6) + "-" + d.substring(6,10)
     }
 
-    function _addDigit(ch) {
+    function _addDigit(ch: var): void {
         if (!/\d/.test(ch)) return
         if (rawDigits.length >= 10) return
         rawDigits = rawDigits + ch
         root.valueChanged(root.countryCode + rawDigits)
     }
-    function _removeDigit() {
+    function _removeDigit(): void {
         if (rawDigits.length > 0)
             rawDigits = rawDigits.substring(0, rawDigits.length - 1)
     }
-    function clear() { rawDigits = "" }
+    function clear(): void { rawDigits = "" }
 
     Row {
         anchors.fill: parent

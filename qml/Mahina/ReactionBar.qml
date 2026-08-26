@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -63,7 +64,7 @@ Item {
                     }
                     Text {
                         text:           (_rq1.modelData.count || 0).toString()
-                        color:          isActive ? Theme.primary : Theme.textSecondary
+                        color:          _rq1.isActive ? Theme.primary : Theme.textSecondary
                         font.family:    Theme.fontFamily
                         font.pixelSize: Theme.textXs
                         font.weight:    Font.Medium

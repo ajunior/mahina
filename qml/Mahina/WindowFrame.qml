@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -64,15 +65,18 @@ Rectangle {
                     { visible: true,             color: "#28c840", tip: "Expand"   },
                 ]
                 delegate: Rectangle {
-                    required property var  modelData
-                    visible: modelData.visible
+                    id: _dot
+                    required property var modelData
+                    required property int index
+
+                    visible: _dot.modelData.visible
                     width: 12; height: 12; radius: 6
-                    color: modelData.color
+                    color: _dot.modelData.color
                     MouseArea {
                         anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                         onClicked: {
-                            if (index === 0) root.closeRequested()
-                            else if (index === 1) root.minimized()
+                            if (_dot.index === 0) root.closeRequested()
+                            else if (_dot.index === 1) root.minimized()
                         }
                     }
                 }

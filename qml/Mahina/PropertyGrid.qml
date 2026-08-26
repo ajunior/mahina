@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -78,7 +79,7 @@ Item {
 
                         // text (default)
                         Text {
-                            visible:        _type === "text"
+                            visible:        _rq1._type === "text"
                             anchors.verticalCenter: parent.verticalCenter
                             width:          parent.width
                             text:           String(_rq1.modelData.value ?? "")
@@ -90,7 +91,7 @@ Item {
 
                         // badge
                         Rectangle {
-                            visible:  _type === "badge"
+                            visible:  _rq1._type === "badge"
                             anchors.verticalCenter: parent.verticalCenter
                             height:       20
                             width:        _badgeLbl.implicitWidth + Theme.sp3 * 2
@@ -109,7 +110,7 @@ Item {
 
                         // color swatch
                         Row {
-                            visible:  _type === "color"
+                            visible:  _rq1._type === "color"
                             anchors.verticalCenter: parent.verticalCenter
                             spacing:  Theme.sp2
                             Rectangle {
@@ -132,7 +133,7 @@ Item {
 
                         // boolean
                         Row {
-                            visible:  _type === "boolean"
+                            visible:  _rq1._type === "boolean"
                             anchors.verticalCenter: parent.verticalCenter
                             spacing:  Theme.sp1
                             readonly property bool _bval: _rq1.modelData.value === true || _rq1.modelData.value === "true"
@@ -153,7 +154,7 @@ Item {
 
                         // link
                         Text {
-                            visible:  _type === "link"
+                            visible:  _rq1._type === "link"
                             anchors.verticalCenter: parent.verticalCenter
                             width:          parent.width
                             text:           String(_rq1.modelData.value ?? "")

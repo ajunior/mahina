@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -35,8 +36,8 @@ Item {
     }
 
     // ── Helper: clamp ─────────────────────────────────────────────────────────
-    function _cw(w) { return Math.max(root.minWidth,  Math.min(root.maxWidth,  w)) }
-    function _ch(h) { return Math.max(root.minHeight, Math.min(root.maxHeight, h)) }
+    function _cw(w: var): var { return Math.max(root.minWidth,  Math.min(root.maxWidth,  w)) }
+    function _ch(h: var): var { return Math.max(root.minHeight, Math.min(root.maxHeight, h)) }
 
     // ── Edge handles ──────────────────────────────────────────────────────────
 
@@ -58,7 +59,7 @@ Item {
             onPositionChanged: (m) => {
                 if (!pressed) return
                 var dx = mapToGlobal(m.x, m.y).x - _startX
-                root.width = _cw(_startW + dx)
+                root.width = root._cw(_startW + dx)
                 root.resized(root.width, root.height)
             }
         }
@@ -88,7 +89,7 @@ Item {
             onPositionChanged: (m) => {
                 if (!pressed) return
                 var dy = mapToGlobal(m.x, m.y).y - _startY
-                root.height = _ch(_startH + dy)
+                root.height = root._ch(_startH + dy)
                 root.resized(root.width, root.height)
             }
         }
@@ -121,7 +122,7 @@ Item {
             onPositionChanged: (m) => {
                 if (!pressed) return
                 var dy = mapToGlobal(m.x, m.y).y - _startY
-                var nh = _ch(_startH - dy)
+                var nh = root._ch(_startH - dy)
                 root.y      = _startYp + (_startH - nh)
                 root.height = nh
                 root.resized(root.width, root.height)
@@ -150,7 +151,7 @@ Item {
             onPositionChanged: (m) => {
                 if (!pressed) return
                 var dx = mapToGlobal(m.x, m.y).x - _startX
-                var nw = _cw(_startW - dx)
+                var nw = root._cw(_startW - dx)
                 root.x     = _startXp + (_startW - nw)
                 root.width = nw
                 root.resized(root.width, root.height)
@@ -180,8 +181,8 @@ Item {
             onPositionChanged: (m) => {
                 if (!pressed) return
                 var g = mapToGlobal(m.x, m.y)
-                root.width  = _cw(_sw + g.x - _sx)
-                root.height = _ch(_sh + g.y - _sy)
+                root.width  = root._cw(_sw + g.x - _sx)
+                root.height = root._ch(_sh + g.y - _sy)
                 root.resized(root.width, root.height)
             }
         }
@@ -204,10 +205,10 @@ Item {
             onPositionChanged: (m) => {
                 if (!pressed) return
                 var g  = mapToGlobal(m.x, m.y)
-                var nw = _cw(_sw - (g.x - _sx))
+                var nw = root._cw(_sw - (g.x - _sx))
                 root.x      = _sxp + (_sw - nw)
                 root.width  = nw
-                root.height = _ch(_sh + g.y - _sy)
+                root.height = root._ch(_sh + g.y - _sy)
                 root.resized(root.width, root.height)
             }
         }
@@ -230,8 +231,8 @@ Item {
             onPositionChanged: (m) => {
                 if (!pressed) return
                 var g  = mapToGlobal(m.x, m.y)
-                var nh = _ch(_sh - (g.y - _sy))
-                root.width  = _cw(_sw + g.x - _sx)
+                var nh = root._ch(_sh - (g.y - _sy))
+                root.width  = root._cw(_sw + g.x - _sx)
                 root.y      = _syp + (_sh - nh)
                 root.height = nh
                 root.resized(root.width, root.height)
@@ -257,8 +258,8 @@ Item {
             onPositionChanged: (m) => {
                 if (!pressed) return
                 var g  = mapToGlobal(m.x, m.y)
-                var nw = _cw(_sw - (g.x - _sx))
-                var nh = _ch(_sh - (g.y - _sy))
+                var nw = root._cw(_sw - (g.x - _sx))
+                var nh = root._ch(_sh - (g.y - _sy))
                 root.x      = _sxp + (_sw - nw)
                 root.y      = _syp + (_sh - nh)
                 root.width  = nw

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -30,7 +31,7 @@ Item {
     readonly property int barOff:  16  // horizontal padding so stops don't clip
 
     // Build gradient string for Canvas
-    function _gradientCss() {
+    function _gradientCss(): var {
         var sorted = root.stops.slice().sort(function(a,b) { return a.pos - b.pos })
         return sorted
     }
@@ -41,9 +42,9 @@ Item {
 
         Connections {
             target: root
-            function onStopsChanged()  { _canvas.requestPaint() }
-            function onWidthChanged()  { _canvas.requestPaint() }
-            function onHeightChanged() { _canvas.requestPaint() }
+            function onStopsChanged(): void { _canvas.requestPaint() }
+            function onWidthChanged(): void { _canvas.requestPaint() }
+            function onHeightChanged(): void { _canvas.requestPaint() }
         }
         Component.onCompleted: requestPaint()
 

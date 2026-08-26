@@ -10,7 +10,7 @@ A comprehensive QML component library for Qt 6 desktop applications — fully th
 
 - **262 components** covering layout, navigation, data display, forms, charts, overlays, editors and more
 - **Single design token source** — every component reads from the `Theme` singleton; swap colours, radii and typography in one place
-- **AOT-compiled** — over 80% of the library's bindings and functions are compiled ahead of time to C++ rather than interpreted; CI reports the figure on every change
+- **AOT-compiled** — around 87% of the library's bindings and functions are compiled ahead of time to C++ rather than interpreted; CI reports the figure on every change
 - **Desktop-first** — interactions are designed for keyboard and mouse; no mobile-only patterns
 - **Zero external dependencies** — plain Qt 6, no web engine, no JavaScript runtime
 - **Bundled fonts** — [Inter](https://rsms.me/inter/) (UI), [JetBrains Mono](https://www.jetbrains.com/lp/mono/) (mono), and [Phosphor Icons](https://phosphoricons.com) (900+ glyphs, six weights) shipped as embedded Qt resources

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic as QQC
 import Mahina
@@ -22,12 +23,12 @@ Item {
     readonly property int _asciiW: root.showAscii ? root.columns * 9 : 0
     readonly property int _rows:   Math.ceil(root.hexBytes.length / root.columns)
 
-    function _toHex2(n) {
+    function _toHex2(n: var): var {
         var s = n.toString(16).toUpperCase()
         return s.length < 2 ? "0" + s : s
     }
 
-    function _isPrint(n) { return n >= 0x20 && n < 0x7f }
+    function _isPrint(n: var): var { return n >= 0x20 && n < 0x7f }
 
     Rectangle {
         anchors.fill: parent
@@ -112,8 +113,9 @@ Item {
                                 Repeater {
                                     model: root.columns
                                     delegate: Rectangle {
+                                        id: _dg
                                         required property int index
-                                        property int offset: (parent.parent.parent.index) * root.columns + index
+                                        property int offset: _rq1.index * root.columns + _dg.index
                                         property bool valid:  offset < root.hexBytes.length
                                         width: 26; height: root.rowHeight
                                         color: offset === root.selectedOffset
@@ -122,23 +124,23 @@ Item {
                                         HoverHandler { id: _hvH }
                                         Text {
                                             anchors.centerIn: parent
-                                            text:  valid ? root._toHex2(root.hexBytes[offset]) : ""
+                                            text:  _dg.valid ? root._toHex2(root.hexBytes[_dg.offset]) : ""
                                             color: {
-                                                if (!valid) return "transparent"
-                                                var v = root.hexBytes[offset]
+                                                if (!_dg.valid) return "transparent"
+                                                var v = root.hexBytes[_dg.offset]
                                                 if (v === 0) return Theme.textDisabled
                                                 if (v < 0x20 || v >= 0x7f) return Theme.warning
-                                                return offset === root.selectedOffset ? Theme.primary : Theme.textPrimary
+                                                return _dg.offset === root.selectedOffset ? Theme.primary : Theme.textPrimary
                                             }
                                             font { family: Theme.fontFamilyMono; pixelSize: Theme.textSm }
                                         }
                                         MouseArea {
                                             anchors.fill: parent
-                                            visible: valid
+                                            visible: _dg.valid
                                             cursorShape: Qt.PointingHandCursor
                                             onClicked: {
-                                                root.selectedOffset = offset
-                                                root.byteSelected(offset, root.hexBytes[offset])
+                                                root.selectedOffset = _dg.offset
+                                                root.byteSelected(_dg.offset, root.hexBytes[_dg.offset])
                                             }
                                         }
                                     }
@@ -155,8 +157,9 @@ Item {
                                 Repeater {
                                     model: root.columns
                                     delegate: Text {
+                                        id: _asciiCell
                                         required property int index
-                                        property int offset: (parent.parent.parent.parent.index) * root.columns + index
+                                        property int offset: _rq1.index * root.columns + _asciiCell.index
                                         property bool valid:  offset < root.hexBytes.length
                                         width: 9
                                         text: {

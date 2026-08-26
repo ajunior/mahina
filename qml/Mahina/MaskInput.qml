@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -54,7 +55,7 @@ Item {
         return out
     }
 
-    function _addChar(ch) {
+    function _addChar(ch: var): void {
         var m    = root.mask
         var raw  = root.rawValue
         var pos  = raw.length
@@ -74,12 +75,12 @@ Item {
         }
     }
 
-    function _removeChar() {
+    function _removeChar(): void {
         if (root.rawValue.length > 0)
             root.rawValue = root.rawValue.substring(0, root.rawValue.length - 1)
     }
 
-    function clear() { root.rawValue = "" }
+    function clear(): void { root.rawValue = "" }
 
     Rectangle {
         anchors.fill:  parent
@@ -144,23 +145,27 @@ Item {
 
             // Cursor
             Rectangle {
+                id:            _caret
                 visible:       root.focused && _cursor.running
                 x:             _dispText.implicitWidth
                 width:         1; height: _dispText.implicitHeight
                 color:         Theme.primary
                 property bool _on: true
 
+                // `parent` inside an Animation is the enclosing item's parent, not
+                // the item itself, so these actions used to poke a "_on" property
+                // on the row and the caret never blinked. Name the caret instead.
                 SequentialAnimation {
                     id:     _cursor
                     running: root.focused
                     loops:   Animation.Infinite
-                    PropertyAction  { target: parent; property: "_on"; value: true  }
+                    PropertyAction  { target: _caret; property: "_on"; value: true  }
                     PauseAnimation  { duration: 530 }
-                    PropertyAction  { target: parent; property: "_on"; value: false }
+                    PropertyAction  { target: _caret; property: "_on"; value: false }
                     PauseAnimation  { duration: 530 }
                 }
 
-                opacity: _on ? 1 : 0
+                opacity: _caret._on ? 1 : 0
             }
         }
 

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic as QQC
 import Mahina
@@ -21,8 +22,8 @@ Item {
     implicitWidth:  colCount * colWidth + headerSize
     implicitHeight: rowCount * rowHeight + headerSize
 
-    function _key(r, c) { return r + "," + c }
-    function _colLetter(c) {
+    function _key(r: var, c: var): var { return r + "," + c }
+    function _colLetter(c: var): var {
         var s = ""
         var n = c + 1
         while (n > 0) {
@@ -136,6 +137,7 @@ Item {
                 Repeater {
                     model: root.rowCount * root.colCount
                     delegate: Rectangle {
+                        id: _dg
                         required property int index
                         property int r: Math.floor(index / root.colCount)
                         property int c: index % root.colCount
@@ -152,9 +154,9 @@ Item {
 
                         // Display text (hidden when editing)
                         Text {
-                            visible: !_cellEdit.activeFocus || !isActive
+                            visible: !_cellEdit.activeFocus || !_dg.isActive
                             anchors { left: parent.left; right: parent.right; leftMargin: 6; rightMargin: 4; verticalCenter: parent.verticalCenter }
-                            text:  root.cellValues[root._key(r, c)] || ""
+                            text:  root.cellValues[root._key(_dg.r, _dg.c)] || ""
                             color: Theme.textPrimary
                             font { family: Theme.fontFamily; pixelSize: Theme.textSm }
                             elide: Text.ElideRight
@@ -163,34 +165,34 @@ Item {
                         // Edit input
                         TextInput {
                             id:    _cellEdit
-                            visible: isActive
+                            visible: _dg.isActive
                             anchors { fill: parent; leftMargin: 6; rightMargin: 4 }
                             verticalAlignment: TextInput.AlignVCenter
-                            text:  root.cellValues[root._key(r, c)] || ""
+                            text:  root.cellValues[root._key(_dg.r, _dg.c)] || ""
                             color: Theme.textPrimary
                             font { family: Theme.fontFamily; pixelSize: Theme.textSm }
                             selectByMouse: true
 
                             onEditingFinished: {
                                 var vals = Object.assign({}, root.cellValues)
-                                vals[root._key(r, c)] = text
+                                vals[root._key(_dg.r, _dg.c)] = text
                                 root.cellValues = vals
-                                root.cellEdited(r, c, text)
+                                root.cellEdited(_dg.r, _dg.c, text)
                             }
 
                             Keys.onPressed: (e) => {
                                 if (e.key === Qt.Key_Tab) {
                                     e.accepted = true
-                                    if (c + 1 < root.colCount) { root.activeRow = r; root.activeCol = c + 1 }
-                                    else if (r + 1 < root.rowCount) { root.activeRow = r + 1; root.activeCol = 0 }
+                                    if (_dg.c + 1 < root.colCount) { root.activeRow = _dg.r; root.activeCol = _dg.c + 1 }
+                                    else if (_dg.r + 1 < root.rowCount) { root.activeRow = _dg.r + 1; root.activeCol = 0 }
                                 }
                                 if (e.key === Qt.Key_Return || e.key === Qt.Key_Down) {
                                     e.accepted = true
-                                    if (r + 1 < root.rowCount) { root.activeRow = r + 1; root.activeCol = c }
+                                    if (_dg.r + 1 < root.rowCount) { root.activeRow = _dg.r + 1; root.activeCol = _dg.c }
                                 }
                                 if (e.key === Qt.Key_Escape) {
                                     e.accepted = true
-                                    text = root.cellValues[root._key(r, c)] || ""
+                                    text = root.cellValues[root._key(_dg.r, _dg.c)] || ""
                                     root.activeRow = -1; root.activeCol = -1
                                 }
                             }
@@ -199,11 +201,11 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                root.activeRow = r; root.activeCol = c
-                                root.selectionChanged(r, c)
+                                root.activeRow = _dg.r; root.activeCol = _dg.c
+                                root.selectionChanged(_dg.r, _dg.c)
                             }
                             onDoubleClicked: {
-                                root.activeRow = r; root.activeCol = c
+                                root.activeRow = _dg.r; root.activeCol = _dg.c
                                 _cellEdit.forceActiveFocus()
                                 _cellEdit.selectAll()
                             }

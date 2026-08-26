@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls as QQC
 import Mahina
@@ -32,7 +33,7 @@ Item {
         return c
     }
 
-    function _typeColor(t) {
+    function _typeColor(t: var): var {
         if (t === "success") return Theme.success
         if (t === "error")   return Theme.error
         if (t === "warning") return Theme.warning

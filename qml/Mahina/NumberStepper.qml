@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -23,8 +24,8 @@ Item {
     implicitWidth:  130
     implicitHeight: 36
 
-    function _clamp(v) { return Math.max(root.from, Math.min(root.to, v)) }
-    function _fmt(v)   { return v.toFixed(root.decimals) + root.suffix }
+    function _clamp(v: var): var { return Math.max(root.from, Math.min(root.to, v)) }
+    function _fmt(v: var): var { return v.toFixed(root.decimals) + root.suffix }
 
     Rectangle {
         anchors.fill: parent
@@ -49,9 +50,9 @@ Item {
             MouseArea {
                 anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                 onClicked: {
-                    root.stepperValue = _clamp(Math.round((root.stepperValue - root.stepSize) * 1e9) / 1e9)
+                    root.stepperValue = root._clamp(Math.round((root.stepperValue - root.stepSize) * 1e9) / 1e9)
                     root.valueModified(root.stepperValue)
-                    _numInput.text = _fmt(root.stepperValue)
+                    _numInput.text = root._fmt(root.stepperValue)
                 }
             }
         }
@@ -63,7 +64,7 @@ Item {
             TextInput {
                 id:    _numInput
                 anchors { fill: parent; leftMargin: 4; rightMargin: 4 }
-                text:               _fmt(root.stepperValue)
+                text:               root._fmt(root.stepperValue)
                 horizontalAlignment: TextInput.AlignHCenter
                 color:              Theme.textPrimary
                 font.family:        Theme.fontFamily
@@ -75,10 +76,10 @@ Item {
                     var raw = text.replace(root.suffix, "")
                     var v   = parseFloat(raw)
                     if (!isNaN(v)) {
-                        root.stepperValue = _clamp(v)
+                        root.stepperValue = root._clamp(v)
                         root.valueModified(root.stepperValue)
                     }
-                    text = _fmt(root.stepperValue)
+                    text = root._fmt(root.stepperValue)
                 }
             }
         }
@@ -98,9 +99,9 @@ Item {
             MouseArea {
                 anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                 onClicked: {
-                    root.stepperValue = _clamp(Math.round((root.stepperValue + root.stepSize) * 1e9) / 1e9)
+                    root.stepperValue = root._clamp(Math.round((root.stepperValue + root.stepSize) * 1e9) / 1e9)
                     root.valueModified(root.stepperValue)
-                    _numInput.text = _fmt(root.stepperValue)
+                    _numInput.text = root._fmt(root.stepperValue)
                 }
             }
         }

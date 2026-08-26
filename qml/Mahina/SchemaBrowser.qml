@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic as QQC
 import Mahina
@@ -44,28 +45,28 @@ Item {
         root._expanded = e
     }
 
-    function _toggleSchema(name) {
+    function _toggleSchema(name: var): void {
         var e = Object.assign({}, root._expanded)
         e["s::" + name] = !e["s::" + name]
         root._expanded = e
     }
 
-    function _toggleTable(schemaName, tableName) {
+    function _toggleTable(schemaName: var, tableName: var): void {
         var e = Object.assign({}, root._expanded)
         var key = "t::" + schemaName + "::" + tableName
         e[key] = !e[key]
         root._expanded = e
     }
 
-    function _isSchemaExpanded(name) {
+    function _isSchemaExpanded(name: var): var {
         return root._expanded["s::" + name] !== false
     }
 
-    function _isTableExpanded(schemaName, tableName) {
+    function _isTableExpanded(schemaName: var, tableName: var): var {
         return root._expanded["t::" + schemaName + "::" + tableName] === true
     }
 
-    function _filteredTables(tables) {
+    function _filteredTables(tables: var): var {
         var q = root.searchText.toLowerCase()
         if (!q) return tables || []
         return (tables || []).filter(function(t) {
@@ -76,13 +77,13 @@ Item {
         })
     }
 
-    function _tableIcon(type) {
+    function _tableIcon(type: var): var {
         if (type === "view")  return Icons.eye
         if (type === "index") return Icons.hash
         return Icons.table
     }
 
-    function _colIcon(col) {
+    function _colIcon(col: var): var {
         if (col.pk)       return "🔑"
         if (col.fk)       return "🔗"
         if (col.nullable) return "◌"

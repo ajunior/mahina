@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -29,9 +30,9 @@ Item {
     signal opened()
     signal closed()
 
-    function open()   { root.isOpen = true;  root.opened() }
-    function close()  { root.isOpen = false; root.closed() }
-    function toggle() { root.isOpen ? close() : open() }
+    function open(): void { root.isOpen = true;  root.opened() }
+    function close(): void { root.isOpen = false; root.closed() }
+    function toggle(): void { root.isOpen ? close() : open() }
 
     // Zero-size host — panel is anchored inside parent
     width: 0; height: 0

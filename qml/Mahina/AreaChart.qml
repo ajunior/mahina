@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -40,11 +41,11 @@ Item {
 
         Connections {
             target: root
-            function onSeriesChanged()      { _canvas.requestPaint() }
-            function onXLabelsChanged()     { _canvas.requestPaint() }
-            function onFillOpacityChanged() { _canvas.requestPaint() }
-            function onWidthChanged()       { _canvas.requestPaint() }
-            function onHeightChanged()      { _canvas.requestPaint() }
+            function onSeriesChanged(): void { _canvas.requestPaint() }
+            function onXLabelsChanged(): void { _canvas.requestPaint() }
+            function onFillOpacityChanged(): void { _canvas.requestPaint() }
+            function onWidthChanged(): void { _canvas.requestPaint() }
+            function onHeightChanged(): void { _canvas.requestPaint() }
         }
 
         Component.onCompleted: requestPaint()
@@ -59,8 +60,8 @@ Item {
             var plotH = height - padT - padB
             var yMax  = root._yMax
 
-            function fx(i, n) { return padL + (n <= 1 ? 0 : i / (n - 1)) * plotW }
-            function fy(v)    { return padT + plotH - (v / yMax) * plotH }
+            function fx(i: var, n: var): var { return padL + (n <= 1 ? 0 : i / (n - 1)) * plotW }
+            function fy(v: var): var { return padT + plotH - (v / yMax) * plotH }
 
             // Grid
             if (root.showGrid) {

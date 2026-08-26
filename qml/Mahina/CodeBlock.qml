@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic as QQC
 import Mahina
@@ -69,7 +70,11 @@ Item {
                 spacing: Theme.sp1
                 Repeater {
                     model: ["#ff5f57", "#febc2e", "#28c840"]
-                    Rectangle { width: 10; height: 10; radius: 5; color: modelData }
+                    Rectangle {
+                        id: _dot
+                        required property string modelData
+                        width: 10; height: 10; radius: 5; color: _dot.modelData
+                    }
                 }
             }
 
@@ -146,8 +151,10 @@ Item {
                     Repeater {
                         model: root.code.split("\n").length
                         Text {
+                            id: _lineNo
+                            required property int index
                             width:          28
-                            text:           index + 1
+                            text:           _lineNo.index + 1
                             horizontalAlignment: Text.AlignRight
                             color:          root._fgSub
                             font.family:    Theme.fontFamilyMono

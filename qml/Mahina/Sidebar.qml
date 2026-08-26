@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -101,14 +102,17 @@ Rectangle {
 
                 Rectangle {
                     id:               _item
+                    required property var modelData
+                    required property int index
+
                     Layout.fillWidth: true
                     implicitHeight:   38
                     radius:           Theme.radiusSm
 
-                    readonly property bool selected: root.currentIndex === index
+                    readonly property bool selected: root.currentIndex === _item.index
 
-                    color: selected              ? Theme.primarySubtle
-                         : _mouse.containsMouse  ? Theme.panel
+                    color: _item.selected         ? Theme.primarySubtle
+                         : _mouse.containsMouse   ? Theme.panel
                          : "transparent"
 
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
@@ -120,14 +124,14 @@ Rectangle {
                         spacing:             Theme.sp3
 
                         Icon {
-                            name:  modelData.icon !== undefined ? modelData.icon : ""
+                            name:  _item.modelData.icon !== undefined ? _item.modelData.icon : ""
                             size:  16
                             color: _item.selected ? Theme.primary : Theme.textSecondary
                             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         }
 
                         Text {
-                            text:           modelData.label !== undefined ? modelData.label : modelData
+                            text:           _item.modelData.label !== undefined ? _item.modelData.label : _item.modelData
                             color:          _item.selected ? Theme.primary : Theme.textSecondary
                             font.family:    Theme.fontFamily
                             font.pixelSize: Theme.textSm
@@ -143,8 +147,8 @@ Rectangle {
                         hoverEnabled: true
                         cursorShape:  Qt.PointingHandCursor
                         onClicked: {
-                            root.currentIndex = index
-                            root.itemClicked(index)
+                            root.currentIndex = _item.index
+                            root.itemClicked(_item.index)
                         }
                     }
                 }

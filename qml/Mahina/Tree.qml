@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -30,16 +31,16 @@ Item {
     signal nodeClicked(var node)
     signal nodeToggled(string nodeId, bool expanded)
 
-    function setExpanded(nodeId, expanded) {
+    function setExpanded(nodeId: var, expanded: var): void {
         var e = Object.assign({}, root._expanded)
         e[nodeId] = expanded
         root._expanded = e
     }
 
-    function expandAll()  { _setAll(root.model, true) }
-    function collapseAll(){ _setAll(root.model, false) }
+    function expandAll(): void { _setAll(root.model, true) }
+    function collapseAll(): void { _setAll(root.model, false) }
 
-    function _setAll(nodes, val) {
+    function _setAll(nodes: var, val: var): void {
         if (!nodes) return
         var e = Object.assign({}, root._expanded)
         for (var i = 0; i < nodes.length; i++) {
@@ -52,7 +53,7 @@ Item {
     // ── Internal ─────────────────────────────────────────────────────────────
     property var _expanded: ({})
 
-    function _nodeId(node, fallback) {
+    function _nodeId(node: var, fallback: var): var {
         return node.id ?? (node.label + "@" + fallback)
     }
 
@@ -62,7 +63,7 @@ Item {
         return _flatten(root.model, 0)
     }
 
-    function _flatten(nodes, depth) {
+    function _flatten(nodes: var, depth: var): var {
         var result = []
         if (!nodes) return result
         for (var i = 0; i < nodes.length; i++) {

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -29,9 +30,9 @@ Item {
 
         Connections {
             target: root
-            function onCandlesChanged()    { _cc.requestPaint() }
-            function onWidthChanged()      { _cc.requestPaint() }
-            function onHeightChanged()     { _cc.requestPaint() }
+            function onCandlesChanged(): void { _cc.requestPaint() }
+            function onWidthChanged(): void { _cc.requestPaint() }
+            function onHeightChanged(): void { _cc.requestPaint() }
         }
         Component.onCompleted: requestPaint()
 
@@ -59,7 +60,7 @@ Item {
             var barW   = Math.max(4, plotW / cd.length * 0.55)
             var spacing = plotW / cd.length
 
-            function py(v) { return padT + plotH - (v - lo) / rng * plotH }
+            function py(v: var): var { return padT + plotH - (v - lo) / rng * plotH }
 
             // Y grid lines
             ctx.strokeStyle = Qt.color(Theme.border).toString()

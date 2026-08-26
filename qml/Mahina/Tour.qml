@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -28,13 +29,13 @@ Item {
     signal finished()
     signal stepChanged(int step)
 
-    function start() {
+    function start(): void {
         root.currentStep = 0
         root.visible     = true
         root.started()
     }
 
-    function next() {
+    function next(): void {
         if (root.currentStep < root.steps.length - 1) {
             root.currentStep++
             root.stepChanged(root.currentStep)
@@ -43,14 +44,14 @@ Item {
         }
     }
 
-    function previous() {
+    function previous(): void {
         if (root.currentStep > 0) {
             root.currentStep--
             root.stepChanged(root.currentStep)
         }
     }
 
-    function stop() {
+    function stop(): void {
         _finishAnim.start()
     }
 
@@ -61,11 +62,19 @@ Item {
     readonly property var _step: steps.length > 0 ? steps[Math.max(0, Math.min(currentStep, steps.length - 1))] : null
     readonly property Item _target: (_step && _step.target) ? _step.target : null
 
-    // Finish animation
+    // Finish animation. The teardown runs from onFinished rather than a
+    // trailing ScriptAction: a ScriptAction's `script` is a QQmlScriptString,
+    // which qmlcachegen cannot compile — and it stops compiling the rest of the
+    // document when it meets one, so a ScriptAction near the top of a file
+    // costs every binding below it. onFinished is an ordinary signal handler.
     SequentialAnimation {
         id: _finishAnim
         NumberAnimation { target: root; property: "opacity"; to: 0; duration: Theme.durationNormal }
-        ScriptAction    { script: { root.visible = false; root.opacity = 1; root.finished() } }
+        onFinished: {
+            root.visible = false
+            root.opacity = 1
+            root.finished()
+        }
     }
 
     // ── Dimmed backdrop ───────────────────────────────────────────────────────
@@ -214,8 +223,8 @@ Item {
                 // Skip
                 Rectangle {
                     visible:  root.steps.length > 1
-                    height:   32; radius: Theme.radiusMd
-                    width:    _skipTxt.implicitWidth + Theme.sp3 * 2
+                    implicitHeight: 32; radius: Theme.radiusMd
+                    implicitWidth:  _skipTxt.implicitWidth + Theme.sp3 * 2
                     color:    _skipH.containsMouse ? Theme.panel : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _skipH }
@@ -235,8 +244,8 @@ Item {
                 // Previous
                 Rectangle {
                     visible: root.currentStep > 0
-                    height:  32; radius: Theme.radiusMd
-                    width:   _prevTxt.implicitWidth + Theme.sp3 * 2
+                    implicitHeight: 32; radius: Theme.radiusMd
+                    implicitWidth:  _prevTxt.implicitWidth + Theme.sp3 * 2
                     color:   _prevH.containsMouse ? Theme.panel : Theme.panel
                     border.color: Theme.border; border.width: 1
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
@@ -255,8 +264,8 @@ Item {
 
                 // Next / Done
                 Rectangle {
-                    height:       32; radius: Theme.radiusMd
-                    width:        _nextTxt.implicitWidth + Theme.sp4 * 2
+                    implicitHeight: 32; radius: Theme.radiusMd
+                    implicitWidth:  _nextTxt.implicitWidth + Theme.sp4 * 2
                     color:        _nextH.containsMouse ? Qt.darker(Theme.primary, 1.1) : Theme.primary
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _nextH }

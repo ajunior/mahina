@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as QQC
@@ -34,7 +35,7 @@ Item {
     property string _filterText: ""
     property var    _expanded:   ({})   // entry.id → bool
 
-    function _toggle(entryId) {
+    function _toggle(entryId: var): void {
         var m = Object.assign({}, root._expanded)
         m[entryId] = !m[entryId]
         root._expanded = m
@@ -53,7 +54,7 @@ Item {
         })
     }
 
-    function _levelColor(l) {
+    function _levelColor(l: var): var {
         switch (l) {
             case "debug": return Theme.textSecondary
             case "info":  return Theme.info
@@ -117,7 +118,7 @@ Item {
                         Text {
                             id: _lt; anchors.centerIn: parent
                             text: _rq1.modelData
-                            color: _on ? root._levelColor(_rq1.modelData) : Theme.textDisabled
+                            color: _rq1._on ? root._levelColor(_rq1.modelData) : Theme.textDisabled
                             font.family: Theme.fontFamily; font.pixelSize: Theme.textXs; font.weight: Theme.weightMedium
                         }
                         MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor

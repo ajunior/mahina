@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -26,14 +27,14 @@ Item {
     property bool   _editing: false
 
     // Format a number for display
-    function _fmt(n) {
+    function _fmt(n: var): var {
         var fixed  = Math.abs(n).toFixed(root.decimals)
         var parts  = fixed.split(".")
         parts[0]   = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",")
         return root.symbol + (n < 0 ? "-" : "") + parts.join(".")
     }
 
-    function _parseRaw(s) {
+    function _parseRaw(s: var): var {
         var cleaned = s.replace(/[^0-9.-]/g, "")
         var n = parseFloat(cleaned)
         return isNaN(n) ? 0 : Math.max(root.min, Math.min(root.max, n))

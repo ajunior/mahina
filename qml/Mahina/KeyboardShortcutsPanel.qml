@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Controls as QQC
@@ -27,8 +28,8 @@ Item {
     property bool closeOnEsc:  true
     property var  sections:    []
 
-    function show() { open = true }
-    function hide() { open = false }
+    function show(): void { open = true }
+    function hide(): void { open = false }
 
     QQC.Popup {
         anchors.centerIn: Overlay.overlay

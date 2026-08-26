@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -110,7 +111,7 @@ Rectangle {
 
         Connections {
             target: root
-            function onSparkDataChanged() { _spark.requestPaint() }
+            function onSparkDataChanged(): void { _spark.requestPaint() }
         }
         Component.onCompleted: requestPaint()
 

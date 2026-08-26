@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -45,11 +46,11 @@ Item {
 
         Connections {
             target: root
-            function onAmplitudesChanged() { _wc.requestPaint() }
-            function onAnimatingChanged()  { _wc.requestPaint() }
-            function on_PhaseChanged()     { _wc.requestPaint() }
-            function onWidthChanged()      { _wc.requestPaint() }
-            function onHeightChanged()     { _wc.requestPaint() }
+            function onAmplitudesChanged(): void { _wc.requestPaint() }
+            function onAnimatingChanged(): void { _wc.requestPaint() }
+            function on_PhaseChanged(): void { _wc.requestPaint() }
+            function onWidthChanged(): void { _wc.requestPaint() }
+            function onHeightChanged(): void { _wc.requestPaint() }
         }
         Component.onCompleted: requestPaint()
 

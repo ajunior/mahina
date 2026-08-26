@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -20,7 +21,7 @@ Item {
     implicitWidth:  400
     implicitHeight: _row.implicitHeight + 8
 
-    function _iconFor(t) {
+    function _iconFor(t: var): var {
         if (root.icon !== "") return root.icon
         switch (t) {
             case "success": return "✓"
@@ -29,7 +30,7 @@ Item {
             default:        return "•"
         }
     }
-    function _colorFor(t) {
+    function _colorFor(t: var): var {
         switch (t) {
             case "success": return Theme.success
             case "error":   return Theme.error

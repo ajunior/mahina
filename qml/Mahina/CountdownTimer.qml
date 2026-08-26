@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -52,8 +53,8 @@ Item {
 
         Connections {
             target: root
-            function onFracLeftChanged() { _ring.requestPaint() }
-            function onColorChanged() { _ring.requestPaint() }
+            function onFracLeftChanged(): void { _ring.requestPaint() }
+            function onColorChanged(): void { _ring.requestPaint() }
         }
         Component.onCompleted: requestPaint()
 

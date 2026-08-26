@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -40,16 +41,16 @@ Item {
     signal cellClicked(string key, var value)
 
     // ── Calendar mode helpers ─────────────────────────────────────────────────
-    function _parseDate(s) {
+    function _parseDate(s: var): var {
         var p = s.split("-")
         return new Date(parseInt(p[0]), parseInt(p[1])-1, parseInt(p[2]))
     }
-    function _dateKey(d) {
+    function _dateKey(d: var): var {
         return d.getFullYear() + "-" +
                String(d.getMonth()+1).padStart(2,"0") + "-" +
                String(d.getDate()).padStart(2,"0")
     }
-    function _interp(t) {
+    function _interp(t: var): var {
         var r = t < 0.5
             ? Qt.rgba(Qt.color(colorEmpty).r*(1-2*t) + Qt.color(colorLow).r*(2*t),
                       Qt.color(colorEmpty).g*(1-2*t) + Qt.color(colorLow).g*(2*t),

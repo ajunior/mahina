@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -27,7 +28,7 @@ Item {
     implicitWidth:  500
     implicitHeight: 400
 
-    function next() {
+    function next(): void {
         if (root.currentStep < root.steps.length - 1) {
             root.currentStep++
             root.stepChanged(root.currentStep)
@@ -35,7 +36,7 @@ Item {
             root.finished()
         }
     }
-    function back() {
+    function back(): void {
         if (root.currentStep > 0) {
             root.currentStep--
             root.stepChanged(root.currentStep)

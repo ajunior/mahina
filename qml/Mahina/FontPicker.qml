@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic as QQC
 import Mahina
@@ -26,13 +27,13 @@ Item {
         { label: "Black",      value: Font.Black     },
     ]
 
-    function _weightLabel(w) {
+    function _weightLabel(w: var): var {
         for (var i = 0; i < _weights.length; i++)
             if (_weights[i].value === w) return _weights[i].label
         return "Regular"
     }
 
-    function _emit() {
+    function _emit(): void {
         root.fontPicked(root.pickedFamily, root.pickedSize, root.pickedWeight, root.pickedItalic)
     }
 

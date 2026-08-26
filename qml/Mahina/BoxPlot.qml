@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -20,7 +21,7 @@ Item {
     implicitWidth:  360
     implicitHeight: 240
 
-    function _stats(vals) {
+    function _stats(vals: var): var {
         if (!vals || vals.length === 0) return null
         var sorted = vals.slice().sort(function(a, b) { return a - b })
         var n  = sorted.length
@@ -51,9 +52,9 @@ Item {
 
         Connections {
             target: root
-            function onSeriesChanged()  { _canvas.requestPaint() }
-            function onWidthChanged()   { _canvas.requestPaint() }
-            function onHeightChanged()  { _canvas.requestPaint() }
+            function onSeriesChanged(): void { _canvas.requestPaint() }
+            function onWidthChanged(): void { _canvas.requestPaint() }
+            function onHeightChanged(): void { _canvas.requestPaint() }
         }
         Component.onCompleted: requestPaint()
 
@@ -82,7 +83,7 @@ Item {
             var plotH = height - padT - padB
             var n = root.series.length
 
-            function fy(v) { return padT + plotH - (v - gmin) / (gmax - gmin) * plotH }
+            function fy(v: var): var { return padT + plotH - (v - gmin) / (gmax - gmin) * plotH }
 
             // Grid
             if (root.showGrid) {

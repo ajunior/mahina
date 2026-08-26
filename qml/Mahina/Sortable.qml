@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -33,9 +34,9 @@ Item {
     implicitWidth:  300
     implicitHeight: _lm.count * root.rowHeight
 
-    function _label(item) { return typeof item === "string" ? item : (item.label ?? "") }
-    function _desc(item)  { return typeof item === "string" ? "" : (item.description ?? "") }
-    function _icon(item)  { return typeof item === "string" ? "" : (item.icon ?? "") }
+    function _label(item: var): var { return typeof item === "string" ? item : (item.label ?? "") }
+    function _desc(item: var): var { return typeof item === "string" ? "" : (item.description ?? "") }
+    function _icon(item: var): var { return typeof item === "string" ? "" : (item.icon ?? "") }
 
     // Internal ListModel keeps a live copy
     ListModel { id: _lm }
@@ -61,7 +62,7 @@ Item {
         }
     }
 
-    function _emitReordered() {
+    function _emitReordered(): void {
         var arr = []
         for (var i = 0; i < _lm.count; i++) arr.push(_lm.get(i)._src)
         root.reordered(arr)

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -22,13 +23,13 @@ Item {
     implicitWidth:  320
     implicitHeight: _oiCol.implicitHeight
 
-    function _type(v) {
+    function _type(v: var): var {
         if (v === null)             return "null"
         if (Array.isArray(v))       return "array"
         return typeof v
     }
 
-    function _preview(v) {
+    function _preview(v: var): var {
         var t = _type(v)
         if (t === "null")    return "null"
         if (t === "string")  return '"' + v.substring(0, 40) + (v.length > 40 ? "…" : "") + '"'
@@ -41,13 +42,13 @@ Item {
     // Flat list of visible rows
     property var _rows: []
 
-    function _rebuild() {
+    function _rebuild(): void {
         var out = []
         _addNode(out, root.rootLabel, root.inspectData, 0)
         root._rows = out
     }
 
-    function _addNode(out, key, val, depth) {
+    function _addNode(out: var, key: var, val: var, depth: var): void {
         var t   = _type(val)
         var exp = false
         // Check if previously expanded
@@ -62,13 +63,13 @@ Item {
 
     property var _expanded: ({})
 
-    function _buildFlat() {
+    function _buildFlat(): void {
         var out = []
         _flattenNode(out, root.rootLabel, root.inspectData, 0)
         root._rows = out
     }
 
-    function _flattenNode(out, key, val, depth) {
+    function _flattenNode(out: var, key: var, val: var, depth: var): void {
         var t   = _type(val)
         var exp = root._expanded[depth + ":" + key] || false
         var leaf = t !== "object" && t !== "array"

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls as QQC
 import Mahina
@@ -138,7 +139,7 @@ Item {
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _rowH }
 
-                        Rectangle { width: 3; height: parent.height; color: Theme.primary; visible: isSelected }
+                        Rectangle { width: 3; height: parent.height; color: Theme.primary; visible: _rowRect.isSelected }
                         Rectangle { width: parent.width; height: 1; anchors.bottom: parent.bottom; color: Theme.border; opacity: 0.5 }
 
                         Row {

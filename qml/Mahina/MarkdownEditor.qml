@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls as QQC
 import Mahina
@@ -84,13 +85,14 @@ Item {
                         { label: "—",  insert: "\n---\n"    },
                     ]
                     delegate: Rectangle {
+                        id: _tbBtn
                         required property var modelData
                         width: 28; height: 24; radius: Theme.radiusSm
                         color: _tbHover.containsMouse ? Theme.surfaceVariant : "transparent"
                         HoverHandler { id: _tbHover }
                         Text {
                             anchors.centerIn: parent
-                            text:           modelData.label
+                            text:           _tbBtn.modelData.label
                             color:          Theme.textPrimary
                             font.family:    Theme.fontFamilyMono
                             font.pixelSize: Theme.textXs
@@ -99,7 +101,7 @@ Item {
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                _editor.insert(_editor.cursorPosition, parent.modelData.insert)
+                                _editor.insert(_editor.cursorPosition, _tbBtn.modelData.insert)
                                 _editor.forceActiveFocus()
                             }
                         }

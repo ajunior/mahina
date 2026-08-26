@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Dialogs
@@ -37,7 +38,7 @@ Item {
 
     readonly property bool _full: root.maxFiles > 0 && root.files.length >= root.maxFiles
 
-    function _addUrl(url) {
+    function _addUrl(url: var): void {
         if (root._full) return
         if (!root.multiple && root.files.length > 0) root.files = []
         var newFiles = root.files.slice()
@@ -46,7 +47,7 @@ Item {
         root.fileAdded(url)
     }
 
-    function _basename(url) {
+    function _basename(url: var): var {
         var s = url.toString()
         return s.substring(s.lastIndexOf("/") + 1)
     }
@@ -56,7 +57,7 @@ Item {
         fileMode:     root.multiple ? FileDialog.OpenFiles : FileDialog.OpenFile
         onAccepted: {
             var urls = root.multiple ? selectedFiles : [selectedFile]
-            for (var i = 0; i < urls.length; i++) _addUrl(urls[i])
+            for (var i = 0; i < urls.length; i++) root._addUrl(urls[i])
         }
     }
 
@@ -83,7 +84,7 @@ Item {
             onDropped: (drop) => {
                 if (!drop.hasUrls) return
                 var urls = drop.urls
-                for (var i = 0; i < urls.length; i++) _addUrl(urls[i])
+                for (var i = 0; i < urls.length; i++) root._addUrl(urls[i])
             }
 
             Rectangle {

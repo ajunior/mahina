@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -14,7 +15,7 @@ Item {
     // Parse cron into 5 fields
     property var _fields: cronExpression.split(" ").concat(["*","*","*","*","*"]).slice(0,5)
 
-    function _rebuild() {
+    function _rebuild(): void {
         var expr = [_mF.fieldValue, _hF.fieldValue, _dF.fieldValue, _moF.fieldValue, _wF.fieldValue].join(" ")
         root.cronExpression = expr
         root.expressionChanged(expr)
@@ -148,6 +149,7 @@ Item {
     }
 
     component CronField: Rectangle {
+        id: _field
         property string fieldLabel: "*"
         property string fieldValue: "*"
 
@@ -163,20 +165,20 @@ Item {
             anchors { fill: parent; leftMargin: Theme.sp3; rightMargin: Theme.sp3 }
             verticalAlignment: TextInput.AlignVCenter
             horizontalAlignment: TextInput.AlignHCenter
-            text:  fieldValue
+            text:  _field.fieldValue
             color: Theme.textPrimary
             font { family: Theme.fontFamilyMono; pixelSize: Theme.textSm }
             selectByMouse: true
             onTextChanged: {
-                if (text !== fieldValue) {
-                    fieldValue = text
+                if (text !== _field.fieldValue) {
+                    _field.fieldValue = text
                 }
             }
         }
 
         Text {
             anchors { bottom: parent.bottom; bottomMargin: -Theme.sp4; horizontalCenter: parent.horizontalCenter }
-            text:  fieldLabel
+            text:  _field.fieldLabel
             color: Theme.textDisabled
             font { family: Theme.fontFamily; pixelSize: 10 }
         }

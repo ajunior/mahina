@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -143,13 +144,16 @@ Item {
             spacing:          Theme.sp2
 
             Icon {
+                id:    _mainIcon
                 anchors.verticalCenter: parent.verticalCenter
                 name:  root.actions.length > 0 && root.expanded ? Icons.x : root.icon
                 size:  22; color: "#ffffff"
                 Behavior on name { }
+                // `parent` inside an Animator is the icon's parent — the Row — so
+                // this used to spin the whole row, label included.
                 RotationAnimator {
                     running:   root.actions.length > 0
-                    target:    parent
+                    target:    _mainIcon
                     from:      0; to: root.expanded ? 45 : 0
                     duration:  Theme.durationNormal
                 }

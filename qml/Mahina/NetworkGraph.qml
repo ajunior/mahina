@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -33,7 +34,7 @@ Item {
     onWidthChanged:  { if (width > 0 && height > 0 && nodePos.length !== nodes.length) _initPositions() }
     onHeightChanged: { if (width > 0 && height > 0 && nodePos.length !== nodes.length) _initPositions() }
 
-    function _initPositions() {
+    function _initPositions(): void {
         if (width <= 0 || height <= 0 || nodes.length === 0) return
         var pos = []
         for (var i = 0; i < nodes.length; i++) {
@@ -47,7 +48,7 @@ Item {
         _simTimer.restart()
     }
 
-    function _relax() {
+    function _relax(): var {
         if (nodePos.length === 0 || width <= 0) return
         var pos = nodePos.slice().map(function(p) { return { x: p.x, y: p.y } })
         var repel = 1000
@@ -108,7 +109,7 @@ Item {
 
         Connections {
             target: root
-            function onNodePosChanged() { _canvas.requestPaint() }
+            function onNodePosChanged(): void { _canvas.requestPaint() }
         }
 
         onPaint: {
@@ -133,6 +134,7 @@ Item {
     Repeater {
         model: root.nodePos.length
         delegate: Item {
+            id: _dg
             required property int index
             property var npos:  index < root.nodePos.length ? root.nodePos[index] : ({x:0, y:0})
             property var ndata: index < root.nodes.length   ? root.nodes[index]   : null
@@ -144,13 +146,13 @@ Item {
             Rectangle {
                 anchors.fill: parent
                 radius:       width / 2
-                color:        ndata && ndata.color ? ndata.color : Theme.primary
+                color:        _dg.ndata && _dg.ndata.color ? _dg.ndata.color : Theme.primary
                 border.color: Theme.background
                 border.width: 2
             }
             Text {
-                visible:        root.showLabels && ndata !== null
-                text:           ndata ? (ndata.label ?? "") : ""
+                visible:        root.showLabels && _dg.ndata !== null
+                text:           _dg.ndata ? (_dg.ndata.label ?? "") : ""
                 color:          Theme.textPrimary
                 font.family:    Theme.fontFamily
                 font.pixelSize: Theme.textXs
@@ -161,7 +163,7 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 cursorShape:  Qt.PointingHandCursor
-                onClicked:    if (ndata) root.nodeSelected(ndata)
+                onClicked:    if (_dg.ndata) root.nodeSelected(_dg.ndata)
             }
         }
     }

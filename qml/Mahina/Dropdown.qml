@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -50,7 +51,7 @@ Item {
     // ── State ────────────────────────────────────────────────────────────────
     property bool _open: false
 
-    function _close() { root._open = false }
+    function _close(): void { root._open = false }
 
     // ── Layout ────────────────────────────────────────────────────────────────
     Column {
@@ -178,17 +179,20 @@ Item {
 
             delegate: Rectangle {
                 id:     _opt
+                required property var modelData
+                required property int index
+
                 width:  ListView.view.width
                 height: 34
                 radius: Theme.radiusSm
 
-                readonly property bool selected: root.currentIndex === index
+                readonly property bool selected: root.currentIndex === _opt.index
                 readonly property string optLabel: {
-                    var item = modelData
+                    var item = _opt.modelData
                     return (typeof item === "object" && item !== null) ? (item.label || "") : String(item)
                 }
 
-                color: selected           ? Theme.primarySubtle
+                color: _opt.selected           ? Theme.primarySubtle
                      : _optMouse.containsMouse ? Theme.panel
                      : "transparent"
 
@@ -226,7 +230,7 @@ Item {
                     hoverEnabled: true
                     cursorShape:  Qt.PointingHandCursor
                     onClicked: {
-                        root.currentIndex = index
+                        root.currentIndex = _opt.index
                         root._open = false
                     }
                 }

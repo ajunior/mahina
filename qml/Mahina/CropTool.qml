@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -116,8 +117,8 @@ Item {
 
             Rectangle {
                 width: 10; height: 10; color: "white"
-                x: isRight  ? 14 : 0
-                y: isBottom ? 14 : 0
+                x: _rq1.isRight  ? 14 : 0
+                y: _rq1.isBottom ? 14 : 0
             }
 
             MouseArea {
@@ -136,14 +137,14 @@ Item {
                 onPositionChanged: (mouse) => {
                     var ddx = (mouse.x - startMX) / root.width
                     var ddy = (mouse.y - startMY) / root.height
-                    if (dxSign < 0) {
+                    if (_rq1.dxSign < 0) {
                         var newW = Math.max(root.minSize/root.width, startCW - ddx)
                         root.cropX = Math.max(0, startCX + startCW - newW)
                         root.cropWidth = newW
                     } else {
                         root.cropWidth = Math.max(root.minSize/root.width, Math.min(1-root.cropX, startCW + ddx))
                     }
-                    if (dySign < 0) {
+                    if (_rq1.dySign < 0) {
                         var newH = Math.max(root.minSize/root.height, startCH - ddy)
                         root.cropY = Math.max(0, startCY + startCH - newH)
                         root.cropHeight = newH

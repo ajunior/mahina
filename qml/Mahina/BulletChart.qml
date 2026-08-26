@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -46,7 +47,7 @@ Item {
                 readonly property real barRight:  16
                 readonly property real barW:      width - barLeft - barRight
                 readonly property real barH:      14
-                readonly property real barY:      (rowHeight - barH) / 2
+                readonly property real barY:      (root.rowHeight - barH) / 2
 
                 Canvas {
                     id:           _bc
@@ -54,8 +55,8 @@ Item {
 
                     Connections {
                         target: root
-                        function onItemsChanged() { _bc.requestPaint() }
-                        function onWidthChanged()  { _bc.requestPaint() }
+                        function onItemsChanged(): void { _bc.requestPaint() }
+                        function onWidthChanged(): void { _bc.requestPaint() }
                     }
                     Component.onCompleted: requestPaint()
 

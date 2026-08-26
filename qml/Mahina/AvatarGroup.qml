@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -34,6 +35,7 @@ Item {
     Repeater {
         model: root._shown
         delegate: Item {
+            id: _dg
             required property int index
 
             x: index * (root.size - root.overlap)
@@ -51,20 +53,20 @@ Item {
             Rectangle {
                 anchors.fill:  parent
                 radius:        root.size / 2
-                color:         _item.color ?? Theme.primary
+                color:         _dg._item.color ?? Theme.primary
                 border.color:  Theme.surface
                 border.width:  2
 
                 Image {
                     anchors.fill:  parent
-                    source:        _item.src ?? ""
+                    source:        _dg._item.src ?? ""
                     fillMode:      Image.PreserveAspectCrop
-                    visible:       (_item.src ?? "") !== "" && status === Image.Ready
+                    visible:       (_dg._item.src ?? "") !== "" && status === Image.Ready
                 }
 
                 Text {
                     anchors.centerIn: parent
-                    text:           _initials
+                    text:           _dg._initials
                     color:          "#ffffff"
                     font.family:    Theme.fontFamily
                     font.pixelSize: Math.round(root.size * 0.32)

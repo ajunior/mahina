@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -22,7 +23,7 @@ Item {
     implicitWidth:  Math.max(_display.implicitWidth + 16, 120)
     implicitHeight: Math.max(_display.implicitHeight + 8, 32)
 
-    function _commit() {
+    function _commit(): void {
         root.editing   = false
         root.editValue = _input.text
         root.committed(root.editValue)

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -37,15 +38,18 @@ Item {
 
             Item {
                 id:     _tab
+                required property string modelData
+                required property int    index
+
                 width:  Math.max(root.tabMinWidth, _label.implicitWidth + Theme.sp5 * 2)
                 height: root.tabHeight
 
-                readonly property bool selected: root.currentIndex === index
+                readonly property bool selected: root.currentIndex === _tab.index
 
                 Text {
                     id:                  _label
                     anchors.centerIn:    parent
-                    text:                modelData
+                    text:                _tab.modelData
                     color:               _tab.selected ? Theme.primary : _tabMouse.containsMouse ? Theme.textPrimary : Theme.textSecondary
                     font.family:         Theme.fontFamily
                     font.pixelSize:      Theme.textSm
@@ -72,8 +76,8 @@ Item {
                     hoverEnabled:  true
                     cursorShape:   Qt.PointingHandCursor
                     onClicked: {
-                        root.currentIndex = index
-                        root.tabClicked(index)
+                        root.currentIndex = _tab.index
+                        root.tabClicked(_tab.index)
                     }
                 }
             }

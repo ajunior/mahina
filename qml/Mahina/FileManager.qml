@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic as QQC
 import Mahina
@@ -35,7 +36,7 @@ Item {
         })
     }
 
-    function _fileIcon(f) {
+    function _fileIcon(f: var): var {
         if (f.icon) return f.icon
         if (f.type === "dir") return "📁"
         var ext = f.name.split(".").pop().toLowerCase()
@@ -47,7 +48,7 @@ Item {
         return map[ext] || "📄"
     }
 
-    function _fmtSize(bytes) {
+    function _fmtSize(bytes: var): var {
         if (!bytes) return ""
         if (bytes < 1024)   return bytes + " B"
         if (bytes < 1048576) return (bytes / 1024).toFixed(1) + " KB"

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -25,7 +26,7 @@ Item {
 
     property int maxVisible: 5
 
-    function show(message, type, duration, copyable) {
+    function show(message: var, type: var, duration: var, copyable: var): void {
         if (_model.count >= root.maxVisible) _model.remove(0)
         _model.append({
             toastId:   ++_nextId,
@@ -36,13 +37,13 @@ Item {
         })
     }
 
-    function copyToClipboard(text) {
+    function copyToClipboard(text: var): void {
         _clipHelper.text = text
         _clipHelper.selectAll()
         _clipHelper.copy()
     }
 
-    function _remove(id) {
+    function _remove(id: var): var {
         for (var i = 0; i < _model.count; i++) {
             if (_model.get(i).toastId === id) { _model.remove(i); return }
         }
@@ -71,6 +72,14 @@ Item {
 
             delegate: Rectangle {
                 id:      _toast
+
+                // ComponentBehavior: Bound — roles arrive as required properties.
+                required property int    toastId
+                required property string message
+                required property int    toastType
+                required property int    duration
+                required property bool   copyable
+
                 width:   parent.width
                 height:  _tRow.implicitHeight + Theme.sp3 * 2
                 radius:  0
@@ -83,7 +92,7 @@ Item {
 
                 // ── Palette ───────────────────────────────────────────────────
                 readonly property color _accent: {
-                    switch (toastType) {
+                    switch (_toast.toastType) {
                         case Toaster.Type.Success: return Theme.success
                         case Toaster.Type.Warning: return Theme.warning
                         case Toaster.Type.Error:   return Theme.error
@@ -91,7 +100,7 @@ Item {
                     }
                 }
                 readonly property color _subtle: {
-                    switch (toastType) {
+                    switch (_toast.toastType) {
                         case Toaster.Type.Success: return Theme.successSubtle
                         case Toaster.Type.Warning: return Theme.warningSubtle
                         case Toaster.Type.Error:   return Theme.errorSubtle
@@ -99,7 +108,7 @@ Item {
                     }
                 }
                 readonly property string _icon: {
-                    switch (toastType) {
+                    switch (_toast.toastType) {
                         case Toaster.Type.Success: return Icons.checkCircle
                         case Toaster.Type.Warning: return Icons.warningCircle
                         case Toaster.Type.Error:   return Icons.xCircle
@@ -139,7 +148,7 @@ Item {
                     }
 
                     Text {
-                        text:             message
+                        text:             _toast.message
                         color:            Theme.textPrimary
                         font.family:      Theme.fontFamily
                         font.pixelSize:   Theme.textSm
@@ -149,7 +158,7 @@ Item {
 
                     // Copy button
                     Rectangle {
-                        visible: copyable
+                        visible: _toast.copyable
                         width:  24; height: 24; radius: Theme.radiusSm
                         color:  _copyHov.containsMouse ? Theme.border : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
@@ -168,7 +177,7 @@ Item {
                             anchors.fill: parent
                             cursorShape:  Qt.PointingHandCursor
                             onClicked: {
-                                _clipHelper.text = message
+                                _clipHelper.text = _toast.message
                                 _clipHelper.selectAll()
                                 _clipHelper.copy()
                                 _toast._copied = true
@@ -200,7 +209,7 @@ Item {
 
                 // ── Auto-dismiss timer (inside delegate — uses duration role) ──
                 Timer {
-                    interval: duration
+                    interval: _toast.duration
                     running:  true
                     onTriggered: _exitAnim.start()
                 }
@@ -216,7 +225,7 @@ Item {
                 SequentialAnimation {
                     id: _exitAnim
                     NumberAnimation { target: _toast; property: "opacity"; to: 0; duration: Theme.durationNormal; easing.type: Easing.InCubic }
-                    ScriptAction    { script: root._remove(toastId) }
+                    onFinished: root._remove(_toast.toastId)
                 }
             }
         }

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic as QQC
 import Mahina
@@ -52,7 +53,7 @@ Item {
         onContentYChanged: _checkLoadMore()
         onCountChanged:    _checkLoadMore()
 
-        function _checkLoadMore() {
+        function _checkLoadMore(): void {
             if (root.loading) return
             if (contentHeight <= height) return
             var distFromBottom = contentHeight - (contentY + height)

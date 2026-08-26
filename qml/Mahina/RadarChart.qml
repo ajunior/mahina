@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -34,10 +35,10 @@ Item {
 
         Connections {
             target: root
-            function onAxesChanged()    { _canvas.requestPaint() }
-            function onSeriesChanged()  { _canvas.requestPaint() }
-            function onWidthChanged()   { _canvas.requestPaint() }
-            function onHeightChanged()  { _canvas.requestPaint() }
+            function onAxesChanged(): void { _canvas.requestPaint() }
+            function onSeriesChanged(): void { _canvas.requestPaint() }
+            function onWidthChanged(): void { _canvas.requestPaint() }
+            function onHeightChanged(): void { _canvas.requestPaint() }
         }
 
         onPaint: {
@@ -51,7 +52,7 @@ Item {
             var cy  = root._cy
             var r   = root._r
 
-            function pt(axis, frac) {
+            function pt(axis: var, frac: var): var {
                 var angle = (axis / n) * Math.PI * 2 - Math.PI / 2
                 return { x: cx + Math.cos(angle) * frac * r,
                          y: cy + Math.sin(angle) * frac * r }

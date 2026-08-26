@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -28,8 +29,8 @@ Item {
     signal confirmed()
     signal cancelled()
 
-    function open()  { root.isOpen = true  }
-    function close() { root.isOpen = false }
+    function open(): void { root.isOpen = true  }
+    function close(): void { root.isOpen = false }
 
     anchors.fill: parent
     visible:      root.isOpen

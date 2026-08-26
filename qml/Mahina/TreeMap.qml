@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -30,7 +31,7 @@ Item {
     // Compute squarified layout
     property var _rects: []
 
-    function _layout() {
+    function _layout(): var {
         var n = nodes.length
         if (n === 0) { _rects = []; return }
         var total = _total
@@ -87,7 +88,7 @@ Item {
         _rects = rects
     }
 
-    function _worstRatio(items, shortSide, area) {
+    function _worstRatio(items: var, shortSide: var, area: var): var {
         var worst = 0
         for (var i = 0; i < items.length; i++) {
             var frac = (items[i].value ?? 0) / _total

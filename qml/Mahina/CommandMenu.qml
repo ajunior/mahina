@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls
 import Mahina
@@ -58,7 +59,7 @@ Item {
         return out
     }
 
-    function _runActive() {
+    function _runActive(): void {
         if (root.activeIdx < root.flatItems.length) {
             var it = root.flatItems[root.activeIdx]
             root.isOpen = false
@@ -206,7 +207,7 @@ Item {
                                     Behavior on color { ColorAnimation { duration: 80 } }
 
                                     HoverHandler {
-                                        onHoveredChanged: if (hovered) root.activeIdx = globalIdx
+                                        onHoveredChanged: if (hovered) root.activeIdx = _rq2.globalIdx
                                     }
 
                                     Row {

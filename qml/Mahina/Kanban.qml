@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls as QQC
 import Mahina
@@ -35,7 +36,7 @@ Item {
     onColumnsChanged:     _syncBoard()
     Component.onCompleted: _syncBoard()
 
-    function _syncBoard() {
+    function _syncBoard(): void {
         boardData = JSON.parse(JSON.stringify(root.columns))
     }
 
@@ -174,10 +175,10 @@ Item {
                     id:     _colBody
                     anchors { left: parent.left; right: parent.right; top: _colHeader.bottom; topMargin: 8; bottom: parent.bottom }
                     radius: Theme.radiusMd
-                    color:  root.targetCol === colIdx && root.dragging
+                    color:  root.targetCol === _rq1.colIdx && root.dragging
                                 ? Qt.rgba(Qt.color(Theme.primary).r, Qt.color(Theme.primary).g, Qt.color(Theme.primary).b, 0.06)
                                 : Theme.panel
-                    border.color: root.targetCol === colIdx && root.dragging ? Theme.primary : "transparent"
+                    border.color: root.targetCol === _rq1.colIdx && root.dragging ? Theme.primary : "transparent"
                     border.width: 1
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
 
@@ -199,8 +200,8 @@ Item {
                                     required property int index
 
                                     property int  myCardIdx: index
-                                    property int  myColIdx:  colIdx
-                                    property bool isBeingDragged: root.dragging && root.dragFromCol === colIdx && root.dragFromCard === index
+                                    property int  myColIdx:  _rq1.colIdx
+                                    property bool isBeingDragged: root.dragging && root.dragFromCol === _rq1.colIdx && root.dragFromCard === index
 
                                     width:   parent.width - Theme.sp1 * 2
                                     height:  isBeingDragged ? 4 : _cardRect.implicitHeight
@@ -267,11 +268,11 @@ Item {
                                             onPressed: (mouse) => {
                                                 var g = mapToItem(root, mouse.x, mouse.y)
                                                 root.dragCardData  = _rq2.modelData
-                                                root.dragFromCol   = myColIdx
-                                                root.dragFromCard  = myCardIdx
+                                                root.dragFromCol   = _rq2.myColIdx
+                                                root.dragFromCard  = _rq2.myCardIdx
                                                 root.ghostX        = g.x
                                                 root.ghostY        = g.y
-                                                root.targetCol     = myColIdx
+                                                root.targetCol     = _rq2.myColIdx
                                                 root.dragging      = true
                                             }
                                         }

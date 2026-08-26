@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -32,9 +33,9 @@ Item {
 
         Connections {
             target: root
-            function onBarsChanged()   { _canvas.requestPaint() }
-            function onWidthChanged()  { _canvas.requestPaint() }
-            function onHeightChanged() { _canvas.requestPaint() }
+            function onBarsChanged(): void { _canvas.requestPaint() }
+            function onWidthChanged(): void { _canvas.requestPaint() }
+            function onHeightChanged(): void { _canvas.requestPaint() }
         }
 
         onPaint: {
@@ -68,7 +69,7 @@ Item {
             }
 
             var range = yMax - yMin || 1
-            function fy(v) { return padT + plotH - ((v - yMin) / range) * plotH }
+            function fy(v: var): var { return padT + plotH - ((v - yMin) / range) * plotH }
 
             // Grid
             ctx.font = "10px '" + Theme.fontFamily + "'"; ctx.textAlign = "right"

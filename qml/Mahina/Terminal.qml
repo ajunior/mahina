@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -28,7 +29,7 @@ Item {
     property var cmdHistory:     []
     property int historyIdx:     -1
 
-    function appendLine(text) {
+    function appendLine(text: var): void {
         var lines = root.outputLines.slice()
         lines.push({ text: text, error: false })
         if (lines.length > 500) lines = lines.slice(lines.length - 500)
@@ -36,14 +37,14 @@ Item {
         Qt.callLater(function() { _scroll.positionViewAtEnd() })
     }
 
-    function appendError(text) {
+    function appendError(text: var): void {
         var lines = root.outputLines.slice()
         lines.push({ text: text, error: true })
         root.outputLines = lines
         Qt.callLater(function() { _scroll.positionViewAtEnd() })
     }
 
-    function clear() {
+    function clear(): void {
         root.outputLines = []
     }
 

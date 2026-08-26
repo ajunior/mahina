@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -18,7 +19,7 @@ Item {
     implicitWidth:  360
     implicitHeight: _col.implicitHeight
 
-    function _emit() {
+    function _emit(): void {
         addressEdited({ street: _street.text, city: _city.text, state: _state.text, zip: _zip.text, country: _country.text })
     }
 

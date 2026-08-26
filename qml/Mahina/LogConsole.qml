@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -20,7 +21,7 @@ Item {
 
     signal entryClicked(var entry)
 
-    function append(level, message) {
+    function append(level: var, message: var): void {
         var ts   = new Date().toLocaleTimeString(Qt.locale(), "HH:mm:ss")
         var copy = root.logEntries.slice()
         copy.push({ level: level, message: message, timestamp: ts })
@@ -29,9 +30,9 @@ Item {
         if (root.autoScroll) _lcView.positionViewAtEnd()
     }
 
-    function clear() { root.logEntries = [] }
+    function clear(): void { root.logEntries = [] }
 
-    function _levelColor(l) {
+    function _levelColor(l: var): var {
         switch (l) {
             case "error": return Theme.error
             case "warn":  return Theme.warning
@@ -41,7 +42,7 @@ Item {
         }
     }
 
-    function _matches(e) {
+    function _matches(e: var): var {
         if (root.filterLevel !== "all" && e.level !== root.filterLevel) return false
         if (root.searchText !== "" && e.message.toLowerCase().indexOf(root.searchText.toLowerCase()) < 0) return false
         return true

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -29,13 +30,13 @@ Item {
 
     signal triggered(var item)
 
-    function open()  {
+    function open(): void {
         root.visible   = true
         _search.text   = ""
         _selectedIdx   = 0
         _search.forceActiveFocus()
     }
-    function close() { root.visible = false }
+    function close(): void { root.visible = false }
 
     // ── Internal ─────────────────────────────────────────────────────────────
     property int _selectedIdx: 0
@@ -58,12 +59,22 @@ Item {
     z:            9500
     focus:        visible
 
-    Keys.onEscapePressed: root.close()
-    Keys.onUpPressed:     _selectedIdx = Math.max(0, _selectedIdx - 1)
-    Keys.onDownPressed:   _selectedIdx = Math.min(_filtered.length - 1, _selectedIdx + 1)
-    Keys.onReturnPressed: {
-        if (_filtered[_selectedIdx]) { root.triggered(_filtered[_selectedIdx]); root.close() }
+    // The search field forwards its arrow/return keys here, so the behaviour
+    // lives in plain functions rather than being reached by invoking root's
+    // attached Keys handlers as if they were methods.
+    function _moveUp(): void   { root._selectedIdx = Math.max(0, root._selectedIdx - 1) }
+    function _moveDown(): void { root._selectedIdx = Math.min(root._filtered.length - 1, root._selectedIdx + 1) }
+    function _activate(): void {
+        if (root._filtered[root._selectedIdx]) {
+            root.triggered(root._filtered[root._selectedIdx])
+            root.close()
+        }
     }
+
+    Keys.onEscapePressed: root.close()
+    Keys.onUpPressed:     root._moveUp()
+    Keys.onDownPressed:   root._moveDown()
+    Keys.onReturnPressed: root._activate()
 
     // Backdrop
     Rectangle {
@@ -121,9 +132,9 @@ Item {
                         font:      _search.font
                     }
 
-                    Keys.onUpPressed:     { root.Keys.onUpPressed(event);     event.accepted = true }
-                    Keys.onDownPressed:   { root.Keys.onDownPressed(event);   event.accepted = true }
-                    Keys.onReturnPressed: { root.Keys.onReturnPressed(event); event.accepted = true }
+                    Keys.onUpPressed:     (event) => { root._moveUp();   event.accepted = true }
+                    Keys.onDownPressed:   (event) => { root._moveDown(); event.accepted = true }
+                    Keys.onReturnPressed: (event) => { root._activate(); event.accepted = true }
                     Keys.onEscapePressed: root.close()
 
                     onTextChanged: root._selectedIdx = 0
@@ -146,6 +157,7 @@ Item {
 
             // ── Results ───────────────────────────────────────────────────────
             Column {
+                id:               _results
                 Layout.fillWidth: true
                 padding:          Theme.sp1
 
@@ -157,7 +169,7 @@ Item {
                         required property var modelData
                         required property int index
 
-                        width:   parent.width - parent.padding * 2
+                        width:   _results.width - _results.padding * 2
                         height:  40
                         radius:  Theme.radiusSm
                         color:   root._selectedIdx === index

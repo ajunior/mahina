@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as QQC
@@ -40,7 +41,7 @@ Item {
     }
 
     // Sync HSV → color when knobs move
-    function _applyHsv() {
+    function _applyHsv(): void {
         if (_syncing) return
         _syncing     = true
         root.color   = Qt.hsva(root._hue / 360, root._sat, root._val, 1.0)
@@ -50,7 +51,7 @@ Item {
     }
 
     // ── Colour math helpers ───────────────────────────────────────────────────
-    function _toHsv(c) {
+    function _toHsv(c: var): var {
         var r = c.r, g = c.g, b = c.b
         var mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn
         var h = 0, s = mx === 0 ? 0 : d / mx, v = mx
@@ -63,12 +64,12 @@ Item {
         return { h: h, s: s, v: v }
     }
 
-    function _toHex(c) {
+    function _toHex(c: var): var {
         function h(v) { return Math.round(v * 255).toString(16).padStart(2, "0") }
         return "#" + h(c.r) + h(c.g) + h(c.b)
     }
 
-    function _fromHex(hex) {
+    function _fromHex(hex: var): var {
         hex = hex.replace(/^#/, "")
         if (hex.length !== 6) return null
         var r = parseInt(hex.slice(0,2), 16) / 255

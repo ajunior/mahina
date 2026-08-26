@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -74,10 +75,10 @@ Item {
 
                         Text {
                             text:           _rq1.modelData.label || ""
-                            color:          isActive ? Theme.primary : Theme.textPrimary
+                            color:          _rq1.isActive ? Theme.primary : Theme.textPrimary
                             font.family:    Theme.fontFamily
                             font.pixelSize: Theme.textSm
-                            font.weight:    isActive ? Font.Medium : Font.Normal
+                            font.weight:    _rq1.isActive ? Font.Medium : Font.Normal
                         }
                     }
 

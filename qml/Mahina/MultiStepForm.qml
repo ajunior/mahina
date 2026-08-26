@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -72,7 +73,7 @@ Rectangle {
                             visible: _rq1.index > 0
                             width: 40; height: 2
                             anchors.verticalCenter: parent.verticalCenter
-                            color: isDone ? Theme.primary : Theme.border
+                            color: _rq1.isDone ? Theme.primary : Theme.border
                             Behavior on color { ColorAnimation { duration: 200 } }
                         }
 
@@ -84,20 +85,20 @@ Rectangle {
                             Rectangle {
                                 width: 28; height: 28; radius: 14
                                 anchors.horizontalCenter: parent.horizontalCenter
-                                color: isDone ? Theme.primary
-                                             : (isCurrent ? Qt.rgba(Qt.color(Theme.primary).r,
+                                color: _rq1.isDone ? Theme.primary
+                                             : (_rq1.isCurrent ? Qt.rgba(Qt.color(Theme.primary).r,
                                                                     Qt.color(Theme.primary).g,
                                                                     Qt.color(Theme.primary).b, 0.12)
                                                           : Theme.surfaceVariant)
-                                border.color: isDone || isCurrent ? Theme.primary : Theme.border
+                                border.color: _rq1.isDone || _rq1.isCurrent ? Theme.primary : Theme.border
                                 border.width: 2
                                 Behavior on color { ColorAnimation { duration: 200 } }
 
                                 Text {
                                     anchors.centerIn: parent
-                                    text:           isDone ? "✓" : (_rq1.index + 1).toString()
-                                    color:          isDone ? Theme.textOnPrimary
-                                                          : (isCurrent ? Theme.primary : Theme.textDisabled)
+                                    text:           _rq1.isDone ? "✓" : (_rq1.index + 1).toString()
+                                    color:          _rq1.isDone ? Theme.textOnPrimary
+                                                          : (_rq1.isCurrent ? Theme.primary : Theme.textDisabled)
                                     font.pixelSize: 11; font.weight: Font.Bold; font.family: Theme.fontFamily
                                     Behavior on color { ColorAnimation { duration: 200 } }
                                 }
@@ -106,7 +107,7 @@ Rectangle {
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 text:           _rq1.modelData.title || ""
-                                color:          isCurrent ? Theme.primary : Theme.textDisabled
+                                color:          _rq1.isCurrent ? Theme.primary : Theme.textDisabled
                                 font.family:    Theme.fontFamily
                                 font.pixelSize: 9
                                 Behavior on color { ColorAnimation { duration: 200 } }

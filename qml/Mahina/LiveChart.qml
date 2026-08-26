@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -25,7 +26,7 @@ Item {
     implicitWidth:  400
     implicitHeight: 180
 
-    function push(val) {
+    function push(val: var): void {
         var pts = root.dataPoints.slice()
         pts.push(val)
         if (pts.length > root.maxPoints) pts.shift()
@@ -38,9 +39,9 @@ Item {
 
         Connections {
             target: root
-            function onDataPointsChanged() { _lc.requestPaint() }
-            function onWidthChanged()      { _lc.requestPaint() }
-            function onHeightChanged()     { _lc.requestPaint() }
+            function onDataPointsChanged(): void { _lc.requestPaint() }
+            function onWidthChanged(): void { _lc.requestPaint() }
+            function onHeightChanged(): void { _lc.requestPaint() }
         }
         Component.onCompleted: requestPaint()
 
@@ -63,8 +64,8 @@ Item {
             if (mx === mn) { mx += 1; mn -= 1 }
             var rng = mx - mn
 
-            function px(i) { return padL + (i / (root.maxPoints - 1)) * plotW }
-            function py(v) { return padT + plotH - (v - mn) / rng * plotH }
+            function px(i: var): var { return padL + (i / (root.maxPoints - 1)) * plotW }
+            function py(v: var): var { return padT + plotH - (v - mn) / rng * plotH }
 
             // Grid
             if (root.showGrid) {

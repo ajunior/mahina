@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as QQC
@@ -46,9 +47,9 @@ Item {
     property bool _focused: false
     property string _query: ""
 
-    function _label(item) { return typeof item === "string" ? item : (item.label ?? "") }
-    function _desc(item)  { return typeof item === "string" ? "" : (item.description ?? "") }
-    function _icon(item)  { return typeof item === "string" ? "" : (item.icon ?? "") }
+    function _label(item: var): var { return typeof item === "string" ? item : (item.label ?? "") }
+    function _desc(item: var): var { return typeof item === "string" ? "" : (item.description ?? "") }
+    function _icon(item: var): var { return typeof item === "string" ? "" : (item.icon ?? "") }
 
     readonly property var _suggestions: {
         if (!root.staticFilter) return root.model.slice(0, root.maxItems)

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -20,7 +21,7 @@ Item {
     implicitWidth:  220
     implicitHeight: 36
 
-    function _keyName(key) {
+    function _keyName(key: var): var {
         if (key >= Qt.Key_A && key <= Qt.Key_Z)
             return String.fromCharCode(key)
         if (key >= Qt.Key_0 && key <= Qt.Key_9)

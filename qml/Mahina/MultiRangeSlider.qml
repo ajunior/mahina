@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -22,12 +23,12 @@ Item {
 
     readonly property real _range: max - min || 1
 
-    function _snap(v) {
+    function _snap(v: var): var {
         var snapped = step > 0 ? Math.round(v / step) * step : v
         return Math.max(min, Math.min(max, snapped))
     }
 
-    function _xToVal(px) {
+    function _xToVal(px: var): var {
         return min + (px / (_track.width - 18)) * _range
     }
 
@@ -77,7 +78,7 @@ Item {
                 id:     _lbl
                 anchors { bottom: parent.top; bottomMargin: 4; horizontalCenter: parent.horizontalCenter }
                 visible: _thumbMA.containsMouse || _thumbMA.drag.active
-                text:   _val.toFixed(root.decimals)
+                text:   _rq1._val.toFixed(root.decimals)
                 color:  Theme.textPrimary
                 font.family: Theme.fontFamilyMono
                 font.pixelSize: Theme.textXs

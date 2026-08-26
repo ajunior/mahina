@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -42,17 +43,17 @@ Item {
     readonly property bool _usingModel: root.model !== null && root.delegate !== null
     readonly property int  _count:      _usingModel ? _repeater.count : _staticSlot.children.length
 
-    function next() {
+    function next(): void {
         if (root._count < 2) return
         if (root.currentIndex < root._count - 1) root.currentIndex++
         else if (root.loop) root.currentIndex = 0
     }
-    function previous() {
+    function previous(): void {
         if (root._count < 2) return
         if (root.currentIndex > 0) root.currentIndex--
         else if (root.loop) root.currentIndex = root._count - 1
     }
-    function goTo(i) {
+    function goTo(i: var): void {
         if (i >= 0 && i < root._count) root.currentIndex = i
     }
 
@@ -89,7 +90,7 @@ Item {
             width:   root.width * Math.max(1, _staticSlot.children.length)
             height:  root.height
 
-            function _reposition() {
+            function _reposition(): void {
                 for (var i = 0; i < children.length; i++) {
                     children[i].x      = i * root.width
                     children[i].width  = root.width
@@ -102,8 +103,8 @@ Item {
 
             Connections {
                 target: root
-                function onWidthChanged()  { _staticSlot._reposition() }
-                function onHeightChanged() { _staticSlot._reposition() }
+                function onWidthChanged(): void { _staticSlot._reposition() }
+                function onHeightChanged(): void { _staticSlot._reposition() }
             }
         }
     }

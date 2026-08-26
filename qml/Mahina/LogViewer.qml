@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as QQC
@@ -44,7 +45,7 @@ Item {
 
     property string _filterText: ""
 
-    function _levelColor(level) {
+    function _levelColor(level: var): var {
         switch (level) {
             case "debug": return "#6c7086"
             case "info":  return "#89b4fa"
@@ -53,7 +54,7 @@ Item {
             default:      return Theme.textSecondary
         }
     }
-    function _levelBg(level) {
+    function _levelBg(level: var): var {
         switch (level) {
             case "debug": return "#1e1e2e"
             case "info":  return "#1e2030"
@@ -122,7 +123,7 @@ Item {
                             id:              _lt
                             anchors.centerIn: parent
                             text:            _rq2.modelData
-                            color:           _on ? root._levelColor(_rq2.modelData) : Theme.textDisabled
+                            color:           _rq2._on ? root._levelColor(_rq2.modelData) : Theme.textDisabled
                             font.family:     Theme.fontFamily
                             font.pixelSize:  Theme.textXs
                             font.weight:     Theme.weightMedium

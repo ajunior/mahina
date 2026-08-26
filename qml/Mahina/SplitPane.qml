@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -53,8 +54,8 @@ Item {
         id:      _firstSlot
         visible: root.firstVisible
         x:       0; y: 0
-        width:   _horiz ? root._animatedRatio * root.width  - root._ht : root.width
-        height:  _horiz ? root.height : root._animatedRatio * root.height - root._ht
+        width:   root._horiz ? root._animatedRatio * root.width  - root._ht : root.width
+        height:  root._horiz ? root.height : root._animatedRatio * root.height - root._ht
 
         clip: true
 
@@ -76,28 +77,28 @@ Item {
         readonly property real grabThick: 9
 
         visible: root._animatedRatio > 0.0 && root._animatedRatio < 1.0
-        x:       _horiz ? root._animatedRatio * root.width - grabThick / 2 : 0
-        y:       _horiz ? 0 : root._animatedRatio * root.height - grabThick / 2
-        width:  _horiz ? grabThick : root.width
-        height: _horiz ? root.height : grabThick
+        x:       root._horiz ? root._animatedRatio * root.width - grabThick / 2 : 0
+        y:       root._horiz ? 0 : root._animatedRatio * root.height - grabThick / 2
+        width:  root._horiz ? grabThick : root.width
+        height: root._horiz ? root.height : grabThick
         z:      10
 
         readonly property bool _active: _divHov.hovered || _drag.pressed
 
         Rectangle {
             anchors.centerIn: parent
-            width:  _horiz ? _divider.lineThick : parent.width
-            height: _horiz ? parent.height : _divider.lineThick
+            width:  root._horiz ? _divider.lineThick : parent.width
+            height: root._horiz ? parent.height : _divider.lineThick
             color:  _divider._active ? Theme.primary : Theme.border
             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
         }
 
-        HoverHandler { id: _divHov; cursorShape: _horiz ? Qt.SizeHorCursor : Qt.SizeVerCursor }
+        HoverHandler { id: _divHov; cursorShape: root._horiz ? Qt.SizeHorCursor : Qt.SizeVerCursor }
 
         MouseArea {
             id:          _drag
             anchors.fill: parent
-            cursorShape: _horiz ? Qt.SizeHorCursor : Qt.SizeVerCursor
+            cursorShape: root._horiz ? Qt.SizeHorCursor : Qt.SizeVerCursor
             onPositionChanged: (mouse) => {
                 if (!pressed) return
                 if (root._horiz) {
@@ -115,10 +116,10 @@ Item {
     Item {
         id:      _secondSlot
         visible: root.secondVisible
-        x:       _horiz ? root._animatedRatio * root.width  + root._ht : 0
-        y:       _horiz ? 0 : root._animatedRatio * root.height + root._ht
-        width:   _horiz ? root.width  - root._animatedRatio * root.width  - root._ht : root.width
-        height:  _horiz ? root.height : root.height - root._animatedRatio * root.height - root._ht
+        x:       root._horiz ? root._animatedRatio * root.width  + root._ht : 0
+        y:       root._horiz ? 0 : root._animatedRatio * root.height + root._ht
+        width:   root._horiz ? root.width  - root._animatedRatio * root.width  - root._ht : root.width
+        height:  root._horiz ? root.height : root.height - root._animatedRatio * root.height - root._ht
 
         clip: true
 

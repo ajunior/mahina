@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic as QQC
 import Mahina
@@ -38,7 +39,7 @@ Item {
     readonly property int  count:        _list.count
     readonly property int  currentIndex: _list.currentIndex
 
-    function positionAt(index) { _list.positionViewAtIndex(index, ListView.Contain) }
+    function positionAt(index: var): void { _list.positionViewAtIndex(index, ListView.Contain) }
 
     implicitWidth:  300
     implicitHeight: 400

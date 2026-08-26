@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -49,12 +50,12 @@ Item {
         // Repaint on value/style changes
         Connections {
             target: root
-            function onValueChanged()          { _canvas.requestPaint() }
-            function onColorChanged()          { _canvas.requestPaint() }
-            function onTrackColorChanged()     { _canvas.requestPaint() }
-            function onStrokeWidthChanged()    { _canvas.requestPaint() }
-            function onArcFracChanged()        { _canvas.requestPaint() }
-            function onIndeterminateChanged()  { _canvas.requestPaint() }
+            function onValueChanged(): void { _canvas.requestPaint() }
+            function onColorChanged(): void { _canvas.requestPaint() }
+            function onTrackColorChanged(): void { _canvas.requestPaint() }
+            function onStrokeWidthChanged(): void { _canvas.requestPaint() }
+            function onArcFracChanged(): void { _canvas.requestPaint() }
+            function onIndeterminateChanged(): void { _canvas.requestPaint() }
         }
 
         onPaint: {

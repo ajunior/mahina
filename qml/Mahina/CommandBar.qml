@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Controls as QQC
@@ -22,9 +23,9 @@ Item {
     property string query:     ""
     property int    maxHeight: 360
 
-    function show() { root.open = true; root.query = ""; _search.forceActiveFocus() }
-    function hide() { root.open = false; root.query = "" }
-    function toggle() { if (root.open) hide(); else show() }
+    function show(): void { root.open = true; root.query = ""; _search.forceActiveFocus() }
+    function hide(): void { root.open = false; root.query = "" }
+    function toggle(): void { if (root.open) hide(); else show() }
 
     readonly property var _filtered: {
         var q   = root.query.toLowerCase()

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as QQC
@@ -39,8 +40,8 @@ Item {
     // Real index of triggered item (skips dividers)
     signal triggered(int index, var item)
 
-    function open()  { _popup.open()  }
-    function close() { _popup.close() }
+    function open(): void { _popup.open()  }
+    function close(): void { _popup.close() }
 
     width: 0; height: 0
 

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as QQC
@@ -39,9 +40,9 @@ Item {
     readonly property bool _hasError: root.errorText !== ""
     readonly property bool _full:     root.maxSelections > 0 && root.selectedIndices.length >= root.maxSelections
 
-    function _label(item) { return typeof item === "string" ? item : (item.label ?? "") }
+    function _label(item: var): var { return typeof item === "string" ? item : (item.label ?? "") }
 
-    function _toggleIndex(i) {
+    function _toggleIndex(i: var): var {
         var arr = root.selectedIndices.slice()
         var pos = arr.indexOf(i)
         if (pos >= 0) {
@@ -208,33 +209,33 @@ Item {
                           : "transparent"
                     opacity: _dis ? 0.4 : 1.0
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
-                    HoverHandler { id: _rH; enabled: !_dis }
+                    HoverHandler { id: _rH; enabled: !_rq1._dis }
 
                     RowLayout {
                         anchors { fill: parent; leftMargin: Theme.sp3; rightMargin: Theme.sp3 }
 
                         Text {
                             text:             root._label(_rq1.modelData)
-                            color:            _sel ? Theme.primary : Theme.textPrimary
+                            color:            _rq1._sel ? Theme.primary : Theme.textPrimary
                             font.family:      Theme.fontFamily
                             font.pixelSize:   Theme.textSm
-                            font.weight:      _sel ? Theme.weightMedium : Theme.weightRegular
+                            font.weight:      _rq1._sel ? Theme.weightMedium : Theme.weightRegular
                             Layout.fillWidth: true
                         }
 
                         Rectangle {
                             width: 18; height: 18; radius: 4
-                            color:        _sel ? Theme.primary : "transparent"
-                            border.color: _sel ? Theme.primary : Theme.border
+                            color:        _rq1._sel ? Theme.primary : "transparent"
+                            border.color: _rq1._sel ? Theme.primary : Theme.border
                             border.width: 1
                             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
-                            Icon { visible: _sel; anchors.centerIn: parent; name: Icons.check; size: 11; color: "#ffffff" }
+                            Icon { visible: _rq1._sel; anchors.centerIn: parent; name: Icons.check; size: 11; color: "#ffffff" }
                         }
                     }
 
                     MouseArea {
                         anchors.fill: parent; cursorShape: Qt.PointingHandCursor
-                        enabled: !_dis || _sel
+                        enabled: !_rq1._dis || _rq1._sel
                         onClicked: root._toggleIndex(_rq1.index)
                     }
                 }

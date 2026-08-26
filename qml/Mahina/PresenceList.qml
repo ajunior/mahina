@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -22,7 +23,7 @@ Rectangle {
 
     signal memberClicked(var member)
 
-    function _statusColor(s) {
+    function _statusColor(s: var): var {
         switch (s) {
             case "online":       return Theme.success
             case "away":         return Theme.warning

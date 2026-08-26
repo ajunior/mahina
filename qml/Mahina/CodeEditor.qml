@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic as QQC
 import Mahina
@@ -45,12 +46,12 @@ Item {
         return _edit.mapToItem(root, r.x, r.y + r.height)
     }
 
-    function insertAtCursor(text) {
+    function insertAtCursor(text: var): void {
         _edit.insert(_edit.cursorPosition, text)
         _edit.forceActiveFocus()
     }
 
-    function replaceRange(from, to, text) {
+    function replaceRange(from: var, to: var, text: var): void {
         _edit.remove(from, to)
         _edit.insert(from, text)
         _edit.cursorPosition = from + text.length
@@ -69,7 +70,7 @@ Item {
         return (_curIdx + 1) + " of " + _matches.length
     }
 
-    function openFind() {
+    function openFind(): void {
         _replaceMode = false
         _findOpen    = true
         if (_edit.selectedText) _findField.text = _edit.selectedText
@@ -77,7 +78,7 @@ Item {
         Qt.callLater(function() { _findField.forceActiveFocus(); _findField.selectAll() })
     }
 
-    function openReplace() {
+    function openReplace(): void {
         _replaceMode = true
         _findOpen    = true
         if (_edit.selectedText) _findField.text = _edit.selectedText
@@ -85,39 +86,39 @@ Item {
         Qt.callLater(function() { _findField.forceActiveFocus(); _findField.selectAll() })
     }
 
-    function closeFind() {
+    function closeFind(): void {
         _findOpen = false
         _edit.deselect()
         _edit.forceActiveFocus()
     }
 
-    function findNext() {
+    function findNext(): void {
         if (!_matches.length) return
         _curIdx = (_curIdx + 1) % _matches.length
         _selectCurrent()
     }
 
-    function findPrev() {
+    function findPrev(): void {
         if (!_matches.length) return
         _curIdx = (_curIdx - 1 + _matches.length) % _matches.length
         _selectCurrent()
     }
 
-    function replaceCurrent() {
+    function replaceCurrent(): void {
         if (_curIdx < 0 || _curIdx >= _matches.length) return
         var pos = _matches[_curIdx]
         replaceRange(pos, pos + _findField.text.length, _replaceField.text)
         _scanMatches()
     }
 
-    function replaceAll() {
+    function replaceAll(): void {
         var q = _findField.text
         if (!q) return
         _edit.text = _edit.text.split(q).join(_replaceField.text)
         _scanMatches()
     }
 
-    function _scanMatches() {
+    function _scanMatches(): void {
         var arr = []
         var q   = _findField.text
         var t   = _edit.text
@@ -140,7 +141,7 @@ Item {
         }
     }
 
-    function _selectCurrent() {
+    function _selectCurrent(): void {
         if (_curIdx < 0 || _curIdx >= _matches.length) return
         var pos = _matches[_curIdx]
         _edit.select(pos, pos + _findField.text.length)
@@ -410,7 +411,7 @@ Item {
                         width:               62
                         anchors.verticalCenter: parent.verticalCenter
                         text:                root._matchLabel
-                        color:               (_matches.length || !_findField.text) ? Theme.textSecondary : Theme.error
+                        color:               (root._matches.length || !_findField.text) ? Theme.textSecondary : Theme.error
                         font.family:         Theme.fontFamily
                         font.pixelSize:      Theme.textXs
                         horizontalAlignment: Text.AlignHCenter

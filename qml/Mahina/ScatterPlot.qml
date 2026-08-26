@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import Mahina
 
@@ -32,9 +33,9 @@ Item {
 
         Connections {
             target: root
-            function onSeriesChanged()  { _canvas.requestPaint() }
-            function onWidthChanged()   { _canvas.requestPaint() }
-            function onHeightChanged()  { _canvas.requestPaint() }
+            function onSeriesChanged(): void { _canvas.requestPaint() }
+            function onWidthChanged(): void { _canvas.requestPaint() }
+            function onHeightChanged(): void { _canvas.requestPaint() }
         }
         Component.onCompleted: requestPaint()
 
@@ -67,8 +68,8 @@ Item {
             var yPad = (yMax - yMin) * 0.1 || 1
             xMin -= xPad; xMax += xPad; yMin -= yPad; yMax += yPad
 
-            function px(x) { return padL + (x - xMin) / (xMax - xMin) * plotW }
-            function py(y) { return padT + plotH - (y - yMin) / (yMax - yMin) * plotH }
+            function px(x: var): var { return padL + (x - xMin) / (xMax - xMin) * plotW }
+            function py(y: var): var { return padT + plotH - (y - yMin) / (yMax - yMin) * plotH }
 
             // Grid + axis labels
             if (root.showGrid) {

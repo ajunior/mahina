@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -29,8 +30,8 @@ Item {
     signal confirmed()
     signal cancelled()
 
-    function open()  { root.visible = true;  _openAnim.start() }
-    function close() { _closeAnim.start() }
+    function open(): void { root.visible = true;  _openAnim.start() }
+    function close(): void { _closeAnim.start() }
 
     // ── Overlay ───────────────────────────────────────────────────────────────
     anchors.fill: parent
@@ -140,6 +141,6 @@ Item {
             NumberAnimation { target: _box;      property: "opacity"; to: 0.0; duration: Theme.durationNormal; easing.type: Easing.InCubic }
             NumberAnimation { target: _box;      property: "scale";   to: 0.96; duration: Theme.durationNormal; easing.type: Easing.InCubic }
         }
-        ScriptAction { script: root.visible = false }
+        onFinished: root.visible = false
     }
 }

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -25,19 +26,19 @@ Item {
     signal opened()
     signal closed()
 
-    function open()  {
+    function open(): void {
         root.visible = true
         _panel.y     = _openY()
         _backdrop.opacity = 1
         root.opened()
     }
-    function close() {
+    function close(): void {
         _panel.y          = _closedY()
         _backdrop.opacity = 0
     }
 
-    function _openY()  { return root.height - _panel.height }
-    function _closedY(){ return root.height }
+    function _openY(): var { return root.height - _panel.height }
+    function _closedY(): var { return root.height }
 
     anchors.fill: parent
     visible:      false
@@ -56,7 +57,7 @@ Item {
         id:     _panel
         width:  root.width
         height: Math.min(root.maxHeight, _col.implicitHeight + Theme.sp2)
-        y:      _closedY()
+        y:      root._closedY()
         color:  Theme.surface
 
         // Rounded top corners only
