@@ -207,6 +207,13 @@ Item {
     }
 
     // ── Table ─────────────────────────────────────────────────────────────────
+    // Row under the pointer, or -1. Held on the root rather than per cell so that
+    // every cell of the same row lights up together, and so that moving sideways
+    // between two cells of one row cannot leave the highlight behind: each cell
+    // only ever *sets* this, and the handler on the view below is what clears it
+    // when the pointer leaves the table.
+    property int _hoverRow: -1
+
     TableView {
         id: _tv
         anchors {
@@ -219,6 +226,13 @@ Item {
         model:           root.model
         selectionModel:  _sel
         boundsBehavior:  Flickable.StopAtBounds
+
+        // Not blocking, so the per-cell handlers below still see the pointer; this
+        // one exists only to notice that it has left the table entirely.
+        HoverHandler {
+            id: _tvHover
+            onHoveredChanged: if (!_tvHover.hovered) root._hoverRow = -1
+        }
 
         rowHeightProvider: function() { return root.rowHeight }
 
@@ -259,6 +273,20 @@ Item {
                     : Theme.surface
 
             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
+
+            HoverHandler {
+                id: _cellHover
+                onHoveredChanged: if (_cellHover.hovered) root._hoverRow = _cell.row
+            }
+
+            // Row hover wash. A translucent overlay rather than another value for
+            // `color` above: the cell's own colour carries the zebra stripe and the
+            // selection tint, and an opaque hover would erase both.
+            Rectangle {
+                anchors.fill: parent
+                visible: root._hoverRow === _cell.row
+                color:   Theme.hover
+            }
 
             // Row border
             Rectangle {
