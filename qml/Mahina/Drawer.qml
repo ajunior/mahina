@@ -37,7 +37,7 @@ Item {
     signal opened()
     signal closed()
 
-    function open() {
+    function open(): void {
         root.visible = true
         _panel.x = _openX()
         _panel.y = _openY()
@@ -45,32 +45,32 @@ Item {
         root.opened()
     }
 
-    function close() {
+    function close(): void {
         _panel.x = _closedX()
         _panel.y = _closedY()
         _backdrop.opacity = 0
     }
 
-    function _openX() {
+    function _openX(): var {
         switch (root.position) {
             case Drawer.Position.Right: return root.width - root.panelWidth
             default:                    return 0
         }
     }
-    function _closedX() {
+    function _closedX(): var {
         switch (root.position) {
             case Drawer.Position.Left:  return -root.panelWidth
             case Drawer.Position.Right: return root.width
             default:                    return 0
         }
     }
-    function _openY() {
+    function _openY(): var {
         switch (root.position) {
             case Drawer.Position.Bottom: return root.height - root.panelHeight
             default:                     return 0
         }
     }
-    function _closedY() {
+    function _closedY(): var {
         switch (root.position) {
             case Drawer.Position.Top:    return -root.panelHeight
             case Drawer.Position.Bottom: return root.height

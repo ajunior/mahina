@@ -55,7 +55,7 @@ Item {
     // ── Public methods ───────────────────────────────────────────────────────
 
     // Append one entry and scroll if the view was already at the bottom.
-    function appendLine(entry) {
+    function appendLine(entry: var): void {
         var wasAtBottom = root._atBottom
         var next = root.lines.slice()
         next.push(entry)
@@ -69,17 +69,17 @@ Item {
         if (wasAtBottom) Qt.callLater(root.scrollToBottom)
     }
 
-    function clear() {
+    function clear(): void {
         root.lines = []
         root.markerIndex = -1
     }
 
-    function scrollToBottom() {
+    function scrollToBottom(): void {
         _flick.contentY = Math.max(0, _flick.contentHeight - _flick.height)
     }
 
     // Mark the current end of the buffer as "read up to here".
-    function markUnreadHere() {
+    function markUnreadHere(): void {
         root.markerIndex = root.lines.length
     }
 
@@ -99,7 +99,7 @@ Item {
     }
 
     // Characters consumed by the "[time] <nick> " prefix of a given entry.
-    function _prefixChars(entry, kind) {
+    function _prefixChars(entry: var, kind: var): var {
         var n = 0
         if (root.showTimestamps && (entry.time ?? "") !== "")
             n += String(entry.time).length + 1
@@ -119,12 +119,12 @@ Item {
 
     // Colour tables and the nick-hash live in IrcPalette so this pane and
     // IrcNickList always agree on a given nick's colour.
-    function _nickColor(nick) {
+    function _nickColor(nick: var): var {
         if (!root.colorNicks || nick === "") return Theme.textPrimary
         return IrcPalette.nickColor(nick)
     }
 
-    function _kindColor(kind) {
+    function _kindColor(kind: var): var {
         switch (kind) {
             case "join":   return Theme.success
             case "part":
@@ -140,7 +140,7 @@ Item {
         }
     }
 
-    function _isEvent(kind) {
+    function _isEvent(kind: var): var {
         return kind === "join" || kind === "part" || kind === "quit" ||
                kind === "mode" || kind === "topic" || kind === "kick" ||
                kind === "nick"
@@ -148,7 +148,7 @@ Item {
 
     // Escape first, always — IRC text is untrusted and this document is
     // rendered as rich text. Nothing may reach the TextEdit unescaped.
-    function _esc(s) {
+    function _esc(s: var): var {
         return String(s === undefined || s === null ? "" : s)
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
@@ -176,7 +176,7 @@ Item {
     // Translate mIRC control codes into styled spans.
     // \x02 bold  \x1D italic  \x1F underline  \x1E strike  \x16 reverse
     // \x03 colour (fg[,bg])   \x0F reset
-    function _formatCodes(raw) {
+    function _formatCodes(raw: var): var {
         if (!root.parseFormatting)
             return root._linkify(root._preserveSpaces(root._esc(raw)))
 
@@ -247,7 +247,7 @@ Item {
     }
 
     // Render one entry as a rich-text block.
-    function _renderLine(entry, idx) {
+    function _renderLine(entry: var, idx: var): var {
         var kind = String(entry.kind ?? "message")
         var nick = String(entry.nick ?? "")
         var text = String(entry.text ?? "")
@@ -310,7 +310,7 @@ Item {
         return html
     }
 
-    function _eventGlyph(kind) {
+    function _eventGlyph(kind: var): var {
         switch (kind) {
             case "join": return "&#8594;"   // →
             case "part":
@@ -320,17 +320,17 @@ Item {
         }
     }
 
-    function _markerBlock() {
+    function _markerBlock(): var {
         return '<div style="margin:0; color:' + Theme.error + '">' +
                "&#8212;&#8212;&#8212; new messages &#8212;&#8212;&#8212;</div>"
     }
 
-    function _highlightBg() {
+    function _highlightBg(): var {
         var c = Qt.color(Theme.warning)
         return Qt.rgba(c.r, c.g, c.b, Theme.dark ? 0.18 : 0.14)
     }
 
-    function _isHighlight(text, kind, isSelf) {
+    function _isHighlight(text: var, kind: var, isSelf: var): var {
         if (isSelf || root._isEvent(kind)) return false
         var lower = text.toLowerCase()
         if (root.selfNick !== "" && lower.indexOf(root.selfNick.toLowerCase()) !== -1)

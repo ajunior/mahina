@@ -27,12 +27,12 @@ Item {
 
     property var _collapsed: ({})   // path → true when collapsed
 
-    function _rebuild() {
+    function _rebuild(): void {
         _model.clear()
         _flatten(root.value, null, 0, "root")
     }
 
-    function _flatten(obj, key, depth, path) {
+    function _flatten(obj: var, key: var, depth: var, path: var): void {
         var isArr = Array.isArray(obj)
         var isObj = typeof obj === "object" && obj !== null && !isArr
 
@@ -63,7 +63,7 @@ Item {
         }
     }
 
-    function _typeColor(t) {
+    function _typeColor(t: var): var {
         switch (t) {
             case "string":  return "#a6e3a1"
             case "number":  return "#fab387"

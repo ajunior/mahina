@@ -71,9 +71,9 @@ Item {
 
         Connections {
             target: root
-            function onSeriesChanged()  { _canvas.requestPaint() }
-            function onWidthChanged()   { _canvas.requestPaint() }
-            function onHeightChanged()  { _canvas.requestPaint() }
+            function onSeriesChanged(): void { _canvas.requestPaint() }
+            function onWidthChanged(): void { _canvas.requestPaint() }
+            function onHeightChanged(): void { _canvas.requestPaint() }
         }
 
         onPaint: {
@@ -88,8 +88,8 @@ Item {
             var xRange = root._xMax - root._xMin || 1
             var yRange = root._yMax - root._yMin || 1
 
-            function fx(v) { return padL + ((v - root._xMin) / xRange) * plotW }
-            function fy(v) { return padT + plotH - ((v - root._yMin) / yRange) * plotH }
+            function fx(v: var): var { return padL + ((v - root._xMin) / xRange) * plotW }
+            function fy(v: var): var { return padT + plotH - ((v - root._yMin) / yRange) * plotH }
 
             // Grid
             ctx.font      = "10px '" + Theme.fontFamily + "'"

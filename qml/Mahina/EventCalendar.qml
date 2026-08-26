@@ -29,7 +29,7 @@ Item {
     readonly property var monthNames: ["January","February","March","April","May","June",
                                        "July","August","September","October","November","December"]
 
-    function _eventsOn(y, m, d) {
+    function _eventsOn(y: var, m: var, d: var): var {
         var key = y + "-" + String(m+1).padStart(2,"0") + "-" + String(d).padStart(2,"0")
         var evs = []
         for (var i = 0; i < root.events.length; i++) {

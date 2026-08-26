@@ -153,7 +153,7 @@ Item {
         }
     }
 
-    function _updateMentionState() {
+    function _updateMentionState(): void {
         var t   = _area.text
         var pos = _area.cursorPosition
         // Walk back from cursor to find @ start
@@ -175,7 +175,7 @@ Item {
         }
     }
 
-    function _insertMention(name) {
+    function _insertMention(name: var): void {
         var t   = _area.text
         var pos = _area.cursorPosition
         var before  = t.slice(0, root.mentionStart)

@@ -40,8 +40,8 @@ Item {
     signal opened()
     signal closed()
 
-    function open()  { _popup.open()  }
-    function close() { _popup.close() }
+    function open(): void { _popup.open()  }
+    function close(): void { _popup.close() }
 
     // Zero-size — the popup itself positions via the overlay
     width:  0

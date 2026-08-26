@@ -31,7 +31,7 @@ Item {
     readonly property string _displayText: root.selectedDate
         ? _fmt(root.selectedDate) : ""
 
-    function _fmt(d) {
+    function _fmt(d: var): var {
         if (!d) return ""
         return d.getFullYear() + "-"
              + String(d.getMonth() + 1).padStart(2, "0") + "-"
@@ -57,14 +57,14 @@ Item {
         return cells
     }
 
-    function _isSelected(day) {
+    function _isSelected(day: var): var {
         if (day === 0 || !root.selectedDate) return false
         return root.selectedDate.getFullYear() === root._viewYear
             && root.selectedDate.getMonth()    === root._viewMonth
             && root.selectedDate.getDate()     === day
     }
 
-    function _isToday(day) {
+    function _isToday(day: var): var {
         if (day === 0) return false
         var t = new Date()
         return t.getFullYear() === root._viewYear
@@ -72,7 +72,7 @@ Item {
             && t.getDate()     === day
     }
 
-    function _isDisabled(day) {
+    function _isDisabled(day: var): var {
         if (day === 0) return true
         var d = new Date(root._viewYear, root._viewMonth, day)
         if (root.minDate && d < root.minDate) return true

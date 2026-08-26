@@ -40,9 +40,9 @@ Item {
     readonly property bool _hasError: root.errorText !== ""
     readonly property bool _full:     root.maxSelections > 0 && root.selectedIndices.length >= root.maxSelections
 
-    function _label(item) { return typeof item === "string" ? item : (item.label ?? "") }
+    function _label(item: var): var { return typeof item === "string" ? item : (item.label ?? "") }
 
-    function _toggleIndex(i) {
+    function _toggleIndex(i: var): var {
         var arr = root.selectedIndices.slice()
         var pos = arr.indexOf(i)
         if (pos >= 0) {

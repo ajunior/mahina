@@ -22,7 +22,7 @@ Item {
 
     property var logLines: []
 
-    function log(msg) {
+    function log(msg: var): void {
         var ts    = new Date().toTimeString().slice(0, 8)
         var lines = root.logLines.slice()
         lines.push(ts + "  " + msg)

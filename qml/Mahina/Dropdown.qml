@@ -51,7 +51,7 @@ Item {
     // ── State ────────────────────────────────────────────────────────────────
     property bool _open: false
 
-    function _close() { root._open = false }
+    function _close(): void { root._open = false }
 
     // ── Layout ────────────────────────────────────────────────────────────────
     Column {

@@ -27,19 +27,19 @@ Item {
     property int rightYear:  leftMonth === 11 ? leftYear + 1 : leftYear
     property int rightMonth: (leftMonth + 1) % 12
 
-    function _isoDate(d) {
+    function _isoDate(d: var): var {
         if (!d) return ""
         return d.getFullYear() + "-"
             + String(d.getMonth()+1).padStart(2,"0") + "-"
             + String(d.getDate()).padStart(2,"0")
     }
 
-    function _sameDay(a, b) {
+    function _sameDay(a: var, b: var): var {
         if (!a || !b) return false
         return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate()
     }
 
-    function _inRange(d) {
+    function _inRange(d: var): var {
         if (!root.startDate || !d) return false
         var end = root.endDate || root.hoveredDate
         if (!end) return false
@@ -48,7 +48,7 @@ Item {
         return d >= lo && d <= hi
     }
 
-    function _handleClick(d) {
+    function _handleClick(d: var): void {
         if (!root.startDate || (root.startDate && root.endDate)) {
             root.startDate = d; root.endDate = null
         } else if (d < root.startDate) {

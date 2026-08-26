@@ -41,7 +41,7 @@ QtObject {
 
     // Deterministic: the same nick always maps to the same palette slot, so
     // colours stay stable across reconnects and between panes.
-    function nickColor(nick) {
+    function nickColor(nick: var): var {
         var s = String(nick ?? "")
         if (s === "") return Theme.textPrimary
         var pal = Theme.dark ? root.nickPaletteDark : root.nickPaletteLight
@@ -56,12 +56,12 @@ QtObject {
     // Conventional prefix order: owner, admin, op, halfop, voice, none.
     readonly property var modePrefixes: ["~", "&", "@", "%", "+"]
 
-    function modeRank(mode) {
+    function modeRank(mode: var): var {
         var i = root.modePrefixes.indexOf(String(mode ?? ""))
         return i === -1 ? root.modePrefixes.length : i
     }
 
-    function modeColor(mode) {
+    function modeColor(mode: var): var {
         switch (String(mode ?? "")) {
             case "~": return Theme.error      // owner
             case "&": return Theme.warning    // admin
@@ -72,7 +72,7 @@ QtObject {
         }
     }
 
-    function modeLabel(mode) {
+    function modeLabel(mode: var): var {
         switch (String(mode ?? "")) {
             case "~": return "Owners"
             case "&": return "Admins"

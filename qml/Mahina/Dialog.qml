@@ -35,12 +35,12 @@ Item {
 
     signal closed()
 
-    function open() {
+    function open(): void {
         root.visible = true
         _openAnim.start()
     }
 
-    function close() {
+    function close(): void {
         _closeAnim.start()
     }
 

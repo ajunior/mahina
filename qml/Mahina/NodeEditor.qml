@@ -24,17 +24,17 @@ Item {
     readonly property int _portH:    20
     readonly property int _headerH:  28
 
-    function _nodeHeight(n) {
+    function _nodeHeight(n: var): var {
         var rows = Math.max((n.inputs || []).length, (n.outputs || []).length)
         return root._headerH + Math.max(1, rows) * root._portH + 8
     }
 
-    function _portY(n, portIdx, isOutput) {
+    function _portY(n: var, portIdx: var, isOutput: var): var {
         var ports = isOutput ? (n.outputs || []) : (n.inputs || [])
         return n.y + root._headerH + portIdx * root._portH + root._portH / 2
     }
 
-    function _portX(n, isOutput) {
+    function _portX(n: var, isOutput: var): var {
         return isOutput ? n.x + root._nodeW : n.x
     }
 

@@ -34,7 +34,7 @@ Item {
     onWidthChanged:  { if (width > 0 && height > 0 && nodePos.length !== nodes.length) _initPositions() }
     onHeightChanged: { if (width > 0 && height > 0 && nodePos.length !== nodes.length) _initPositions() }
 
-    function _initPositions() {
+    function _initPositions(): void {
         if (width <= 0 || height <= 0 || nodes.length === 0) return
         var pos = []
         for (var i = 0; i < nodes.length; i++) {
@@ -48,7 +48,7 @@ Item {
         _simTimer.restart()
     }
 
-    function _relax() {
+    function _relax(): var {
         if (nodePos.length === 0 || width <= 0) return
         var pos = nodePos.slice().map(function(p) { return { x: p.x, y: p.y } })
         var repel = 1000
@@ -109,7 +109,7 @@ Item {
 
         Connections {
             target: root
-            function onNodePosChanged() { _canvas.requestPaint() }
+            function onNodePosChanged(): void { _canvas.requestPaint() }
         }
 
         onPaint: {

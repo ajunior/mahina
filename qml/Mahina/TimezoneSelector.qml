@@ -45,12 +45,12 @@ Item {
         "Pacific/Auckland":    "+12/+13"
     })
 
-    function _label(z) {
+    function _label(z: var): var {
         var parts = z.split("/")
         return parts[parts.length - 1].replace(/_/g, " ")
     }
 
-    function _filtered() {
+    function _filtered(): var {
         if (root.searchText === "") return root._zones
         var q = root.searchText.toLowerCase()
         return root._zones.filter(function(z) {

@@ -35,7 +35,7 @@ Item {
     property string _filterText: ""
     property var    _expanded:   ({})   // entry.id → bool
 
-    function _toggle(entryId) {
+    function _toggle(entryId: var): void {
         var m = Object.assign({}, root._expanded)
         m[entryId] = !m[entryId]
         root._expanded = m
@@ -54,7 +54,7 @@ Item {
         })
     }
 
-    function _levelColor(l) {
+    function _levelColor(l: var): var {
         switch (l) {
             case "debug": return Theme.textSecondary
             case "info":  return Theme.info

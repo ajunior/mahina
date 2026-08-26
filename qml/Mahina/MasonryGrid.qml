@@ -28,7 +28,7 @@ Item {
     implicitWidth:  400
     implicitHeight: _maxColH()
 
-    function _maxColH() {
+    function _maxColH(): var {
         var m = 0
         for (var c = 0; c < _colItems.length; c++)
             if (_colItems[c]) m = Math.max(m, _colItems[c].height)

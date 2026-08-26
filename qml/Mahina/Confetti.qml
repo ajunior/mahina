@@ -18,7 +18,7 @@ Item {
 
     visible: false
 
-    function burst() {
+    function burst(): void {
         root.visible = true
         _parts = []
         for (var i = 0; i < root.count; i++) {

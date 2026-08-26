@@ -23,8 +23,8 @@ Item {
     readonly property int _trackH:   36
     readonly property real _pxPerSec: root.zoom * 50
 
-    function _timeToPx(t) { return t * root._pxPerSec }
-    function _pxToTime(px) { return px / root._pxPerSec }
+    function _timeToPx(t: var): var { return t * root._pxPerSec }
+    function _pxToTime(px: var): var { return px / root._pxPerSec }
 
     Rectangle {
         anchors.fill: parent
@@ -113,7 +113,7 @@ Item {
 
                         Connections {
                             target: _timelineFlick
-                            function onContentXChanged() { _ruler.requestPaint() }
+                            function onContentXChanged(): void { _ruler.requestPaint() }
                         }
                     }
                 }

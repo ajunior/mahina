@@ -25,7 +25,7 @@ Item {
     property int minutes: Math.floor((totalSeconds % 3600) / 60)
     property int seconds: totalSeconds % 60
 
-    function _rebuild() {
+    function _rebuild(): void {
         var h = Math.min(root.maxHours, Math.max(0, root.hours))
         var m = Math.max(0, Math.min(59, root.minutes))
         var s = Math.max(0, Math.min(59, root.seconds))

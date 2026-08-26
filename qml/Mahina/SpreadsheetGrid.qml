@@ -22,8 +22,8 @@ Item {
     implicitWidth:  colCount * colWidth + headerSize
     implicitHeight: rowCount * rowHeight + headerSize
 
-    function _key(r, c) { return r + "," + c }
-    function _colLetter(c) {
+    function _key(r: var, c: var): var { return r + "," + c }
+    function _colLetter(c: var): var {
         var s = ""
         var n = c + 1
         while (n > 0) {

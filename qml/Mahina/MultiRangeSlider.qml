@@ -23,12 +23,12 @@ Item {
 
     readonly property real _range: max - min || 1
 
-    function _snap(v) {
+    function _snap(v: var): var {
         var snapped = step > 0 ? Math.round(v / step) * step : v
         return Math.max(min, Math.min(max, snapped))
     }
 
-    function _xToVal(px) {
+    function _xToVal(px: var): var {
         return min + (px / (_track.width - 18)) * _range
     }
 

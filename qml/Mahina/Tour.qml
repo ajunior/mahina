@@ -29,13 +29,13 @@ Item {
     signal finished()
     signal stepChanged(int step)
 
-    function start() {
+    function start(): void {
         root.currentStep = 0
         root.visible     = true
         root.started()
     }
 
-    function next() {
+    function next(): void {
         if (root.currentStep < root.steps.length - 1) {
             root.currentStep++
             root.stepChanged(root.currentStep)
@@ -44,14 +44,14 @@ Item {
         }
     }
 
-    function previous() {
+    function previous(): void {
         if (root.currentStep > 0) {
             root.currentStep--
             root.stepChanged(root.currentStep)
         }
     }
 
-    function stop() {
+    function stop(): void {
         _finishAnim.start()
     }
 

@@ -67,13 +67,13 @@ Item {
     }
 
     // Index of item in filtered list
-    function _filteredIndex(origIdx) {
+    function _filteredIndex(origIdx: var): var {
         var item = root.model[origIdx]
         return _filtered.indexOf(item)
     }
 
     // Find original index from filtered item
-    function _origIndex(filteredItem) {
+    function _origIndex(filteredItem: var): var {
         return root.model.indexOf(filteredItem)
     }
 

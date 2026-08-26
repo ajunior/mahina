@@ -28,11 +28,11 @@ Item {
     readonly property real _fieldH: Theme.textBase + Theme.sp2 * 2 + 2
 
     // ── Stepper actions ───────────────────────────────────────────────────────
-    function increment() {
+    function increment(): void {
         root.value = parseFloat(Math.min(root.max, root.value + root.step).toFixed(root.decimals))
         _field.text = root.value.toFixed(root.decimals)
     }
-    function decrement() {
+    function decrement(): void {
         root.value = parseFloat(Math.max(root.min, root.value - root.step).toFixed(root.decimals))
         _field.text = root.value.toFixed(root.decimals)
     }
@@ -136,7 +136,7 @@ Item {
                     // Sync display when value changes externally while not editing
                     Connections {
                         target: root
-                        function onValueChanged() {
+                        function onValueChanged(): void {
                             if (!_field.activeFocus)
                                 _field.text = root.value.toFixed(root.decimals)
                         }

@@ -47,10 +47,10 @@ Item {
 
         Connections {
             target: root
-            function onSeriesChanged()  { _canvas.requestPaint() }
-            function onXLabelsChanged() { _canvas.requestPaint() }
-            function onWidthChanged()   { _canvas.requestPaint() }
-            function onHeightChanged()  { _canvas.requestPaint() }
+            function onSeriesChanged(): void { _canvas.requestPaint() }
+            function onXLabelsChanged(): void { _canvas.requestPaint() }
+            function onWidthChanged(): void { _canvas.requestPaint() }
+            function onHeightChanged(): void { _canvas.requestPaint() }
         }
 
         onPaint: {
@@ -66,7 +66,7 @@ Item {
             var nSer  = root.series.length
             if (nCat <= 0 || nSer <= 0 || plotW <= 0 || plotH <= 0) return
 
-            function fy(v) { return padT + plotH - (v / yMax) * plotH }
+            function fy(v: var): var { return padT + plotH - (v / yMax) * plotH }
 
             // Grid + Y axis labels
             if (root.showGrid) {

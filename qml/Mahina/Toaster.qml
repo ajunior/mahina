@@ -26,7 +26,7 @@ Item {
 
     property int maxVisible: 5
 
-    function show(message, type, duration, copyable) {
+    function show(message: var, type: var, duration: var, copyable: var): void {
         if (_model.count >= root.maxVisible) _model.remove(0)
         _model.append({
             toastId:   ++_nextId,
@@ -37,13 +37,13 @@ Item {
         })
     }
 
-    function copyToClipboard(text) {
+    function copyToClipboard(text: var): void {
         _clipHelper.text = text
         _clipHelper.selectAll()
         _clipHelper.copy()
     }
 
-    function _remove(id) {
+    function _remove(id: var): var {
         for (var i = 0; i < _model.count; i++) {
             if (_model.get(i).toastId === id) { _model.remove(i); return }
         }

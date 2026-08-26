@@ -44,12 +44,12 @@ Item {
 
         Connections {
             target: root
-            function onValueChanged()      { _canvas.requestPaint() }
-            function onColorChanged()      { _canvas.requestPaint() }
-            function onTrackColorChanged() { _canvas.requestPaint() }
-            function onStrokeWidthChanged(){ _canvas.requestPaint() }
-            function onSizeChanged()       { _canvas.requestPaint() }
-            function onTicksChanged()      { _canvas.requestPaint() }
+            function onValueChanged(): void { _canvas.requestPaint() }
+            function onColorChanged(): void { _canvas.requestPaint() }
+            function onTrackColorChanged(): void { _canvas.requestPaint() }
+            function onStrokeWidthChanged(): void { _canvas.requestPaint() }
+            function onSizeChanged(): void { _canvas.requestPaint() }
+            function onTicksChanged(): void { _canvas.requestPaint() }
         }
 
         onPaint: {

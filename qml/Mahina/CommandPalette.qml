@@ -30,13 +30,13 @@ Item {
 
     signal triggered(var item)
 
-    function open()  {
+    function open(): void {
         root.visible   = true
         _search.text   = ""
         _selectedIdx   = 0
         _search.forceActiveFocus()
     }
-    function close() { root.visible = false }
+    function close(): void { root.visible = false }
 
     // ── Internal ─────────────────────────────────────────────────────────────
     property int _selectedIdx: 0

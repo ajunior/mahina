@@ -34,17 +34,17 @@ Item {
 
         Connections {
             target: root
-            function onMatrixDataChanged()   { _cm.requestPaint() }
-            function onMatrixLabelsChanged() { _cm.requestPaint() }
-            function onWidthChanged()        { _cm.requestPaint() }
-            function onHeightChanged()       { _cm.requestPaint() }
+            function onMatrixDataChanged(): void { _cm.requestPaint() }
+            function onMatrixLabelsChanged(): void { _cm.requestPaint() }
+            function onWidthChanged(): void { _cm.requestPaint() }
+            function onHeightChanged(): void { _cm.requestPaint() }
         }
         Component.onCompleted: requestPaint()
 
-        function _lerp(a, b, t) {
+        function _lerp(a: var, b: var, t: var): var {
             return { r: a.r + (b.r - a.r)*t, g: a.g + (b.g - a.g)*t, b: a.b + (b.b - a.b)*t }
         }
-        function _cellColor(v) {
+        function _cellColor(v: var): var {
             var hi = Qt.color(root.highColor)
             var lo = Qt.color(root.lowColor)
             var zo = Qt.color(root.zeroColor)

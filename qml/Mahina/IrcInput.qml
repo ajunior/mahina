@@ -46,16 +46,16 @@ Rectangle {
     radius:       Theme.radiusSm
 
     // ── Public methods ───────────────────────────────────────────────────────
-    function focusInput() { _field.forceActiveFocus() }
+    function focusInput(): void { _field.forceActiveFocus() }
 
-    function clear() {
+    function clear(): void {
         root._applying = true
         _field.text = ""
         root._applying = false
         root._resetCompletion()
     }
 
-    function insert(s) {
+    function insert(s: var): void {
         _field.insert(_field.cursorPosition, s)
     }
 
@@ -64,7 +64,7 @@ Rectangle {
     property int    _histIdx: -1     // -1 = editing the live draft
     property string _draft:   ""
 
-    function _pushHistory(line) {
+    function _pushHistory(line: var): void {
         if (line === "") return
         var h = root._history.slice()
         if (h.length > 0 && h[h.length - 1] === line) {
@@ -78,7 +78,7 @@ Rectangle {
         root._draft   = ""
     }
 
-    function _historyPrev() {
+    function _historyPrev(): void {
         if (root._history.length === 0) return
         if (root._histIdx === -1) {
             root._draft   = _field.text
@@ -91,7 +91,7 @@ Rectangle {
         root._setText(root._history[root._histIdx])
     }
 
-    function _historyNext() {
+    function _historyNext(): void {
         if (root._histIdx === -1) return
         if (root._histIdx < root._history.length - 1) {
             root._histIdx++
@@ -111,7 +111,7 @@ Rectangle {
     property var  _compMatches: []
     property int  _compIndex:   0
 
-    function _setText(s) {
+    function _setText(s: var): void {
         root._applying = true
         _field.text = s
         _field.cursorPosition = s.length
@@ -119,7 +119,7 @@ Rectangle {
         root._resetCompletion()
     }
 
-    function _resetCompletion() {
+    function _resetCompletion(): void {
         root._compActive  = false
         root._compMatches = []
         root._compIndex   = 0
@@ -127,13 +127,13 @@ Rectangle {
     }
 
     // Start of the whitespace-delimited token containing pos.
-    function _tokenStart(s, pos) {
+    function _tokenStart(s: var, pos: var): var {
         var i = pos
         while (i > 0 && s.charAt(i - 1) !== " ") i--
         return i
     }
 
-    function _candidatesFor(base, atLineStart) {
+    function _candidatesFor(base: var, atLineStart: var): var {
         var isCommand = base.charAt(0) === "/"
         var pool = isCommand ? root.commands : root.nicks
         var lower = base.toLowerCase()
@@ -150,7 +150,7 @@ Rectangle {
         return out
     }
 
-    function _applyCompletion() {
+    function _applyCompletion(): void {
         if (root._compMatches.length === 0) return
 
         var match     = String(root._compMatches[root._compIndex])
@@ -170,7 +170,7 @@ Rectangle {
         root.tabCompleted(match)
     }
 
-    function _cycleCompletion(step) {
+    function _cycleCompletion(step: var): void {
         if (!root._compActive) {
             var pos   = _field.cursorPosition
             var start = root._tokenStart(_field.text, pos)
@@ -195,7 +195,7 @@ Rectangle {
 
     // ── Byte budget ──────────────────────────────────────────────────────────
     // IRC lines are capped in bytes, not characters, so non-ASCII counts more.
-    function _utf8Length(s) {
+    function _utf8Length(s: var): var {
         var n = 0
         for (var i = 0; i < s.length; i++) {
             var c = s.charCodeAt(i)

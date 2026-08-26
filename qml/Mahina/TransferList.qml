@@ -20,7 +20,7 @@ Item {
     property var _availChecked: []
     property var _selChecked:   []
 
-    function _moveToSelected() {
+    function _moveToSelected(): void {
         var avail = root.available.slice()
         var sel   = root.selected.slice()
         var remaining = []
@@ -34,7 +34,7 @@ Item {
         root.selectionChanged(root.selected)
     }
 
-    function _moveToAvailable() {
+    function _moveToAvailable(): void {
         var avail = root.available.slice()
         var sel   = root.selected.slice()
         var remaining = []
@@ -48,7 +48,7 @@ Item {
         root.selectionChanged(root.selected)
     }
 
-    function _moveAllToSelected() {
+    function _moveAllToSelected(): void {
         var sel = root.selected.concat(root.available)
         root.selected  = sel
         root.available = []
@@ -56,7 +56,7 @@ Item {
         root.selectionChanged(root.selected)
     }
 
-    function _moveAllToAvailable() {
+    function _moveAllToAvailable(): void {
         var avail = root.available.concat(root.selected)
         root.available = avail
         root.selected  = []

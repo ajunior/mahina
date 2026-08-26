@@ -45,7 +45,7 @@ Item {
 
     property string _filterText: ""
 
-    function _levelColor(level) {
+    function _levelColor(level: var): var {
         switch (level) {
             case "debug": return "#6c7086"
             case "info":  return "#89b4fa"
@@ -54,7 +54,7 @@ Item {
             default:      return Theme.textSecondary
         }
     }
-    function _levelBg(level) {
+    function _levelBg(level: var): var {
         switch (level) {
             case "debug": return "#1e1e2e"
             case "info":  return "#1e2030"

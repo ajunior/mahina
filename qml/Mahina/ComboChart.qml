@@ -28,11 +28,11 @@ Item {
 
         Connections {
             target: root
-            function onLabelsChanged()  { _canvas.requestPaint() }
-            function onBarsChanged()    { _canvas.requestPaint() }
-            function onLinesChanged()   { _canvas.requestPaint() }
-            function onWidthChanged()   { _canvas.requestPaint() }
-            function onHeightChanged()  { _canvas.requestPaint() }
+            function onLabelsChanged(): void { _canvas.requestPaint() }
+            function onBarsChanged(): void { _canvas.requestPaint() }
+            function onLinesChanged(): void { _canvas.requestPaint() }
+            function onWidthChanged(): void { _canvas.requestPaint() }
+            function onHeightChanged(): void { _canvas.requestPaint() }
         }
         Component.onCompleted: requestPaint()
 
@@ -64,15 +64,15 @@ Item {
             if (!isFinite(linMin)) { linMin = 0; linMax = 1 }
             if (linMax === linMin) linMax = linMin + 1
 
-            function pyBar(v) { return padT + plotH - (v - barMin) / (barMax - barMin) * plotH }
-            function pyLin(v) { return padT + plotH - (v - linMin) / (linMax - linMin) * plotH }
-            function px(i, off, total) {
+            function pyBar(v: var): var { return padT + plotH - (v - barMin) / (barMax - barMin) * plotH }
+            function pyLin(v: var): var { return padT + plotH - (v - linMin) / (linMax - linMin) * plotH }
+            function px(i: var, off: var, total: var): var {
                 var slotW = plotW / n
                 var grpOff = slotW * 0.1
                 var barW = (slotW - grpOff * 2) / Math.max(total, 1)
                 return padL + i * slotW + grpOff + off * barW
             }
-            function barW(total) {
+            function barW(total: var): var {
                 var slotW = plotW / n
                 return (slotW * 0.8) / Math.max(total, 1)
             }

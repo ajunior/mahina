@@ -35,9 +35,9 @@ Item {
 
         Connections {
             target: root
-            function onHeatDataChanged()  { _hmc.requestPaint() }
-            function onWidthChanged()     { _hmc.requestPaint() }
-            function onHeightChanged()    { _hmc.requestPaint() }
+            function onHeatDataChanged(): void { _hmc.requestPaint() }
+            function onWidthChanged(): void { _hmc.requestPaint() }
+            function onHeightChanged(): void { _hmc.requestPaint() }
         }
         Component.onCompleted: requestPaint()
 

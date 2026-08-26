@@ -55,7 +55,7 @@ Item {
         return out
     }
 
-    function _addChar(ch) {
+    function _addChar(ch: var): void {
         var m    = root.mask
         var raw  = root.rawValue
         var pos  = raw.length
@@ -75,12 +75,12 @@ Item {
         }
     }
 
-    function _removeChar() {
+    function _removeChar(): void {
         if (root.rawValue.length > 0)
             root.rawValue = root.rawValue.substring(0, root.rawValue.length - 1)
     }
 
-    function clear() { root.rawValue = "" }
+    function clear(): void { root.rawValue = "" }
 
     Rectangle {
         anchors.fill:  parent

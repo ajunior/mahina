@@ -23,12 +23,12 @@ Item {
     readonly property int _asciiW: root.showAscii ? root.columns * 9 : 0
     readonly property int _rows:   Math.ceil(root.hexBytes.length / root.columns)
 
-    function _toHex2(n) {
+    function _toHex2(n: var): var {
         var s = n.toString(16).toUpperCase()
         return s.length < 2 ? "0" + s : s
     }
 
-    function _isPrint(n) { return n >= 0x20 && n < 0x7f }
+    function _isPrint(n: var): var { return n >= 0x20 && n < 0x7f }
 
     Rectangle {
         anchors.fill: parent

@@ -18,7 +18,7 @@ Item {
     implicitWidth:  _syncRow.implicitWidth
     implicitHeight: 24
 
-    function _icon(s) {
+    function _icon(s: var): var {
         switch (s) {
             case "saved":    return "✓"
             case "syncing":  return "↻"
@@ -27,7 +27,7 @@ Item {
             default:         return "○"
         }
     }
-    function _label(s) {
+    function _label(s: var): var {
         switch (s) {
             case "saved":    return "Saved"
             case "syncing":  return "Saving…"
@@ -36,7 +36,7 @@ Item {
             default:         return s
         }
     }
-    function _color(s) {
+    function _color(s: var): var {
         switch (s) {
             case "saved":    return Theme.success
             case "syncing":  return Theme.primary

@@ -55,8 +55,8 @@ Item {
 
                     Connections {
                         target: root
-                        function onItemsChanged() { _bc.requestPaint() }
-                        function onWidthChanged()  { _bc.requestPaint() }
+                        function onItemsChanged(): void { _bc.requestPaint() }
+                        function onWidthChanged(): void { _bc.requestPaint() }
                     }
                     Component.onCompleted: requestPaint()
 

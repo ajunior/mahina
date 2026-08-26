@@ -31,7 +31,7 @@ Item {
 
     readonly property real _range: xMax - xMin || 1
 
-    function _fx(v) { return root.labelWidth + ((v - root.xMin) / root._range) * (root.width - root.labelWidth - 12) }
+    function _fx(v: var): var { return root.labelWidth + ((v - root.xMin) / root._range) * (root.width - root.labelWidth - 12) }
 
     // Header row
     Rectangle {

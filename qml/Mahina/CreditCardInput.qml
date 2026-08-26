@@ -20,7 +20,7 @@ Item {
     implicitWidth:  320
     implicitHeight: 48
 
-    function _detectBrand(digits) {
+    function _detectBrand(digits: var): var {
         if (digits.length === 0) return ""
         var d = digits
         if (d[0] === "4") return "visa"
@@ -30,7 +30,7 @@ Item {
         return ""
     }
 
-    function _formatNumber(digits) {
+    function _formatNumber(digits: var): var {
         // Amex: 4-6-5, others: 4-4-4-4
         if (root.brand === "amex") {
             var p1 = digits.slice(0, 4)

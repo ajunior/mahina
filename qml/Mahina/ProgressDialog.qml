@@ -28,8 +28,8 @@ Item {
 
     signal cancelClicked()
 
-    function show() { root.open = true }
-    function close() { root.open = false }
+    function show(): void { root.open = true }
+    function close(): void { root.open = false }
 
     QQC.Popup {
         anchors.centerIn: Overlay.overlay

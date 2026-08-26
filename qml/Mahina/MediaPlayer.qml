@@ -39,7 +39,7 @@ Item {
     signal loopToggled(bool on)
 
     readonly property string _timeStr: {
-        function _fmt(s) {
+        function _fmt(s: var): var {
             var m = Math.floor(s / 60), sec = Math.floor(s % 60)
             return m + ":" + (sec < 10 ? "0" : "") + sec
         }

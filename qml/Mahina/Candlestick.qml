@@ -44,9 +44,9 @@ Item {
 
         Connections {
             target: root
-            function onCandlesChanged()  { _canvas.requestPaint() }
-            function onWidthChanged()    { _canvas.requestPaint() }
-            function onHeightChanged()   { _canvas.requestPaint() }
+            function onCandlesChanged(): void { _canvas.requestPaint() }
+            function onWidthChanged(): void { _canvas.requestPaint() }
+            function onHeightChanged(): void { _canvas.requestPaint() }
         }
 
         onPaint: {
@@ -62,7 +62,7 @@ Item {
             var plotH  = height - padT - padB
             var range  = root._maxV - root._minV
 
-            function fy(v) { return padT + plotH - ((v - root._minV) / range) * plotH }
+            function fy(v: var): var { return padT + plotH - ((v - root._minV) / range) * plotH }
 
             var cw = (plotW / n) - root.candleGap
 

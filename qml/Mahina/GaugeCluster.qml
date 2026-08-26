@@ -45,7 +45,7 @@ Item {
 
                     Connections {
                         target: root
-                        function onGaugesChanged() { _gc.requestPaint() }
+                        function onGaugesChanged(): void { _gc.requestPaint() }
                     }
 
                     property real _target: parent.normalised

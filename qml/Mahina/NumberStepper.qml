@@ -24,8 +24,8 @@ Item {
     implicitWidth:  130
     implicitHeight: 36
 
-    function _clamp(v) { return Math.max(root.from, Math.min(root.to, v)) }
-    function _fmt(v)   { return v.toFixed(root.decimals) + root.suffix }
+    function _clamp(v: var): var { return Math.max(root.from, Math.min(root.to, v)) }
+    function _fmt(v: var): var { return v.toFixed(root.decimals) + root.suffix }
 
     Rectangle {
         anchors.fill: parent

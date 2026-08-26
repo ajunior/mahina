@@ -182,7 +182,7 @@ Item {
                                 Keys.onReturnPressed: _commitEdit()
                                 Keys.onEscapePressed: { root._editRow = -1; root._editKey = "" }
 
-                                function _commitEdit() {
+                                function _commitEdit(): void {
                                     var rowIdx = root._editRow
                                     var key    = root._editKey
                                     var val    = root._editVal

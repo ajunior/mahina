@@ -34,7 +34,7 @@ Item {
     }
 
     // Build highlighted segments from testString + matches
-    function _segments() {
+    function _segments(): var {
         var str  = root.testString
         var mats = root._result.matches
         if (mats.length === 0) return [{ text: str, match: false }]

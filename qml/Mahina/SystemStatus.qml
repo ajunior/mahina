@@ -25,7 +25,7 @@ Rectangle {
     color:  Theme.surface
     border.color: Theme.border; border.width: 1
 
-    function _statusColor(s) {
+    function _statusColor(s: var): var {
         switch (s) {
             case "operational":  return Theme.success
             case "degraded":     return Theme.warning
@@ -35,7 +35,7 @@ Rectangle {
         }
     }
 
-    function _statusLabel(s) {
+    function _statusLabel(s: var): var {
         switch (s) {
             case "operational":  return "Operational"
             case "degraded":     return "Degraded"

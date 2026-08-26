@@ -115,7 +115,7 @@ Item {
                             root.tagRemoved(removed)
                         }
                     }
-                    function _addTag() {
+                    function _addTag(): var {
                         var t = text.trim().replace(/,/g, "")
                         if (t === "") return
                         if (root.maxTags > 0 && root.tags.length >= root.maxTags) return

@@ -139,7 +139,7 @@ QtObject {
     //     light: { background: "#f8fafc", textPrimary: "#0f172a" },
     //     dark:  { background: "#0f172a", textPrimary: "#f8fafc" }
     // })
-    function load(obj) {
+    function load(obj: var): void {
         if (obj.primary       !== undefined) root.primary       = obj.primary
         if (obj.primaryHover  !== undefined) root.primaryHover  = obj.primaryHover
         if (obj.primaryActive !== undefined) root.primaryActive = obj.primaryActive
@@ -184,7 +184,7 @@ QtObject {
     }
 
     // Restore Mahina's built-in defaults.
-    function reset() {
+    function reset(): void {
         root.primary       = "#5B8DF6"
         root.primaryHover  = "#4878E8"
         root.primaryActive = "#3A66D0"

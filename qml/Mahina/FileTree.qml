@@ -30,7 +30,7 @@ Item {
     implicitWidth:  280
     implicitHeight: _col.implicitHeight
 
-    function _flatten(nodes, depth, parentPath, result) {
+    function _flatten(nodes: var, depth: var, parentPath: var, result: var): var {
         for (var i = 0; i < nodes.length; i++) {
             var n = nodes[i]
             var p = (parentPath !== "" ? parentPath + "/" : "") + n.name
@@ -115,7 +115,7 @@ Item {
         }
     }
 
-    function _fileIcon(name) {
+    function _fileIcon(name: var): var {
         var ext = name.split(".").pop().toLowerCase()
         switch (ext) {
             case "qml": case "js": case "ts": return "📜"

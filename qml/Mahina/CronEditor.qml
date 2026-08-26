@@ -15,7 +15,7 @@ Item {
     // Parse cron into 5 fields
     property var _fields: cronExpression.split(" ").concat(["*","*","*","*","*"]).slice(0,5)
 
-    function _rebuild() {
+    function _rebuild(): void {
         var expr = [_mF.fieldValue, _hF.fieldValue, _dF.fieldValue, _moF.fieldValue, _wF.fieldValue].join(" ")
         root.cronExpression = expr
         root.expressionChanged(expr)

@@ -28,7 +28,7 @@ Item {
     implicitWidth:  320
     implicitHeight: _col.implicitHeight
 
-    function _flattenVisible(nodes, depth, result) {
+    function _flattenVisible(nodes: var, depth: var, result: var): var {
         for (var i = 0; i < nodes.length; i++) {
             var n = nodes[i]
             var hasChildren = !!(n.children && n.children.length > 0)

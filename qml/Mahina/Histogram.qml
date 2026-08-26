@@ -51,10 +51,10 @@ Item {
 
         Connections {
             target: root
-            function onValuesChanged()   { _canvas.requestPaint() }
-            function onBinsChanged()     { _canvas.requestPaint() }
-            function onWidthChanged()    { _canvas.requestPaint() }
-            function onHeightChanged()   { _canvas.requestPaint() }
+            function onValuesChanged(): void { _canvas.requestPaint() }
+            function onBinsChanged(): void { _canvas.requestPaint() }
+            function onWidthChanged(): void { _canvas.requestPaint() }
+            function onHeightChanged(): void { _canvas.requestPaint() }
         }
 
         onPaint: {
@@ -72,7 +72,7 @@ Item {
             var barW  = plotW / n
             var maxC  = root._maxCount
 
-            function fy(c) { return padT + plotH - (c / maxC) * plotH }
+            function fy(c: var): var { return padT + plotH - (c / maxC) * plotH }
 
             // Y grid
             ctx.font = "10px '" + Theme.fontFamily + "'"; ctx.textAlign = "right"

@@ -29,7 +29,7 @@ Item {
     implicitHeight: _mainCol.implicitHeight
 
     // Single helper function avoids repeated logic
-    function _avatar(bg, initials, sz) { return Qt.binding(function() { return bg }) }
+    function _avatar(bg: var, initials: var, sz: var): var { return Qt.binding(function() { return bg }) }
 
     Column {
         id:     _mainCol

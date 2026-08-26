@@ -41,11 +41,11 @@ Item {
 
         Connections {
             target: root
-            function onValuesChanged()      { _canvas.requestPaint() }
-            function onColorChanged()      { _canvas.requestPaint() }
-            function onTypeChanged()       { _canvas.requestPaint() }
-            function onStrokeWidthChanged(){ _canvas.requestPaint() }
-            function onFillOpacityChanged(){ _canvas.requestPaint() }
+            function onValuesChanged(): void { _canvas.requestPaint() }
+            function onColorChanged(): void { _canvas.requestPaint() }
+            function onTypeChanged(): void { _canvas.requestPaint() }
+            function onStrokeWidthChanged(): void { _canvas.requestPaint() }
+            function onFillOpacityChanged(): void { _canvas.requestPaint() }
         }
 
         onPaint: {
@@ -61,9 +61,9 @@ Item {
             var maxV = root._max
             var rng  = maxV - minV
 
-            function fy(v) { return height - ((v - minV) / rng) * height }
+            function fy(v: var): var { return height - ((v - minV) / rng) * height }
 
-            function roundRect(x, y, w, h, r) {
+            function roundRect(x: var, y: var, w: var, h: var, r: var): void {
                 r = Math.min(r, w / 2, h / 2)
                 ctx.moveTo(x + r, y)
                 ctx.lineTo(x + w - r, y)

@@ -59,7 +59,7 @@ Item {
         return out
     }
 
-    function _runActive() {
+    function _runActive(): void {
         if (root.activeIdx < root.flatItems.length) {
             var it = root.flatItems[root.activeIdx]
             root.isOpen = false

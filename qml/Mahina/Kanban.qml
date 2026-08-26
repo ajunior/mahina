@@ -36,7 +36,7 @@ Item {
     onColumnsChanged:     _syncBoard()
     Component.onCompleted: _syncBoard()
 
-    function _syncBoard() {
+    function _syncBoard(): void {
         boardData = JSON.parse(JSON.stringify(root.columns))
     }
 

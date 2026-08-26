@@ -35,10 +35,10 @@ Item {
 
         Connections {
             target: root
-            function onNodesChanged()  { _canvas.requestPaint() }
-            function onLinksChanged()  { _canvas.requestPaint() }
-            function onWidthChanged()  { _canvas.requestPaint() }
-            function onHeightChanged() { _canvas.requestPaint() }
+            function onNodesChanged(): void { _canvas.requestPaint() }
+            function onLinksChanged(): void { _canvas.requestPaint() }
+            function onWidthChanged(): void { _canvas.requestPaint() }
+            function onHeightChanged(): void { _canvas.requestPaint() }
         }
         Component.onCompleted: requestPaint()
 
@@ -68,7 +68,7 @@ Item {
             })
             var numCols = maxGroup + 1
 
-            function colX(g) {
+            function colX(g: var): var {
                 return padL + (numCols <= 1 ? plotW/2 : g * plotW / (numCols - 1))
             }
 

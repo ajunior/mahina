@@ -36,8 +36,8 @@ Item {
     }
 
     // ── Helper: clamp ─────────────────────────────────────────────────────────
-    function _cw(w) { return Math.max(root.minWidth,  Math.min(root.maxWidth,  w)) }
-    function _ch(h) { return Math.max(root.minHeight, Math.min(root.maxHeight, h)) }
+    function _cw(w: var): var { return Math.max(root.minWidth,  Math.min(root.maxWidth,  w)) }
+    function _ch(h: var): var { return Math.max(root.minHeight, Math.min(root.maxHeight, h)) }
 
     // ── Edge handles ──────────────────────────────────────────────────────────
 

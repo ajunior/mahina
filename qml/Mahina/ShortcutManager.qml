@@ -18,7 +18,7 @@ Item {
 
     property string _recordingId: ""
 
-    function _flatten() {
+    function _flatten(): var {
         var out = []
         var q = root.searchText.toLowerCase()
         for (var i = 0; i < root.shortcutCategories.length; i++) {

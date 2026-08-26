@@ -45,7 +45,7 @@ Item {
     implicitHeight: 320
 
     // ── Public methods ───────────────────────────────────────────────────────
-    function positionAtNick(nick) {
+    function positionAtNick(nick: var): var {
         var lower = String(nick).toLowerCase()
         for (var i = 0; i < root._view.length; i++) {
             if (String(root._view[i].nick).toLowerCase() === lower) {

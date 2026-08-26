@@ -22,7 +22,7 @@ Item {
     implicitWidth:  380
     implicitHeight: 260
 
-    function _validate(str) {
+    function _validate(str: var): void {
         try {
             JSON.parse(str)
             root.valid      = true
@@ -33,7 +33,7 @@ Item {
         }
     }
 
-    function _formatJson(str) {
+    function _formatJson(str: var): var {
         try {
             return JSON.stringify(JSON.parse(str), null, 2)
         } catch(e) {

@@ -30,8 +30,8 @@ Item {
     signal confirmed()
     signal cancelled()
 
-    function open()  { root.visible = true;  _openAnim.start() }
-    function close() { _closeAnim.start() }
+    function open(): void { root.visible = true;  _openAnim.start() }
+    function close(): void { _closeAnim.start() }
 
     // ── Overlay ───────────────────────────────────────────────────────────────
     anchors.fill: parent

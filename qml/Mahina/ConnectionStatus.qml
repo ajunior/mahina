@@ -18,14 +18,14 @@ Item {
     implicitWidth:  showLabel ? _row.implicitWidth : 12
     implicitHeight: 20
 
-    function _color(s) {
+    function _color(s: var): var {
         switch (s) {
             case "online":        return Theme.success
             case "reconnecting":  return Theme.warning
             default:              return Theme.error
         }
     }
-    function _label(s) {
+    function _label(s: var): var {
         switch (s) {
             case "online":        return "Connected"
             case "reconnecting":  return "Reconnecting…"

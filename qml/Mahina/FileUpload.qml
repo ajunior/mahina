@@ -38,7 +38,7 @@ Item {
 
     readonly property bool _full: root.maxFiles > 0 && root.files.length >= root.maxFiles
 
-    function _addUrl(url) {
+    function _addUrl(url: var): void {
         if (root._full) return
         if (!root.multiple && root.files.length > 0) root.files = []
         var newFiles = root.files.slice()
@@ -47,7 +47,7 @@ Item {
         root.fileAdded(url)
     }
 
-    function _basename(url) {
+    function _basename(url: var): var {
         var s = url.toString()
         return s.substring(s.lastIndexOf("/") + 1)
     }

@@ -39,7 +39,7 @@ Item {
     implicitHeight: 360
 
     // ── LCS-based line diff ───────────────────────────────────────────────────
-    function _computeDiff(a, b) {
+    function _computeDiff(a: var, b: var): var {
         var aL = a === "" ? [] : a.split("\n")
         var bL = b === "" ? [] : b.split("\n")
         var m  = aL.length, n = bL.length
@@ -103,21 +103,21 @@ Item {
         return result
     }
 
-    function _lineColor(type) {
+    function _lineColor(type: var): var {
         switch (type) {
             case "add":    return Qt.rgba(0.15, 0.64, 0.24, 0.15)
             case "remove": return Qt.rgba(0.88, 0.30, 0.34, 0.15)
             default:       return "transparent"
         }
     }
-    function _lineTextColor(type) {
+    function _lineTextColor(type: var): var {
         switch (type) {
             case "add":    return "#3fb950"
             case "remove": return "#f85149"
             default:       return Theme.textPrimary
         }
     }
-    function _prefix(type) {
+    function _prefix(type: var): var {
         switch (type) { case "add": return "+"; case "remove": return "-"; default: return " " }
     }
 

@@ -25,7 +25,7 @@ Item {
     implicitWidth:  420
     implicitHeight: _col.implicitHeight
 
-    function _typeColor(t) {
+    function _typeColor(t: var): var {
         switch (t) {
             case "error":   return Theme.error
             case "warning": return Theme.warning
@@ -34,7 +34,7 @@ Item {
             default:        return Theme.textSecondary
         }
     }
-    function _typeIcon(t) {
+    function _typeIcon(t: var): var {
         switch (t) {
             case "error":   return "✕"
             case "warning": return "⚠"

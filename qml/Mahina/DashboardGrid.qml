@@ -43,7 +43,7 @@ Item {
         Component.onCompleted: _relayout()
         onChildrenChanged:     _relayout()
 
-        function _relayout() {
+        function _relayout(): void {
             var col = 0, row = 0
             var colW = root._colW
             for (var i = 0; i < children.length; i++) {
