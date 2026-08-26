@@ -225,7 +225,7 @@ Item {
                 SequentialAnimation {
                     id: _exitAnim
                     NumberAnimation { target: _toast; property: "opacity"; to: 0; duration: Theme.durationNormal; easing.type: Easing.InCubic }
-                    ScriptAction    { script: root._remove(_toast.toastId) }
+                    onFinished: root._remove(_toast.toastId)
                 }
             }
         }

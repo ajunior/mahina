@@ -62,11 +62,19 @@ Item {
     readonly property var _step: steps.length > 0 ? steps[Math.max(0, Math.min(currentStep, steps.length - 1))] : null
     readonly property Item _target: (_step && _step.target) ? _step.target : null
 
-    // Finish animation
+    // Finish animation. The teardown runs from onFinished rather than a
+    // trailing ScriptAction: a ScriptAction's `script` is a QQmlScriptString,
+    // which qmlcachegen cannot compile — and it stops compiling the rest of the
+    // document when it meets one, so a ScriptAction near the top of a file
+    // costs every binding below it. onFinished is an ordinary signal handler.
     SequentialAnimation {
         id: _finishAnim
         NumberAnimation { target: root; property: "opacity"; to: 0; duration: Theme.durationNormal }
-        ScriptAction    { script: { root.visible = false; root.opacity = 1; root.finished() } }
+        onFinished: {
+            root.visible = false
+            root.opacity = 1
+            root.finished()
+        }
     }
 
     // ── Dimmed backdrop ───────────────────────────────────────────────────────

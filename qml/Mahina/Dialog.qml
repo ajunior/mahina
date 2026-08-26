@@ -192,6 +192,9 @@ Item {
             NumberAnimation { target: _box;      property: "opacity"; to: 0.0; duration: Theme.durationNormal; easing.type: Easing.InCubic }
             NumberAnimation { target: _box;      property: "scale";   to: 0.96; duration: Theme.durationNormal; easing.type: Easing.InCubic }
         }
-        ScriptAction { script: { root.visible = false; root.closed() } }
+        onFinished: {
+            root.visible = false
+            root.closed()
+        }
     }
 }
