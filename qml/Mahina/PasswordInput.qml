@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
 import Mahina
@@ -140,9 +141,11 @@ Item {
                 Repeater {
                     model: 4
                     Rectangle {
+                        id: _bar
+                        required property int index
                         width:  (root.implicitWidth - Theme.sp1 * 3) / 4
                         height: 3; radius: 2
-                        color:  index < root.strength ? root._strengthColor : Theme.border
+                        color:  _bar.index < root.strength ? root._strengthColor : Theme.border
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     }
                 }

@@ -1,3 +1,4 @@
+pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Controls.Basic as QQC
 import Mahina
@@ -85,31 +86,44 @@ Item {
         boundsBehavior:      Flickable.StopAtBounds
 
         delegate: Item {
+            id: _rowItem
+
+            // ComponentBehavior: Bound — a delegate reaches its model through
+            // required properties, one per role, not through an injected 'model'.
+            required property string key
+            required property string valueStr
+            required property string typeStr
+            required property int    depth
+            required property string path
+            required property int    count
+            required property bool   isCollapsed
+            required property bool   isCloser
+
             width:  _list.width
             height: 22
 
-            readonly property bool _isExpandable: model.typeStr === "object" || model.typeStr === "array"
+            readonly property bool _isExpandable: _rowItem.typeStr === "object" || _rowItem.typeStr === "array"
 
             Row {
-                x:       model.depth * root.indentSize
+                x:       _rowItem.depth * root.indentSize
                 y:       3
                 spacing: 4
 
                 // Expand/collapse triangle
                 Item {
                     width:  14; height: 16
-                    visible: _isExpandable && !model.isCloser
+                    visible: _rowItem._isExpandable && !_rowItem.isCloser
 
                     Text {
                         anchors.centerIn: parent
-                        text:   model.isCollapsed ? "▶" : "▼"
+                        text:   _rowItem.isCollapsed ? "▶" : "▼"
                         color:  Theme.textSecondary
                         font.pixelSize: 9
                     }
                     MouseArea {
                         anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                         onClicked: {
-                            var p = model.path
+                            var p = _rowItem.path
                             var c = Object.assign({}, root._collapsed)
                             if (c[p]) delete c[p]
                             else      c[p] = true
@@ -119,13 +133,13 @@ Item {
                     }
                 }
 
-                Item { width: _isExpandable && !model.isCloser ? 0 : 14; height: 1 }
+                Item { width: _rowItem._isExpandable && !_rowItem.isCloser ? 0 : 14; height: 1 }
 
                 // Key
                 Text {
-                    visible:        !model.isCloser && model.key !== ""
+                    visible:        !_rowItem.isCloser && _rowItem.key !== ""
                     anchors.verticalCenter: parent.verticalCenter
-                    text:           model.key !== "" ? ('"' + model.key + '": ') : ""
+                    text:           _rowItem.key !== "" ? ('"' + _rowItem.key + '": ') : ""
                     color:          "#cba6f7"
                     font.family:    Theme.fontFamilyMono
                     font.pixelSize: root.fontSize
@@ -134,12 +148,12 @@ Item {
                 // Value / opener
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
-                    text:           model.isCollapsed
-                                    ? model.valueStr + (model.typeStr === "array" ? " " : " ") +
-                                      (model.typeStr === "array" ? "…]" : "…}") +
-                                      " // " + model.count + " item" + (model.count === 1 ? "" : "s")
-                                    : model.valueStr
-                    color:          root._typeColor(model.typeStr)
+                    text:           _rowItem.isCollapsed
+                                    ? _rowItem.valueStr + (_rowItem.typeStr === "array" ? " " : " ") +
+                                      (_rowItem.typeStr === "array" ? "…]" : "…}") +
+                                      " // " + _rowItem.count + " item" + (_rowItem.count === 1 ? "" : "s")
+                                    : _rowItem.valueStr
+                    color:          root._typeColor(_rowItem.typeStr)
                     font.family:    Theme.fontFamilyMono
                     font.pixelSize: root.fontSize
                 }
