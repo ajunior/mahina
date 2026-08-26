@@ -86,15 +86,17 @@ Item {
                                 cursorShape: Qt.SizeVerCursor
                                 property real startY:   0
                                 property int  startIdx: 0
+                                // Global coordinates: the row is reparented and
+                                // moved while it is being dragged.
                                 onPressed: (m) => {
-                                    startY   = m.globalY
+                                    startY   = _dragArea.mapToGlobal(m.x, m.y).y
                                     startIdx = _rq1.index
                                     root.draggedIndex = _rq1.index
                                     root.dropIndex    = _rq1.index
                                 }
                                 onPositionChanged: (m) => {
                                     if (!pressed) return
-                                    var dy     = m.globalY - startY
+                                    var dy     = _dragArea.mapToGlobal(m.x, m.y).y - startY
                                     var newIdx = Math.max(0, Math.min(root.listItems.length - 1,
                                                           startIdx + Math.round(dy / 47)))
                                     root.dropIndex = newIdx

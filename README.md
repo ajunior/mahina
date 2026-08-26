@@ -110,19 +110,27 @@ cmake --install build
 Then in your project:
 
 ```cmake
+find_package(Qt6 REQUIRED COMPONENTS Quick)
+qt_standard_project_setup()
 find_package(Mahina REQUIRED)
 
-# Option A — Qt-native projects using qt_add_executable:
-#   qt_import_qml_plugins handles the static plugin init automatically.
-target_link_libraries(MyApp PRIVATE Mahina::Mahina Mahina::Mahinaplugin)
-qt_import_qml_plugins(MyApp)
+qt_add_executable(MyApp main.cpp)
+qt_add_qml_module(MyApp URI MyApp VERSION 1.0 QML_FILES Main.qml)
 
-# Option B — plain CMake executables:
-#   Link Mahina::All, which also adds the Q_IMPORT_PLUGIN shim to your sources.
-target_link_libraries(MyApp PRIVATE Mahina::All)
+# Mahina::All links the backing library and the QML plugin, and adds the
+# Q_IMPORT_PLUGIN shim to your sources. Link it whether or not your project
+# uses qt_add_executable.
+target_link_libraries(MyApp PRIVATE Qt6::Quick Mahina::All)
 ```
 
-In both cases, add the QML import path at runtime:
+`qt_import_qml_plugins()` is **not** an alternative here: it discovers plugins by
+walking the Qt-generated properties on real Qt QML module targets, and an installed
+Mahina is a set of hand-written `IMPORTED` targets it cannot see. Linking
+`Mahina::Mahina Mahina::Mahinaplugin` and calling it leaves the plugin
+uninitialised, and the app dies at startup with `module "Mahina" is not installed`.
+`Mahina::All` is the one path that works.
+
+Then add the QML import path at runtime:
 
 ```cpp
 engine.addImportPath(QStringLiteral("qrc:/qt/qml"));
