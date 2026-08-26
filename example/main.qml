@@ -69,6 +69,7 @@ Window {
                     { icon: Icons.users,       label: "Social & Charts"  },
                     { icon: Icons.compass,     label: "Nav & Inputs"     },
                     { icon: Icons.code,        label: "Editors & Tools"  },
+                    { icon: Icons.dotsThree,   label: "Odds & Ends"      },
                 ]
                 onItemClicked: (i) => _stack.currentIndex = i
             }
@@ -5098,6 +5099,251 @@ Window {
     
                             Item { height: Theme.sp8 }
                         }
+                    }
+                }
+
+                // ── Page 18 — Odds & Ends ────────────────────────────────────────
+                // Every component the other pages happen not to use. The demo is
+                // what CI boots, so a component missing from it is a component
+                // nothing checks — that is how TabView shipped unable to load.
+                ScrollArea {
+                    clip: true
+
+                    Column {
+                        id: _r11Col
+                        width:   parent.width
+                        padding: Theme.sp6
+                        spacing: Theme.sp8
+
+                        Text {
+                            text: "Odds & Ends"
+                            color: Theme.textPrimary
+                            font.family: Theme.fontFamily
+                            font.pixelSize: Theme.textXl
+                            font.weight: Font.Bold
+                        }
+
+                        // ── Tabs, panels supplied as a list ─────────────────
+                        // The form the retired TabView existed for: panels that
+                        // already exist elsewhere, handed over as a list. Tabs
+                        // reparents them into its StackLayout.
+                        Text { text: "Tabs (panels as a list)"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textLg; font.weight: Theme.weightSemibold }
+                        Item {
+                            id: _r11Pool
+                            visible: false   // emptied at completion; keeps the Column from spacing it
+                            Rectangle {
+                                id: _r11PanelA
+                                color: Theme.panel; radius: Theme.radiusMd
+                                Text { anchors.centerIn: parent; text: "Overview panel"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textSm }
+                            }
+                            Rectangle {
+                                id: _r11PanelB
+                                color: Theme.panel; radius: Theme.radiusMd
+                                Text { anchors.centerIn: parent; text: "Activity panel"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textSm }
+                            }
+                        }
+                        Tabs {
+                            width:   parent.width - Theme.sp6 * 2
+                            height:  160
+                            model:   ["Overview", "Activity"]
+                            content: [_r11PanelA, _r11PanelB]
+                        }
+
+                        // ── TabBar ──────────────────────────────────────────
+                        Text { text: "TabBar"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textLg; font.weight: Theme.weightSemibold }
+                        TabBar {
+                            id:     _r11TabBar
+                            width:  parent.width - Theme.sp6 * 2
+                            model:  ["Inbox", "Drafts", "Sent"]
+                            onTabClicked: (i) => _r11TabBar.currentIndex = i
+                        }
+
+                        // ── BarChart ────────────────────────────────────────
+                        Text { text: "BarChart"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textLg; font.weight: Theme.weightSemibold }
+                        BarChart {
+                            width:  parent.width - Theme.sp6 * 2
+                            height: 220
+                            xLabels: ["Q1", "Q2", "Q3", "Q4", "Q5"]
+                            series: [
+                                { label: "Revenue",  color: Theme.primary, values: [10, 18, 14, 22, 28] },
+                                { label: "Expenses", color: Theme.error,   values: [ 8, 10, 12, 11, 15] },
+                            ]
+                        }
+
+                        // ── Radio ───────────────────────────────────────────
+                        Text { text: "Radio"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textLg; font.weight: Theme.weightSemibold }
+                        Row {
+                            spacing: Theme.sp5
+                            Radio { text: "Daily";   checked: true }
+                            Radio { text: "Weekly" }
+                            Radio { text: "Monthly"; errorText: "Not on your plan" }
+                        }
+
+                        // ── ListRow ─────────────────────────────────────────
+                        Text { text: "ListRow"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textLg; font.weight: Theme.weightSemibold }
+                        Column {
+                            width:   parent.width - Theme.sp6 * 2
+                            spacing: 1
+
+                            Repeater {
+                                model: [
+                                    { title: "alice@glow.dev", subtitle: "Admin · last seen 2h ago"    },
+                                    { title: "bob@glow.dev",   subtitle: "Member · last seen 3d ago"   },
+                                ]
+                                delegate: ListRow {
+                                    id: _r11Row
+                                    required property var modelData
+                                    // Local state rather than a toast: a delegate is its own
+                                    // component, so reaching the page's toaster id from in here
+                                    // would be an unqualified access the lint gate counts.
+                                    property bool starred: false
+                                    width:    parent.width
+                                    title:    _r11Row.modelData.title
+                                    subtitle: _r11Row.modelData.subtitle
+                                    onClicked: _r11Row.starred = !_r11Row.starred
+                                    Badge {
+                                        text:        _r11Row.starred ? "starred" : "active"
+                                        colorScheme: _r11Row.starred ? Badge.Color.Warning : Badge.Color.Success
+                                    }
+                                }
+                            }
+                        }
+
+                        // ── SidebarSection / SidebarEntry ───────────────────
+                        Text { text: "SidebarSection & SidebarEntry"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textLg; font.weight: Theme.weightSemibold }
+                        Rectangle {
+                            width:  320
+                            height: _r11Side.implicitHeight + Theme.sp4
+                            color:  Theme.panel
+                            radius: Theme.radiusMd
+
+                            Column {
+                                id: _r11Side
+                                anchors { left: parent.left; right: parent.right; top: parent.top; margins: Theme.sp2 }
+
+                                SidebarSection {
+                                    width: parent.width
+                                    title: "Connections"
+                                    SidebarEntry { width: parent.width; label: "production"; detail: "12 ms";   severity: "success" }
+                                    SidebarEntry { width: parent.width; label: "staging";    detail: "310 ms";  severity: "warning" }
+                                    SidebarEntry { width: parent.width; label: "legacy";     detail: "timeout"; severity: "error"   }
+                                }
+                            }
+                        }
+
+                        // ── ExpandableLog ───────────────────────────────────
+                        Text { text: "ExpandableLog"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textLg; font.weight: Theme.weightSemibold }
+                        ExpandableLog {
+                            width:  parent.width - Theme.sp6 * 2
+                            height: 220
+                            log: [
+                                { id: 1, level: "info",  message: "Connected to production", timestamp: "10:02:11", tag: "db",   detail: "TLS 1.3 · pool size 8" },
+                                { id: 2, level: "warn",  message: "Slow query: 1.4s",        timestamp: "10:02:40", tag: "db",   detail: "SELECT * FROM orders" },
+                                { id: 3, level: "error", message: "Connection refused",      timestamp: "10:03:02", tag: "net",  detail: "ECONNREFUSED 10.0.0.4:5432" },
+                            ]
+                        }
+
+                        // ── MarkdownView ────────────────────────────────────
+                        Text { text: "MarkdownView"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textLg; font.weight: Theme.weightSemibold }
+                        MarkdownView {
+                            width: parent.width - Theme.sp6 * 2
+                            text: "## Release notes\n\nMarkdownView renders **bold**, _italic_ and `code`, and only follows links whose scheme is allowed.\n\n- one\n- two\n"
+                        }
+
+                        // ── StickySection ───────────────────────────────────
+                        Text { text: "StickySection"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textLg; font.weight: Theme.weightSemibold }
+                        Rectangle {
+                            width:  parent.width - Theme.sp6 * 2
+                            height: 200
+                            color:  Theme.surface
+                            radius: Theme.radiusMd
+                            border.color: Theme.border; border.width: 1
+                            clip:   true
+
+                            Flickable {
+                                id: _r11Flick
+                                anchors { fill: parent; margins: 1 }
+                                contentWidth:  width
+                                contentHeight: _r11Months.implicitHeight
+
+                                Column {
+                                    id:    _r11Months
+                                    width: parent.width
+
+                                    // Written out rather than repeated: a StickySection needs the
+                                    // Flickable's id, and a Repeater delegate is a separate
+                                    // component that cannot see it without pragma
+                                    // ComponentBehavior: Bound, which this file does not set.
+                                    StickySection { width: parent.width; flickable: _r11Flick; label: "January" }
+                                    Repeater { model: 4; delegate: _r11Entry }
+
+                                    StickySection { width: parent.width; flickable: _r11Flick; label: "February" }
+                                    Repeater { model: 4; delegate: _r11Entry }
+
+                                    StickySection { width: parent.width; flickable: _r11Flick; label: "March" }
+                                    Repeater { model: 4; delegate: _r11Entry }
+                                }
+
+                                Component {
+                                    id: _r11Entry
+                                    Text {
+                                        required property int index
+                                        leftPadding:   Theme.sp4
+                                        topPadding:    Theme.sp2
+                                        bottomPadding: Theme.sp2
+                                        text:  "Entry " + (index + 1)
+                                        color: Theme.textSecondary
+                                        font.family:    Theme.fontFamily
+                                        font.pixelSize: Theme.textSm
+                                    }
+                                }
+                            }
+                        }
+
+                        // ── BlurOverlay ─────────────────────────────────────
+                        Text { text: "BlurOverlay"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textLg; font.weight: Theme.weightSemibold }
+                        Rectangle {
+                            id:     _r11Blurred
+                            width:  parent.width - Theme.sp6 * 2
+                            height: 140
+                            radius: Theme.radiusMd
+                            clip:   true
+                            gradient: Gradient {
+                                GradientStop { position: 0.0; color: Theme.primary }
+                                GradientStop { position: 1.0; color: Theme.error }
+                            }
+
+                            BlurOverlay {
+                                anchors { fill: parent; margins: Theme.sp6 }
+                                source: _r11Blurred
+                                Text {
+                                    anchors.centerIn: parent
+                                    text:  "Frosted panel"
+                                    color: Theme.textPrimary
+                                    font.family:    Theme.fontFamily
+                                    font.pixelSize: Theme.textSm
+                                }
+                            }
+                        }
+
+                        // ── IrcPalette ──────────────────────────────────────
+                        // A singleton, so it is exercised by reading it rather
+                        // than by instantiating anything.
+                        Text { text: "IrcPalette"; color: Theme.textSecondary; font.family: Theme.fontFamily; font.pixelSize: Theme.textLg; font.weight: Theme.weightSemibold }
+                        Row {
+                            spacing: Theme.sp2
+                            Repeater {
+                                model: IrcPalette.mircColors.slice(0, 16)
+                                delegate: Rectangle {
+                                    required property color modelData
+                                    width: 24; height: 24; radius: Theme.radiusSm
+                                    color: modelData
+                                    border.color: Theme.border; border.width: 1
+                                }
+                            }
+                        }
+
+                        Item { height: Theme.sp8 }
                     }
                 }
             }

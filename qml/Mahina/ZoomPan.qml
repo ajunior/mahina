@@ -43,8 +43,10 @@ Item {
         onWheel: (event) => {
             var factor = event.angleDelta.y > 0 ? 1.12 : 1 / 1.12
             var newZ   = Math.max(root.minZoom, Math.min(root.maxZoom, root.zoomLevel * factor))
-            // Zoom around mouse position
-            var mx = event.position.x, my = event.position.y
+            // Zoom around the cursor. The handler's own point carries the
+            // position; a WheelEvent does not expose one, and reading
+            // event.position threw before this line could ever run.
+            var mx = _wheel.point.position.x, my = _wheel.point.position.y
             root.panX  = mx + (root.panX - mx) * (newZ / root.zoomLevel)
             root.panY  = my + (root.panY - my) * (newZ / root.zoomLevel)
             root.zoomLevel = newZ

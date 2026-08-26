@@ -54,10 +54,18 @@ Item {
         MouseArea {
             id:          _drag
             anchors { fill: parent; rightMargin: 120 }
+            // Global coordinates: the title bar moves with the window it drags,
+            // so a delta measured against the drag area itself is always zero.
             property real pressX: 0; property real pressY: 0
-            onPressed:  (m) => { pressX = m.globalX; pressY = m.globalY; root.dragStarted(m.globalX, m.globalY) }
+            onPressed:  (m) => {
+                var g = _drag.mapToGlobal(m.x, m.y)
+                pressX = g.x; pressY = g.y
+                root.dragStarted(g.x, g.y)
+            }
             onPositionChanged: (m) => {
-                if (pressed) root.dragged(m.globalX - pressX, m.globalY - pressY)
+                if (!_drag.pressed) return
+                var g = _drag.mapToGlobal(m.x, m.y)
+                root.dragged(g.x - pressX, g.y - pressY)
             }
             onDoubleClicked: root.maximizeClicked()
         }

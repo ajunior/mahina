@@ -106,14 +106,20 @@ Item {
             HoverHandler { id: _rH; cursorShape: Qt.SizeHorCursor }
 
             MouseArea {
+                id: _resizeArea
                 anchors.fill: parent
                 cursorShape:  Qt.SizeHorCursor
+                // Global coordinates: this handle sits on the panel edge and so
+                // travels with every pixel the panel is resized by.
                 property real pressX:  0
                 property real pressW:  0
-                onPressed: (m) => { pressX = m.globalX; pressW = root.panelWidth }
+                onPressed: (m) => {
+                    pressX = _resizeArea.mapToGlobal(m.x, m.y).x
+                    pressW = root.panelWidth
+                }
                 onPositionChanged: (m) => {
-                    if (pressed) {
-                        var delta = pressX - m.globalX
+                    if (_resizeArea.pressed) {
+                        var delta = pressX - _resizeArea.mapToGlobal(m.x, m.y).x
                         root.panelWidth = Math.max(root.minWidth, Math.min(root.maxWidth, pressW + delta))
                     }
                 }

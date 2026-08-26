@@ -162,7 +162,6 @@ set(MAHINA_QML_SOURCES
     MegaMenu.qml
     StickySection.qml
     AppSwitcher.qml
-    TabView.qml
     TestimonialCard.qml
     FeatureGrid.qml
     KeyboardShortcutsPanel.qml
@@ -469,7 +468,6 @@ qt_add_qml_module(Mahina
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/MegaMenu.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/StickySection.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/AppSwitcher.qml"
-        "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/TabView.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/TestimonialCard.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/FeatureGrid.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/KeyboardShortcutsPanel.qml"
@@ -646,7 +644,10 @@ configure_package_config_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/cmake/MahinaConfig.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/MahinaConfig.cmake"
     INSTALL_DESTINATION "${MAHINA_INSTALL_CMAKEDIR}"
-    PATH_VARS CMAKE_INSTALL_LIBDIR
+    # Every variable the .in file wraps in @PACKAGE_...@ has to be listed here.
+    # An omitted one expands to nothing, and the set_and_check() around it turns
+    # that into a FATAL_ERROR in the consumer's find_package(Mahina).
+    PATH_VARS CMAKE_INSTALL_LIBDIR CMAKE_INSTALL_DATADIR
 )
 
 write_basic_package_version_file(

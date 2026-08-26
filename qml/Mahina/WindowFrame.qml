@@ -123,18 +123,25 @@ Rectangle {
     // Resize handles (edges + corners)
     // Right edge
     MouseArea {
+        id: _resizeRight
         visible: root.resizable
         x: parent.width - root.resizeMargin
         y: root.resizeMargin
         width:  root.resizeMargin
         height: parent.height - root.resizeMargin * 2
         cursorShape: Qt.SizeHorCursor
+        // Global coordinates, because the handle moves as the window resizes:
+        // anything relative to the handle itself would chase the cursor.
         property real startW: 0; property real startX: 0
-        onPressed:  (m) => { startW = root.width;  startX = m.globalX }
-        onPositionChanged: (m) => { if (pressed) root.width  = Math.max(180, startW  + (m.globalX - startX)) }
+        onPressed:  (m) => { startW = root.width;  startX = _resizeRight.mapToGlobal(m.x, m.y).x }
+        onPositionChanged: (m) => {
+            if (_resizeRight.pressed)
+                root.width = Math.max(180, startW + (_resizeRight.mapToGlobal(m.x, m.y).x - startX))
+        }
     }
     // Bottom edge
     MouseArea {
+        id: _resizeBottom
         visible: root.resizable
         x: root.resizeMargin
         y: parent.height - root.resizeMargin
@@ -142,11 +149,15 @@ Rectangle {
         height: root.resizeMargin
         cursorShape: Qt.SizeVerCursor
         property real startH: 0; property real startY: 0
-        onPressed:  (m) => { startH = root.height; startY = m.globalY }
-        onPositionChanged: (m) => { if (pressed) root.height = Math.max(120, startH + (m.globalY - startY)) }
+        onPressed:  (m) => { startH = root.height; startY = _resizeBottom.mapToGlobal(m.x, m.y).y }
+        onPositionChanged: (m) => {
+            if (_resizeBottom.pressed)
+                root.height = Math.max(120, startH + (_resizeBottom.mapToGlobal(m.x, m.y).y - startY))
+        }
     }
     // Bottom-right corner
     MouseArea {
+        id: _resizeCorner
         visible: root.resizable
         x: parent.width  - root.resizeMargin
         y: parent.height - root.resizeMargin
@@ -154,11 +165,16 @@ Rectangle {
         cursorShape: Qt.SizeFDiagCursor
         property real startW: 0; property real startH: 0
         property real startX: 0; property real startY: 0
-        onPressed:  (m) => { startW=root.width; startH=root.height; startX=m.globalX; startY=m.globalY }
+        onPressed:  (m) => {
+            var g = _resizeCorner.mapToGlobal(m.x, m.y)
+            startW = root.width; startH = root.height
+            startX = g.x;        startY = g.y
+        }
         onPositionChanged: (m) => {
-            if (pressed) {
-                root.width  = Math.max(180, startW + (m.globalX - startX))
-                root.height = Math.max(120, startH + (m.globalY - startY))
+            if (_resizeCorner.pressed) {
+                var g = _resizeCorner.mapToGlobal(m.x, m.y)
+                root.width  = Math.max(180, startW + (g.x - startX))
+                root.height = Math.max(120, startH + (g.y - startY))
             }
         }
     }
