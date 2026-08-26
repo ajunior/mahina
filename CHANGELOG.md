@@ -5,7 +5,7 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
-## Unreleased
+## 0.45.3
 
 - **Break** `TabView` has been removed. It could not be instantiated at all — `Type TabView unavailable`: its default property was `alias children: _stack.children`, which shadows the `children` every `Item` already has and makes the type fail to load; the panels it documented were selected by a `TabView.index` attached property that does not exist; and it drove `Tabs` through `current` and `onTabSelected`, where `Tabs` exposes `currentIndex` and `tabChanged`. Repairing it produced a strictly worse `Tabs` — no icons, no `underline`/`pill`/`card` variants, no `fullWidth`, no `tabChanged`, a hardcoded `implicitHeight`, and page switching done by hand where `Tabs` uses a `StackLayout`. Even its one distinguishing feature, panels supplied as a list, is something `Tabs` already does: `Tabs { model: [...]; content: [pageA, pageB] }` reparents existing items into its `StackLayout`. Since the type never loaded, no working code can be affected by the removal
 - **Fix** `ZoomPan` threw `TypeError: Cannot read property 'x' of undefined` on every wheel event and never zoomed. It read `event.position` inside `onWheel`, and a QML wheel event carries no position; the cursor-anchored pan maths that followed never ran. The handler's own `point.position` is used instead — wheeling now scales around the cursor rather than the item's origin
