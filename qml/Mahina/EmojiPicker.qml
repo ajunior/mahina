@@ -160,7 +160,7 @@ Item {
                             width:  (root.width - Theme.sp2 * 2) / 8
                             height: width
                             radius: Theme.radiusSm
-                            color:  _eH.containsMouse ? Theme.panel : "transparent"
+                            color:  _eH.hovered ? Theme.panel : "transparent"
                             HoverHandler { id: _eH }
 
                             Text {

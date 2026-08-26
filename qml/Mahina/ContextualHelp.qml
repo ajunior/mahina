@@ -26,8 +26,8 @@ Item {
     Rectangle {
         anchors.fill:  parent
         radius:        10
-        color:         _hh.containsMouse ? Theme.surfaceVariant : "transparent"
-        border.color:  _hh.containsMouse ? Theme.border : "transparent"
+        color:         _hh.hovered ? Theme.surfaceVariant : "transparent"
+        border.color:  _hh.hovered ? Theme.border : "transparent"
         border.width:  1
         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
 

@@ -100,7 +100,7 @@ Item {
             visible:  root.actionText !== ""
             height:   28; radius: Theme.radiusSm
             width:    _actTxt.implicitWidth + Theme.sp3 * 2
-            color:    _actH.containsMouse ? Qt.rgba(root._accent.r, root._accent.g, root._accent.b, 0.15) : "transparent"
+            color:    _actH.hovered ? Qt.rgba(root._accent.r, root._accent.g, root._accent.b, 0.15) : "transparent"
             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
             HoverHandler { id: _actH }
             MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.actionClicked() }
@@ -119,7 +119,7 @@ Item {
         Rectangle {
             visible:  root.dismissible
             width: 28; height: 28; radius: Theme.radiusSm
-            color: _dH.containsMouse ? Qt.rgba(root._accent.r, root._accent.g, root._accent.b, 0.15) : "transparent"
+            color: _dH.hovered ? Qt.rgba(root._accent.r, root._accent.g, root._accent.b, 0.15) : "transparent"
             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
             HoverHandler { id: _dH }
             MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: { root.visible = false; root.dismissed() } }

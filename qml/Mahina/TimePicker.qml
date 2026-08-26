@@ -161,7 +161,7 @@ Item {
                     Rectangle {
                         Layout.alignment: Qt.AlignHCenter
                         width: 40; height: 28; radius: Theme.radiusSm
-                        color: _uhH.containsMouse ? Theme.panel : "transparent"
+                        color: _uhH.hovered ? Theme.panel : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _uhH }
                         MouseArea {
@@ -198,7 +198,7 @@ Item {
                     Rectangle {
                         Layout.alignment: Qt.AlignHCenter
                         width: 40; height: 28; radius: Theme.radiusSm
-                        color: _dhH.containsMouse ? Theme.panel : "transparent"
+                        color: _dhH.hovered ? Theme.panel : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _dhH }
                         MouseArea {
@@ -239,7 +239,7 @@ Item {
                     Rectangle {
                         Layout.alignment: Qt.AlignHCenter
                         width: 40; height: 28; radius: Theme.radiusSm
-                        color: _umH.containsMouse ? Theme.panel : "transparent"
+                        color: _umH.hovered ? Theme.panel : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _umH }
                         MouseArea {
@@ -269,7 +269,7 @@ Item {
                     Rectangle {
                         Layout.alignment: Qt.AlignHCenter
                         width: 40; height: 28; radius: Theme.radiusSm
-                        color: _dmH.containsMouse ? Theme.panel : "transparent"
+                        color: _dmH.hovered ? Theme.panel : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _dmH }
                         MouseArea {
@@ -305,7 +305,7 @@ Item {
 
                             Layout.alignment: Qt.AlignHCenter
                             width:  44; height: 28; radius: Theme.radiusSm
-                            color:  _sel ? Theme.primary : (_amH.containsMouse ? Theme.panel : "transparent")
+                            color:  _sel ? Theme.primary : (_amH.hovered ? Theme.panel : "transparent")
                             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                             HoverHandler { id: _amH }
                             MouseArea {
@@ -336,7 +336,7 @@ Item {
             Rectangle {
                 Layout.fillWidth: true
                 height:           36; radius: Theme.radiusMd
-                color:            _apH.containsMouse ? Qt.darker(Theme.primary, 1.1) : Theme.primary
+                color:            _apH.hovered ? Qt.darker(Theme.primary, 1.1) : Theme.primary
                 Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                 HoverHandler { id: _apH }
                 MouseArea {

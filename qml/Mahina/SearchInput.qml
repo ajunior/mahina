@@ -44,7 +44,7 @@ Item {
             border.width: _field.activeFocus ? 2 : 1
             border.color: root.hasError        ? Theme.error
                         : _field.activeFocus   ? Theme.primary
-                        : _boxHover.containsMouse ? Theme.borderStrong
+                        : _boxHover.hovered ? Theme.borderStrong
                         : Theme.border
 
             HoverHandler { id: _boxHover }
@@ -108,7 +108,7 @@ Item {
                 Rectangle {
                     anchors.fill: parent
                     radius:       width / 2
-                    color:        _cHover.containsMouse ? Theme.border : "transparent"
+                    color:        _cHover.hovered ? Theme.border : "transparent"
 
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                 }

@@ -140,7 +140,7 @@ Item {
                 Rectangle {
                     visible: root.closeable
                     width: 28; height: 28; radius: Theme.radiusSm
-                    color: _xH.containsMouse ? Theme.border : "transparent"
+                    color: _xH.hovered ? Theme.border : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _xH }
                     MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.close() }

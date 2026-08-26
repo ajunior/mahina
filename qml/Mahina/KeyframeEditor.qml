@@ -59,7 +59,7 @@ Item {
                                 width: 20; height: 20; radius: 4
                                 color: _playH.hovered ? Theme.primary : "transparent"
                                 HoverHandler { id: _playH }
-                                Text { anchors.centerIn: parent; text: "▶"; color: _playH.hovered ? "#fff" : Theme.textSecondary; font.pixelSize: 9 }
+                                Text { anchors.centerIn: parent; text: "▶"; color: _playH.hovered ? Theme.textOnPrimary : Theme.textSecondary; font.pixelSize: 9 }
                                 MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: { root.currentTime = 0; root.timeChanged(0) } }
                             }
                             Text {
@@ -235,7 +235,7 @@ Item {
                                     width:  12; height: 12
                                     radius: 2
                                     rotation: 45
-                                    color:  _kfH.hovered ? "#ffffff"
+                                    color:  _kfH.hovered ? Theme.surface
                                             : (_rq3.modelData.color || Theme.primary)
                                     border.color: _rq3.modelData.color || Theme.primary
                                     border.width: 2

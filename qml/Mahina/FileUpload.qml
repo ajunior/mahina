@@ -91,7 +91,7 @@ Item {
                 anchors.fill:  parent
                 radius:        Theme.radiusMd
                 color:         _drop.containsDrag ? Theme.primarySubtle
-                             : _zoneH.containsMouse ? Theme.panel
+                             : _zoneH.hovered ? Theme.panel
                              : "transparent"
                 border.color:  _drop.containsDrag ? Theme.primary : Theme.border
                 border.width:  _drop.containsDrag ? 2 : 1
@@ -177,7 +177,7 @@ Item {
 
                         Rectangle {
                             width: 24; height: 24; radius: Theme.radiusSm
-                            color: _rmH.containsMouse ? Theme.errorSubtle : "transparent"
+                            color: _rmH.hovered ? Theme.errorSubtle : "transparent"
                             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                             HoverHandler { id: _rmH }
                             MouseArea {

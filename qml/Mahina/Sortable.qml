@@ -94,7 +94,7 @@ Item {
                 id:     _content
                 width:  _outer.width
                 height: root.rowHeight
-                color:  Drag.active ? Theme.primarySubtle : _rH.containsMouse ? Theme.panel : Theme.surface
+                color:  Drag.active ? Theme.primarySubtle : _rH.hovered ? Theme.panel : Theme.surface
                 radius: Theme.radiusSm
                 border.color: Drag.active ? Theme.primary : Theme.border
                 border.width: 1

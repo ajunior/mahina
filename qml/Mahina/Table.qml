@@ -138,7 +138,7 @@ Item {
                     // Hover tint + click for sortable columns
                     Rectangle {
                         anchors.fill: parent
-                        color:        _rq1.modelData.sortable === true && _hHover.containsMouse
+                        color:        _rq1.modelData.sortable === true && _hHover.hovered
                                       ? Qt.rgba(0,0,0,0.04) : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     }
@@ -214,7 +214,7 @@ Item {
                 // Row background
                 Rectangle {
                     anchors.fill: parent
-                    color: _rowHov.containsMouse    ? Theme.panel
+                    color: _rowHov.hovered    ? Theme.panel
                          : root.striped && _rowItem.index % 2 === 1 ? Theme.surfaceVariant
                          : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }

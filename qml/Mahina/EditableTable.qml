@@ -106,7 +106,7 @@ Item {
 
             width:  Math.max(_body.width, root._totalW + Theme.sp2 * 2)
             height: 40
-            color:  _rhov.containsMouse ? Theme.surfaceVariant : (index % 2 === 1 ? Theme.panel : "transparent")
+            color:  _rhov.hovered ? Theme.surfaceVariant : (index % 2 === 1 ? Theme.panel : "transparent")
             Behavior on color { ColorAnimation { duration: Theme.durationFast } }
 
             HoverHandler { id: _rhov }

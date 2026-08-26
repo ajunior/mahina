@@ -123,7 +123,7 @@ Item {
                     color:        _rs.enabled ? Theme.surface : Theme.panel
                     border.color: root.hasError          ? Theme.error
                                 : _rs.first.pressed      ? Theme.primaryActive
-                                : _fHover.containsMouse  ? Theme.primaryHover
+                                : _fHover.hovered  ? Theme.primaryHover
                                 : Theme.primary
                     border.width: _rs.first.pressed ? 3 : 2
 
@@ -156,7 +156,7 @@ Item {
                     color:        _rs.enabled ? Theme.surface : Theme.panel
                     border.color: root.hasError           ? Theme.error
                                 : _rs.second.pressed      ? Theme.primaryActive
-                                : _sHover.containsMouse   ? Theme.primaryHover
+                                : _sHover.hovered   ? Theme.primaryHover
                                 : Theme.primary
                     border.width: _rs.second.pressed ? 3 : 2
 

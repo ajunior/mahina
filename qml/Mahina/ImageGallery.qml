@@ -55,7 +55,7 @@ Item {
                 Rectangle {
                     anchors.fill: parent
                     radius: parent.radius
-                    color: Qt.rgba(0, 0, 0, _thumbHover.containsMouse ? 0.25 : 0)
+                    color: Qt.rgba(0, 0, 0, _thumbHover.hovered ? 0.25 : 0)
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                 }
 

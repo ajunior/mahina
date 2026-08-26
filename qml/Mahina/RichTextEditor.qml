@@ -47,7 +47,7 @@ Item {
                         id: _rq1
                         required property var modelData
                         width: 28; height: 26; radius: Theme.radiusSm
-                        color: _tbH.containsMouse ? Theme.surfaceVariant : "transparent"
+                        color: _tbH.hovered ? Theme.surfaceVariant : "transparent"
                         HoverHandler { id: _tbH }
 
                         Text {
@@ -89,7 +89,7 @@ Item {
                             id: _rq2
                             required property var modelData
                             width: 26; height: 26; radius: Theme.radiusSm
-                            color: _hH.containsMouse ? Theme.surfaceVariant : "transparent"
+                            color: _hH.hovered ? Theme.surfaceVariant : "transparent"
                             HoverHandler { id: _hH }
                             Text {
                                 anchors.centerIn: parent

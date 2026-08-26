@@ -171,6 +171,9 @@ Item {
                 anchors { right: parent.right; top: parent.top; bottom: parent.bottom }
                 width: 6
                 cursorShape: Qt.SizeHorCursor
+                // Without this containsMouse never becomes true, and the resize
+                // indicator below it stayed transparent for the handle's whole life.
+                hoverEnabled: true
 
                 property real _startX: 0
                 property real _startW: 0

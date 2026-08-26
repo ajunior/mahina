@@ -132,7 +132,7 @@ Item {
                 Rectangle {
                     anchors { left: parent.left; leftMargin: Theme.sp3; verticalCenter: parent.verticalCenter }
                     width:   36; height: 36; radius: 18
-                    color:   _lH.containsMouse ? Theme.surface : Qt.rgba(0,0,0,0.3)
+                    color:   _lH.hovered ? Theme.surface : Qt.rgba(0,0,0,0.3)
                     border.color: Theme.border; border.width: 1
                     opacity: (root.currentIndex > 0 || root.loop) ? 1 : 0.3
                     Behavior on color   { ColorAnimation  { duration: Theme.durationFast } }
@@ -150,7 +150,7 @@ Item {
                 Rectangle {
                     anchors { right: parent.right; rightMargin: Theme.sp3; verticalCenter: parent.verticalCenter }
                     width:   36; height: 36; radius: 18
-                    color:   _rH.containsMouse ? Theme.surface : Qt.rgba(0,0,0,0.3)
+                    color:   _rH.hovered ? Theme.surface : Qt.rgba(0,0,0,0.3)
                     border.color: Theme.border; border.width: 1
                     opacity: (root.currentIndex < root._count - 1 || root.loop) ? 1 : 0.3
                     Behavior on color   { ColorAnimation  { duration: Theme.durationFast } }

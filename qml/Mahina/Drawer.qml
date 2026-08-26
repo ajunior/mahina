@@ -163,7 +163,7 @@ Item {
                     visible:  root.closeable
                     width:    28; height: 28
                     radius:   Theme.radiusSm
-                    color:    _xHov.containsMouse ? Theme.border : "transparent"
+                    color:    _xHov.hovered ? Theme.border : "transparent"
 
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _xHov }

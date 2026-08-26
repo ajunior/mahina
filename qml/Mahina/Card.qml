@@ -27,7 +27,7 @@ Rectangle {
     layer.effect: null  // attach DropShadow externally if desired
 
     // Hover lift
-    scale: hoverable && _hover.containsMouse ? 1.015 : 1.0
+    scale: hoverable && _hover.hovered ? 1.015 : 1.0
     Behavior on scale { NumberAnimation { duration: Theme.durationNormal; easing.type: Theme.easing } }
 
     HoverHandler { id: _hover; enabled: root.hoverable }

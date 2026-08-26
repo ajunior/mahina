@@ -109,7 +109,7 @@ Item {
                     color:        _slider.enabled ? Theme.surface : Theme.panel
                     border.color: root.hasError      ? Theme.error
                                 : _slider.pressed    ? Theme.primaryActive
-                                : _hHover.containsMouse ? Theme.primaryHover
+                                : _hHover.hovered ? Theme.primaryHover
                                 : Theme.primary
                     border.width: _slider.pressed ? 3 : 2
 

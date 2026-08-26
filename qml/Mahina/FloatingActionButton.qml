@@ -78,7 +78,7 @@ Item {
 
                     Rectangle {
                         anchors.fill: parent; radius: parent.radius
-                        color: _aH.containsMouse ? Qt.rgba(0,0,0,0.08) : "transparent"
+                        color: _aH.hovered ? Qt.rgba(0,0,0,0.08) : "transparent"
                     }
                     HoverHandler { id: _aH }
                     MouseArea {
@@ -123,7 +123,7 @@ Item {
         anchors.right:  parent.right
         width:  parent.width; height: parent.height
         radius: root.label !== "" ? Theme.radiusFull : root.buttonSize / 2
-        color:  _fH.containsMouse ? Qt.darker(root.fabColor, 1.1) : root.fabColor
+        color:  _fH.hovered ? Qt.darker(root.fabColor, 1.1) : root.fabColor
         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
 
         HoverHandler { id: _fH }

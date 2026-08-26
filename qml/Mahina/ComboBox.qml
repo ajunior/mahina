@@ -165,7 +165,7 @@ Item {
                 Rectangle {
                     visible:  root.clearable && root.currentIndex >= 0
                     width: 20; height: 20; radius: 10
-                    color: _clH.containsMouse ? Theme.border : "transparent"
+                    color: _clH.hovered ? Theme.border : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _clH }
                     MouseArea {
@@ -253,7 +253,7 @@ Item {
                     width:  _popup.width - Theme.sp2
                     height: 36; radius: Theme.radiusSm
                     color:  _sel ? Theme.primarySubtle
-                          : _rH.containsMouse ? Theme.panel
+                          : _rH.hovered ? Theme.panel
                           : "transparent"
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                     HoverHandler { id: _rH }

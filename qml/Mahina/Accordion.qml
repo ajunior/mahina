@@ -54,7 +54,7 @@ Item {
             id:               _header
             Layout.fillWidth: true
             implicitHeight:   root._isSection ? 32 : 48
-            color:            !root._isSection && _hHover.containsMouse && !root.disabled
+            color:            !root._isSection && _hHover.hovered && !root.disabled
                               ? Theme.panel : "transparent"
             radius:           (!root._isSection && root.expanded) ? 0 : Theme.radiusSm
 

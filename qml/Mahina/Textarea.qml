@@ -82,7 +82,7 @@ Item {
             border.width: _area.activeFocus ? 2 : 1
             border.color: root.hasError        ? Theme.error
                         : _area.activeFocus    ? Theme.primary
-                        : _hover.containsMouse ? Theme.borderStrong
+                        : _hover.hovered ? Theme.borderStrong
                         : Theme.border
 
             Behavior on border.color { ColorAnimation { duration: Theme.durationFast } }

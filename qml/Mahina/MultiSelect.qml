@@ -131,14 +131,14 @@ Item {
                             Rectangle {
                                 width: 14; height: 14; radius: 7
                                 anchors.verticalCenter: parent.verticalCenter
-                                color: _cxH.containsMouse ? Theme.primary : "transparent"
+                                color: _cxH.hovered ? Theme.primary : "transparent"
                                 Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                                 HoverHandler { id: _cxH }
                                 MouseArea {
                                     anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                                     onClicked: (mouse) => { mouse.accepted = true; root._toggleIndex(_rq2.modelData) }
                                 }
-                                Icon { anchors.centerIn: parent; name: Icons.x; size: 8; color: _cxH.containsMouse ? "#ffffff" : Theme.primary }
+                                Icon { anchors.centerIn: parent; name: Icons.x; size: 8; color: _cxH.hovered ? Theme.textOnPrimary : Theme.primary }
                             }
                         }
                     }
@@ -205,7 +205,7 @@ Item {
                     height: 36; radius: Theme.radiusSm
                     color:  _sel ? Theme.primarySubtle
                           : _dis ? "transparent"
-                          : _rH.containsMouse ? Theme.panel
+                          : _rH.hovered ? Theme.panel
                           : "transparent"
                     opacity: _dis ? 0.4 : 1.0
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }

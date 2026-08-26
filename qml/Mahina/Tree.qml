@@ -103,7 +103,7 @@ Item {
             Rectangle {
                 anchors.fill: parent
                 radius:       Theme.radiusSm
-                color:        _rowHov.containsMouse ? Theme.panel : "transparent"
+                color:        _rowHov.hovered ? Theme.panel : "transparent"
                 Behavior on color { ColorAnimation { duration: Theme.durationFast } }
             }
 

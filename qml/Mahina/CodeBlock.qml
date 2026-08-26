@@ -91,7 +91,7 @@ Item {
                 visible:  root.showCopyButton
                 anchors { right: parent.right; rightMargin: Theme.sp3; verticalCenter: parent.verticalCenter }
                 width: 64; height: 24; radius: Theme.radiusSm
-                color: _cpH.containsMouse ? root._btnHover : root._btnBg
+                color: _cpH.hovered ? root._btnHover : root._btnBg
                 Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                 HoverHandler { id: _cpH }
                 MouseArea {

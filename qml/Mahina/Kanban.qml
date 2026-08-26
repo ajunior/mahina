@@ -214,7 +214,7 @@ Item {
                                         width:  parent.width
                                         implicitHeight: _cardContent.implicitHeight + Theme.sp3 * 2
                                         radius: Theme.radiusSm
-                                        color:  _cardH.containsMouse && !root.dragging ? Theme.surfaceVariant : Theme.surface
+                                        color:  _cardH.hovered && !root.dragging ? Theme.surfaceVariant : Theme.surface
                                         border.color: Theme.border; border.width: 1
                                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
 
