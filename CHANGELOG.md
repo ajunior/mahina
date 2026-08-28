@@ -5,7 +5,7 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
-## Unreleased
+## 0.45.6
 
 - **Fix** `Dropdown`'s option list was a plain `Rectangle` child of the component, so it drew *under* anything declared after the dropdown in its parent — in a toolbar sitting above a table, opening the dropdown covered the toolbar's own slivers of background and nothing else, the list itself hidden behind the table. `z: 999` could not help: `z` orders siblings, and the table is a sibling of the toolbar, not of the list. It is now a `QQC.Popup`, which renders in the window overlay above every item in the scene — the same mechanism `Menu` has always used. The rewrite also buys the two behaviours the hand-rolled popup lacked: clicking outside closes it, and `Escape` closes it whether or not the dropdown happens to hold focus
 - **Feat** `Dropdown` gained public `open()` and `close()` methods, matching `Menu`'s API
