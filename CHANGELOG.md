@@ -5,6 +5,10 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## Unreleased
+
+- **Fix** `Dropdown` drew its chevron with the literal `⌃` and `⌄` arrowhead characters — the only component in the library not using the icon font for one. The two glyphs are heavy relative to the label and, worse, sit off-centre in *opposite* directions inside the em box, so the arrow visibly jumped up and down each time the list opened or closed. It is now an `Icon` on `Icons.caretUp`/`Icons.caretDown` at size 14, matching `ComboBox`, `MultiSelect`, `Accordion` and `SidebarSection`: one caret, centred, in the same place, that stays put when the state changes
+
 ## 0.45.6
 
 - **Fix** `Dropdown`'s option list was a plain `Rectangle` child of the component, so it drew *under* anything declared after the dropdown in its parent — in a toolbar sitting above a table, opening the dropdown covered the toolbar's own slivers of background and nothing else, the list itself hidden behind the table. `z: 999` could not help: `z` orders siblings, and the table is a sibling of the toolbar, not of the list. It is now a `QQC.Popup`, which renders in the window overlay above every item in the scene — the same mechanism `Menu` has always used. The rewrite also buys the two behaviours the hand-rolled popup lacked: clicking outside closes it, and `Escape` closes it whether or not the dropdown happens to hold focus
