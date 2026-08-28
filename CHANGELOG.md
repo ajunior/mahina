@@ -5,7 +5,7 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
-## Unreleased
+## 0.45.7
 
 - **Fix** `Dropdown` drew its chevron with the literal `⌃` and `⌄` arrowhead characters — the only component in the library not using the icon font for one. The two glyphs are heavy relative to the label and, worse, sit off-centre in *opposite* directions inside the em box, so the arrow visibly jumped up and down each time the list opened or closed. It is now an `Icon` on `Icons.caretUp`/`Icons.caretDown` at size 14, matching `ComboBox`, `MultiSelect`, `Accordion` and `SidebarSection`: one caret, centred, in the same place, that stays put when the state changes
 
