@@ -5,6 +5,13 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## Unreleased
+
+- **Fix** `Dropdown`'s option list was a plain `Rectangle` child of the component, so it drew *under* anything declared after the dropdown in its parent — in a toolbar sitting above a table, opening the dropdown covered the toolbar's own slivers of background and nothing else, the list itself hidden behind the table. `z: 999` could not help: `z` orders siblings, and the table is a sibling of the toolbar, not of the list. It is now a `QQC.Popup`, which renders in the window overlay above every item in the scene — the same mechanism `Menu` has always used. The rewrite also buys the two behaviours the hand-rolled popup lacked: clicking outside closes it, and `Escape` closes it whether or not the dropdown happens to hold focus
+- **Feat** `Dropdown` gained public `open()` and `close()` methods, matching `Menu`'s API
+- **Fix** `ExpandableLog` sized its category, level and tag badges to their own text, so every row's message started at a different x and a column of entries read as a ragged staircase. Each badge is now as wide as the widest value in the log — measured with `FontMetrics.advanceWidth` over the distinct values, not over the filtered slice, so filtering does not shift the message column sideways. The level badge is sized once from the four fixed level names instead, so it cannot jump the first time an `ERROR` arrives
+- **Fix** `ExpandableLog` put the whole message in the summary row, including the newlines. A three-line driver error (libpq writes those) grew past the 28px row, was clipped by it, and dragged the text off its vertical centre — the visible fragment was the *middle* of the message, not its first line. The summary row now shows the first line followed by an ellipsis; the full text still reaches the detail component
+
 ## 0.45.5
 
 - **Fix** `ModelTable` gave a row no hover feedback at all. It is the one table in the library driven by a `TableView` — its cells are delegates of the view rather than children of a row item — and hover was never wired into that delegate, so a grid of query results sat inert under the pointer while every list-shaped table beside it highlighted. Each cell now reports itself to a single row index held on the table, which is what makes a whole row light up together and what keeps the highlight from being dropped when the pointer crosses the boundary between two cells of the same row; a non-blocking handler on the view clears it when the pointer leaves

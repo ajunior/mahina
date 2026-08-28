@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Controls.Basic as QQC
 import Mahina
 
 // Select / dropdown component.
@@ -49,9 +50,14 @@ Item {
     implicitHeight: _col.implicitHeight
 
     // ── State ────────────────────────────────────────────────────────────────
-    property bool _open: false
+    // The popup owns the open state: it is a QQC.Popup so it renders in the
+    // window overlay, above whatever is stacked after the dropdown in a layout.
+    // A plain child Rectangle drew *under* the content below it, no matter its z.
+    readonly property bool _open: _popup.visible
 
-    function _close(): void { root._open = false }
+    // Programmatic control, mirroring Menu's API.
+    function open(): void  { if (!root.disabled) _popup.open() }
+    function close(): void { _popup.close() }
 
     // ── Layout ────────────────────────────────────────────────────────────────
     Column {
@@ -118,7 +124,7 @@ Item {
                 anchors.fill: parent
                 enabled:      !root.disabled
                 cursorShape:  Qt.PointingHandCursor
-                onClicked:    root._open = !root._open
+                onClicked:    root._open ? _popup.close() : _popup.open()
             }
         }
 
@@ -133,49 +139,51 @@ Item {
     }
 
     // ── Dropdown popup ────────────────────────────────────────────────────────
-    // Placed outside the Column so it overlays sibling items
-    Rectangle {
-        id:      _popup
-        visible: root._open
-        z:       999
+    // A window-overlay popup, so the list is never covered by a sibling that
+    // happens to be declared after the dropdown.
+    QQC.Popup {
+        id:          _popup
+        parent:      _trigger
+        padding:     Theme.sp1
+        closePolicy: QQC.Popup.CloseOnEscape | QQC.Popup.CloseOnPressOutside
 
         // Position just below the trigger
         x:      0
-        y:      _trigger.y + _trigger.height + Theme.sp1
+        y:      _trigger.height + Theme.sp1
         width:  _trigger.width
-        height: Math.min(_list.contentHeight + Theme.sp2 * 2, 240)
+        height: Math.min(_list.contentHeight + Theme.sp1 * 2, 240)
 
-        color:        Theme.surface
-        radius:       Theme.radiusSm
-        border.color: Theme.border
-        border.width: 1
-
-        // Subtle drop shadow via layered rect
-        Rectangle {
-            anchors.fill:    parent
-            anchors.margins: -1
-            radius:          parent.radius + 1
-            color:           "transparent"
-            border.color:    Theme.shadowColor
-            border.width:    1
-            opacity:         Theme.shadowSmOpacity * 1.5
-            z:               -1
+        enter: Transition {
+            NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Theme.durationFast }
+        }
+        exit: Transition {
+            NumberAnimation { property: "opacity"; from: 1; to: 0; duration: Theme.durationFast }
         }
 
-        // Appear animation
-        NumberAnimation on opacity {
-            running: root._open
-            from:    0; to: 1
-            duration: Theme.durationFast
+        background: Rectangle {
+            color:        Theme.surface
+            radius:       Theme.radiusSm
+            border.color: Theme.border
+            border.width: 1
+
+            // Subtle drop shadow via layered rect
+            Rectangle {
+                anchors.fill:    parent
+                anchors.margins: -1
+                radius:          parent.radius + 1
+                color:           "transparent"
+                border.color:    Theme.shadowColor
+                border.width:    1
+                opacity:         Theme.shadowSmOpacity * 1.5
+                z:               -1
+            }
         }
 
-        ListView {
-            id:           _list
-            anchors.fill: parent
-            anchors.margins: Theme.sp1
-            clip:         true
-            model:        root.model
-            spacing:      2
+        contentItem: ListView {
+            id:      _list
+            clip:    true
+            model:   root.model
+            spacing: 2
 
             delegate: Rectangle {
                 id:     _opt
@@ -231,14 +239,10 @@ Item {
                     cursorShape:  Qt.PointingHandCursor
                     onClicked: {
                         root.currentIndex = _opt.index
-                        root._open = false
+                        _popup.close()
                     }
                 }
             }
         }
     }
-
-    // Escape key closes the popup
-    Keys.onEscapePressed: root._open = false
-    focus: root._open
 }
