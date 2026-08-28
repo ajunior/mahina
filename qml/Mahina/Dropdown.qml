@@ -109,12 +109,14 @@ Item {
                     Layout.fillWidth: true
                 }
 
-                // Chevron
-                Text {
-                    text:           root._open ? "⌃" : "⌄"
-                    color:          root._open ? Theme.primary : Theme.textSecondary
-                    font.pixelSize: 13
-                    font.weight:    Theme.weightSemibold
+                // Chevron. Every other component in the library draws this with
+                // the icon font; the literal ⌃/⌄ characters this used to carry
+                // sit off-centre in opposite directions, so the arrow jumped
+                // vertically each time the list opened.
+                Icon {
+                    name:  root._open ? Icons.caretUp : Icons.caretDown
+                    size:  14
+                    color: root._open ? Theme.primary : Theme.textSecondary
 
                     Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                 }
