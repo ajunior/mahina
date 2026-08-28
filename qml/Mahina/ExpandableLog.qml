@@ -54,6 +54,38 @@ Item {
         })
     }
 
+    // ── Badge widths ─────────────────────────────────────────────────────────
+    // Summary rows only read as columns when the chips are all the same width,
+    // so each badge is sized to the widest value in the log. Ragged rows push
+    // every message to a different x and are hard to scan.
+    FontMetrics {
+        id:             _badgeFm
+        font.family:    Theme.fontFamilyMono
+        font.pixelSize: 9
+        font.weight:    Theme.weightBold
+    }
+
+    function _widestBadge(field: string): real {
+        var w = 0, seen = ({})
+        for (var i = 0; i < root.log.length; i++) {
+            var v = String(root.log[i][field] ?? "")
+            if (v === "" || seen[v]) continue
+            seen[v] = true
+            w = Math.max(w, _badgeFm.advanceWidth(v))
+        }
+        return w === 0 ? 0 : Math.ceil(w) + 8
+    }
+
+    readonly property real _catW: root._widestBadge("category")
+    readonly property real _tagW: root._widestBadge("tag")
+
+    // The level vocabulary is fixed, so this width is stable for the session
+    // instead of jumping the first time an ERROR shows up.
+    readonly property real _lvlW: Math.ceil(Math.max(_badgeFm.advanceWidth("DEBUG"),
+                                                     _badgeFm.advanceWidth("ERROR"),
+                                                     _badgeFm.advanceWidth("WARN"),
+                                                     _badgeFm.advanceWidth("INFO"))) + 8
+
     function _levelColor(l: var): var {
         switch (l) {
             case "debug": return Theme.textSecondary
@@ -177,6 +209,11 @@ Item {
 
                     readonly property bool _hasDetail: root.detailComponent !== null
                     readonly property bool _exp:       root._expanded[modelData.id] === true
+                    readonly property string _summary: {
+                        var m = String(_d.modelData.message ?? "")
+                        var i = m.indexOf("\n")
+                        return i === -1 ? m : m.substring(0, i).trim() + " …"
+                    }
 
                     width:  _lv.width
                     height: 28 + _detailArea.height
@@ -229,7 +266,7 @@ Item {
                             // Category badge
                             Rectangle {
                                 visible: (_d.modelData.category ?? "") !== ""
-                                height: 16; width: _catT.implicitWidth + 8; radius: 3
+                                height: 16; width: root._catW; radius: 3
                                 color: Theme.surfaceVariant; anchors.verticalCenter: parent.verticalCenter
                                 Text { id: _catT; anchors.centerIn: parent
                                     text: _d.modelData.category ?? ""
@@ -238,7 +275,7 @@ Item {
 
                             // Level badge
                             Rectangle {
-                                height: 16; width: _lvlT.implicitWidth + 8; radius: 3
+                                height: 16; width: root._lvlW; radius: 3
                                 color: Qt.rgba(Qt.color(root._levelColor(_d.modelData.level ?? "info")).r,
                                                Qt.color(root._levelColor(_d.modelData.level ?? "info")).g,
                                                Qt.color(root._levelColor(_d.modelData.level ?? "info")).b, 0.2)
@@ -252,17 +289,20 @@ Item {
                             // Optional tag
                             Rectangle {
                                 visible: root.showTags && (_d.modelData.tag ?? "") !== ""
-                                height: 16; width: _tagT.implicitWidth + 8; radius: 3
+                                height: 16; width: root._tagW; radius: 3
                                 color: Qt.rgba(Theme.info.r, Theme.info.g, Theme.info.b, 0.15)
                                 anchors.verticalCenter: parent.verticalCenter
                                 Text { id: _tagT; anchors.centerIn: parent; text: _d.modelData.tag ?? ""
                                     color: Theme.info; font.family: Theme.fontFamilyMono; font.pixelSize: 9 }
                             }
 
-                            // Message
+                            // Message — first line only. A multi-line message (driver
+                            // errors love those) would grow past the 28px row and land
+                            // off-centre; the whole text is still handed to the detail
+                            // component.
                             Text {
                                 anchors.verticalCenter: parent.verticalCenter
-                                text:  _d.modelData.message ?? ""; color: Theme.textPrimary
+                                text:  _d._summary; color: Theme.textPrimary
                                 font.family: Theme.fontFamilyMono; font.pixelSize: Theme.textSm
                                 elide: Text.ElideRight
                                 width: Math.min(implicitWidth, _d.width - x - 20)
