@@ -236,24 +236,38 @@ Item {
                                     readonly property var  dec:   root._decorationMap[_dRow.index + 1] || null
                                     readonly property bool spins: !!_dIcon.dec && _dIcon.dec.spin === true
 
-                                    visible: root._iconSlotW > 0 && !!_dIcon.dec
+                                    visible: root._iconSlotW > 0 && !!_dIcon.dec && !_dIcon.spins
+                                    anchors { left: parent.left; leftMargin: 3; verticalCenter: parent.verticalCenter }
+                                    name:  (_dIcon.dec || {}).icon  || ""
+                                    color: (_dIcon.dec || {}).color || Theme.textDisabled
+                                    size:  13
+                                }
+
+                                // The spinning one is an icon of its own rather
+                                // than a rotation applied to the one above. An
+                                // animator writes the angle it stopped at back
+                                // to the property, and it does so after any
+                                // handler that reacts to it stopping — so the
+                                // icon cannot be shared: the check mark that
+                                // replaces the spinner would arrive frozen at
+                                // 37°, which reads as a rendering fault rather
+                                // than a result. Kept apart, that leftover
+                                // angle lands on an item that is hidden by then.
+                                Icon {
+                                    id: _dSpin
+                                    visible: root._iconSlotW > 0 && _dIcon.spins
                                     anchors { left: parent.left; leftMargin: 3; verticalCenter: parent.verticalCenter }
                                     name:  (_dIcon.dec || {}).icon  || ""
                                     color: (_dIcon.dec || {}).color || Theme.textDisabled
                                     size:  13
 
                                     RotationAnimator on rotation {
-                                        running:  _dIcon.spins
+                                        running:  _dSpin.visible
                                         from:     0
                                         to:       360
                                         duration: 800
                                         loops:    Animation.Infinite
                                     }
-
-                                    // An animator leaves the property wherever
-                                    // it stopped, and a check mark frozen at
-                                    // 37° reads as a rendering fault.
-                                    onSpinsChanged: if (!_dIcon.spins) _dIcon.rotation = 0
                                 }
 
                                 // Line number
