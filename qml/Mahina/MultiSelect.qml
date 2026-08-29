@@ -178,6 +178,7 @@ Item {
         width:       _trigger.width
         padding:     Theme.sp1
         closePolicy: QQC.Popup.CloseOnEscape | QQC.Popup.CloseOnPressOutside
+        focus:       true
 
         enter: Transition { NumberAnimation { property: "opacity"; from: 0; to: 1; duration: Theme.durationFast } }
         exit:  Transition { NumberAnimation { property: "opacity"; from: 1; to: 0; duration: Theme.durationFast } }

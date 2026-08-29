@@ -80,6 +80,7 @@ Item {
         width:       Math.min(Overlay.overlay ? Overlay.overlay.width * 0.9 : 600, 800)
         height:      Math.min(Overlay.overlay ? Overlay.overlay.height * 0.9 : 500, 600)
         closePolicy: QQC.Popup.CloseOnEscape | QQC.Popup.CloseOnPressOutside
+        focus:       true
 
         onClosed: root._lightbox = -1
 

@@ -52,6 +52,7 @@ Item {
         id:          _popup
         parent:      root.anchor !== null ? root.anchor : root
         closePolicy: QQC.Popup.CloseOnEscape | QQC.Popup.CloseOnPressOutside
+        focus:       true
         padding:     0
 
         width: Math.min(root.preferredWidth,

@@ -148,6 +148,7 @@ Item {
         parent:      _trigger
         padding:     Theme.sp1
         closePolicy: QQC.Popup.CloseOnEscape | QQC.Popup.CloseOnPressOutside
+        focus:       true
 
         // Position just below the trigger
         x:      0

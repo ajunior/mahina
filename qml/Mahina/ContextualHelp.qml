@@ -55,6 +55,7 @@ Item {
         width:       root.maxWidth
         padding:     0
         closePolicy: QQC.Popup.CloseOnEscape | QQC.Popup.CloseOnPressOutside
+        focus:       true
 
         background: Rectangle {
             radius:       Theme.radiusMd
