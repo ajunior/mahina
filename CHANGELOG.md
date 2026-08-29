@@ -5,6 +5,11 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.11
+
+- **Feat** `CodeEditor` gutter decorations can mark work in progress, not only its outcome. A decoration carrying `spin: true` rotates, so a line running a long statement is marked from the moment it starts instead of showing an empty gutter for the whole wait and then, suddenly, a result. The gutter is where a line's outcome already appears, so it is where "still working" belongs too
+- **Fix** `Button` and `CodeEditor` reset a spinner's rotation when it stops. A `RotationAnimator` leaves the property wherever it happened to be when `running` goes false, and the icon that replaces the spinner inherits that angle — a check mark frozen at 37°, which reads as a rendering fault rather than a result
+
 ## 0.45.10
 
 - **Fix** Eleven popups declared `CloseOnEscape` and not one of them honoured it. This is the same root cause `KeyboardShortcutsPanel` was fixed for in 0.45.8: Qt delivers `Escape` to a popup only while that popup holds active focus, and a popup opened from a click on its trigger leaves focus wherever it already was — usually a text field elsewhere on the screen, which swallowed the key. `ColorPicker`, `ContextMenu`, `ContextualHelp`, `DatePicker`, `Dropdown`, `ImageGallery`, `Menu`, `MultiSelect`, `Popover` and `TimePicker` now take focus while they are open, so the key that every one of them advertised actually closes them. `ComboBox` takes focus only when it is not `searchable`: a searchable one moves focus into its own search field on open, and that field already closes the popup on `Escape`. `AutoComplete` and `CommandBar` were checked against the same probe and needed no change — both keep focus in a text field of their own that handles the key
