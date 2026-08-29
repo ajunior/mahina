@@ -14,6 +14,11 @@ Item {
     property var    keys: []
     property string size: "md"   // "sm" | "md"
 
+    // Keys are named the way the current platform names them — "Ctrl" prints
+    // as ⌘ on macOS, where that is the key Qt actually binds. Set false to
+    // print the labels exactly as given.
+    property bool   nativeKeys: true
+
     readonly property real _h:   root.size === "sm" ? 18 : 22
     readonly property real _fsz: root.size === "sm" ? 9  : Theme.textXs
 
@@ -45,7 +50,8 @@ Item {
                 Text {
                     id:             _kt
                     anchors.centerIn: parent
-                    text:           _rq1.modelData
+                    text:           root.nativeKeys ? KeyLabels.key(_rq1.modelData)
+                                                    : _rq1.modelData
                     color:          Theme.textSecondary
                     font.family:    Theme.fontFamily
                     font.pixelSize: root._fsz

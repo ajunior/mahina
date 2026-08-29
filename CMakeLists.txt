@@ -20,6 +20,7 @@ qt_add_library(Mahina STATIC)
 set(MAHINA_QML_SOURCES
     Theme.qml
     Icons.qml
+    KeyLabels.qml
     Button.qml
     Icon.qml
     Input.qml
@@ -294,6 +295,7 @@ endforeach()
 set_source_files_properties(
     "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/Theme.qml"
     "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/Icons.qml"
+    "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/KeyLabels.qml"
     "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/IrcPalette.qml"
     PROPERTIES QT_QML_SINGLETON_TYPE TRUE
 )
@@ -326,6 +328,7 @@ qt_add_qml_module(Mahina
     QML_FILES
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/Theme.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/Icons.qml"
+        "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/KeyLabels.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/Button.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/Icon.qml"
         "${CMAKE_CURRENT_SOURCE_DIR}/qml/Mahina/Input.qml"

@@ -221,7 +221,11 @@ Item {
 
                             Kbd {
                                 visible: _item.modelData.shortcut !== undefined && _item.modelData.shortcut !== ""
-                                keys:    _item.modelData.shortcut ? [_item.modelData.shortcut] : []
+                                // One pill for the whole binding, so the
+                                // sequence is translated as a sequence: macOS
+                                // writes ⌘⇧P, not ⌘+⇧+P.
+                                keys:    _item.modelData.shortcut
+                                         ? [KeyLabels.sequence(_item.modelData.shortcut)] : []
                             }
                         }
 
