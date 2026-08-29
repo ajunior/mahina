@@ -5,6 +5,11 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## Unreleased
+
+- **Fix** `KeyboardShortcutsPanel` could not be dismissed with `Escape`. Its `closePolicy` has always carried `CloseOnEscape`, but Qt delivers the key to a popup only while that popup holds active focus, and this one is shown by a `visible` binding rather than by `open()`, so nothing ever gave it focus — the key went to whatever had it before the panel appeared. The popup now takes focus while visible, which is what `CommandPalette` already does; the only way out used to be the ✕
+- **Fix** `KeyboardShortcutsPanel` drew its ✕ immediately after the title rather than at the right edge of the header. The spacer meant to separate them was an `Item` one pixel wide sitting in a `Row`, and a `Row` has no `fillWidth` to stretch it with, so it never pushed anything anywhere: the close button read as punctuation on the end of the heading. The title now claims the header's width minus the button, which puts the ✕ where a close button belongs, and it elides rather than overrunning it. The button also picks up the hover feedback and pointer cursor every other close button in the library has
+
 ## 0.45.7
 
 - **Fix** `Dropdown` drew its chevron with the literal `⌃` and `⌄` arrowhead characters — the only component in the library not using the icon font for one. The two glyphs are heavy relative to the label and, worse, sit off-centre in *opposite* directions inside the em box, so the arrow visibly jumped up and down each time the list opened or closed. It is now an `Icon` on `Icons.caretUp`/`Icons.caretDown` at size 14, matching `ComboBox`, `MultiSelect`, `Accordion` and `SidebarSection`: one caret, centred, in the same place, that stays put when the state changes

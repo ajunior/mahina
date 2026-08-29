@@ -41,6 +41,13 @@ Item {
         closePolicy: (root.closeOnEsc ? QQC.Popup.CloseOnEscape : 0) | QQC.Popup.CloseOnPressOutside
         onClosed:    root.open = false
 
+        // CloseOnEscape above is not enough on its own: Qt delivers the key to
+        // the popup only while the popup holds active focus, and this one is
+        // shown by a visible binding rather than open(), so nothing ever gave
+        // it focus. Escape simply went to whatever had it before — the panel
+        // could only be dismissed with the ✕.
+        focus: visible
+
         background: Rectangle {
             radius:       Theme.radiusLg
             color:        Theme.surface
@@ -58,21 +65,29 @@ Item {
                 color: "transparent"
                 Row {
                     anchors { fill: parent; leftMargin: Theme.sp5; rightMargin: Theme.sp4 }
+                    // The title claims everything the ✕ does not, which is what
+                    // pushes the ✕ to the right edge. The spacer that used to
+                    // stand between them was an Item 1px wide, and a Row has no
+                    // fillWidth to stretch it — so the ✕ sat against the title
+                    // instead, reading as part of it.
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
+                        width: parent.width - 24
                         text:  "Keyboard Shortcuts"
                         color: Theme.textPrimary
                         font.family: Theme.fontFamily
                         font.pixelSize: Theme.textLg
                         font.weight: Theme.weightSemibold
+                        elide: Text.ElideRight
                     }
-                    Item { width: 1; height: 1 }
                     Rectangle {
                         width: 24; height: 24; radius: 12
-                        color: Theme.panel
+                        color: _closeH.hovered ? Theme.hover : Theme.panel
                         anchors.verticalCenter: parent.verticalCenter
+                        Behavior on color { ColorAnimation { duration: Theme.durationFast } }
+                        HoverHandler { id: _closeH }
                         Text { anchors.centerIn: parent; text: "✕"; color: Theme.textSecondary; font.pixelSize: 11 }
-                        MouseArea { anchors.fill: parent; onClicked: root.open = false }
+                        MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.open = false }
                     }
                 }
             }
