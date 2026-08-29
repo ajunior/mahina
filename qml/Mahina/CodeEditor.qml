@@ -226,13 +226,34 @@ Item {
                                 width:  root._gutterW
                                 height: _edit.cursorRectangle.height > 0 ? _edit.cursorRectangle.height : 20
 
-                                // Decoration icon
+                                // Decoration icon. A decoration carrying
+                                // `spin: true` turns into a progress marker —
+                                // the gutter is where the outcome of a line
+                                // already shows, so it is where "still working"
+                                // belongs too.
                                 Icon {
-                                    visible: root._iconSlotW > 0 && !!root._decorationMap[_dRow.index + 1]
+                                    id: _dIcon
+                                    readonly property var  dec:   root._decorationMap[_dRow.index + 1] || null
+                                    readonly property bool spins: !!_dIcon.dec && _dIcon.dec.spin === true
+
+                                    visible: root._iconSlotW > 0 && !!_dIcon.dec
                                     anchors { left: parent.left; leftMargin: 3; verticalCenter: parent.verticalCenter }
-                                    name:  (root._decorationMap[_dRow.index + 1] || {}).icon  || ""
-                                    color: (root._decorationMap[_dRow.index + 1] || {}).color || Theme.textDisabled
+                                    name:  (_dIcon.dec || {}).icon  || ""
+                                    color: (_dIcon.dec || {}).color || Theme.textDisabled
                                     size:  13
+
+                                    RotationAnimator on rotation {
+                                        running:  _dIcon.spins
+                                        from:     0
+                                        to:       360
+                                        duration: 800
+                                        loops:    Animation.Infinite
+                                    }
+
+                                    // An animator leaves the property wherever
+                                    // it stopped, and a check mark frozen at
+                                    // 37° reads as a rendering fault.
+                                    onSpinsChanged: if (!_dIcon.spins) _dIcon.rotation = 0
                                 }
 
                                 // Line number

@@ -129,6 +129,16 @@ AbstractButton {
                     duration: 800
                     loops: Animation.Infinite
                 }
+
+                // The animator stops wherever it happened to be, and the icon
+                // that replaces the spinner inherits that angle — a tilted
+                // check mark on a button that just finished.
+                Connections {
+                    target: root
+                    function onLoadingChanged(): void {
+                        if (!root.loading) _icon.rotation = 0
+                    }
+                }
             }
 
             Text {
