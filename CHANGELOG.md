@@ -5,6 +5,12 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## Unreleased
+
+- **New** `KeyLabels` — a singleton that names keys the way the keyboard in front of the person actually names them. A binding has one spelling in code and another on the keycap: Qt takes `"Ctrl+K"` on every platform and maps Ctrl to Command on macOS, so an application is right to declare it that way, but a Mac user reads that binding as `⌘K` and has no key labelled Ctrl in that position. `KeyLabels.key("Ctrl")` and `KeyLabels.sequence("Ctrl+Shift+K")` translate for the running platform — `⌘`, `⌥`, `⇧`, and `⌃` for Meta, which is the physical Control key there — and return anything they do not recognise unchanged, so a label already written as a glyph cannot be mangled by passing through twice. Only what a Mac keyboard and menu bar genuinely print is translated: Esc, the function keys and the letters stay as they are. `mac` is bound to `Qt.platform.os` but left writable, which is what lets a demo or a screenshot harness render the other platform's labels on this one
+- **Feat** `ShortcutHint` and `Kbd` name their keys through `KeyLabels`, so every shortcut table, menu hint and cheat sheet in an application reads natively on macOS without the application restating its bindings. `CommandPalette` translates each item's `shortcut` as a whole sequence — macOS writes `⌘⇧P`, not `⌘+⇧+P`. Set `nativeKeys: false` on either component to print labels exactly as given
+- **Docs** `ShortcutHint`'s catalogue entry described an implementation it has never had — a row of `Kbd`s built by splitting a `shortcut` string, when it renders its own pills from a `keys` array — and its snippet set a property that does not exist on it
+
 ## 0.45.8
 
 - **Fix** `KeyboardShortcutsPanel` could not be dismissed with `Escape`. Its `closePolicy` has always carried `CloseOnEscape`, but Qt delivers the key to a popup only while that popup holds active focus, and this one is shown by a `visible` binding rather than by `open()`, so nothing ever gave it focus — the key went to whatever had it before the panel appeared. The popup now takes focus while visible, which is what `CommandPalette` already does; the only way out used to be the ✕

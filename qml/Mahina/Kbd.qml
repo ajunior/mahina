@@ -20,6 +20,11 @@ Item {
     property string shortcut: ""
     property var    keys:     []
 
+    // Keys are named the way the current platform names them — "Ctrl" prints
+    // as ⌘ on macOS, where that is the key Qt actually binds. Set false to
+    // print the labels exactly as given.
+    property bool   nativeKeys: true
+
     // Derive key list: explicit array wins; fallback to splitting shortcut by "+"
     readonly property var _keys: {
         if (root.keys.length > 0) return root.keys
@@ -70,7 +75,8 @@ Item {
                     Text {
                         id:               _kText
                         anchors.centerIn: parent
-                        text:             _rq1.modelData
+                        text:             root.nativeKeys ? KeyLabels.key(_rq1.modelData)
+                                                            : _rq1.modelData
                         color:            Theme.textSecondary
                         font.family:      Theme.fontFamilyMono
                         font.pixelSize:   Theme.textXs

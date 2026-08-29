@@ -2225,6 +2225,23 @@ Window {
                             ShortcutHint { keys: ["Esc"] }
                         }
 
+                        // KeyLabels renders each key the way the running
+                        // platform names it. The toggle forces the macOS
+                        // spelling on any machine, which is how you check a
+                        // shortcut table without owning a Mac.
+                        Row {
+                            spacing: Theme.sp4
+                            Toggle {
+                                text:      "macOS key labels"
+                                checked:   KeyLabels.mac
+                                onToggled: KeyLabels.mac = checked
+                                anchors.verticalCenter: parent.verticalCenter
+                            }
+                            ShortcutHint { keys: ["Ctrl", "Shift", "P"]; anchors.verticalCenter: parent.verticalCenter }
+                            ShortcutHint { keys: ["Ctrl", "Alt", "Delete"]; anchors.verticalCenter: parent.verticalCenter }
+                            Kbd { shortcut: "Ctrl+Enter"; anchors.verticalCenter: parent.verticalCenter }
+                        }
+
                         Divider {}
 
                         // ── ContextualHelp ─────────────────────────────────────────
