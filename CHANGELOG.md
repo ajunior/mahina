@@ -5,7 +5,7 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
-## Unreleased
+## 0.45.10
 
 - **Fix** Eleven popups declared `CloseOnEscape` and not one of them honoured it. This is the same root cause `KeyboardShortcutsPanel` was fixed for in 0.45.8: Qt delivers `Escape` to a popup only while that popup holds active focus, and a popup opened from a click on its trigger leaves focus wherever it already was — usually a text field elsewhere on the screen, which swallowed the key. `ColorPicker`, `ContextMenu`, `ContextualHelp`, `DatePicker`, `Dropdown`, `ImageGallery`, `Menu`, `MultiSelect`, `Popover` and `TimePicker` now take focus while they are open, so the key that every one of them advertised actually closes them. `ComboBox` takes focus only when it is not `searchable`: a searchable one moves focus into its own search field on open, and that field already closes the popup on `Escape`. `AutoComplete` and `CommandBar` were checked against the same probe and needed no change — both keep focus in a text field of their own that handles the key
 
