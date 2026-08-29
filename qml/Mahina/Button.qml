@@ -116,28 +116,35 @@ AbstractButton {
 
             Icon {
                 id: _icon
-                name:    root.loading ? Icons.spinner : root.iconName
+                name:    root.iconName
                 weight:  root.iconWeight
                 size:    root._iconSize
                 color:   root._fg
-                visible: root.iconName !== "" || root.loading
+                visible: root.iconName !== "" && !root.loading
+                anchors.verticalCenter: parent.verticalCenter
+            }
+
+            // The spinner is an icon of its own rather than a rotation applied
+            // to the one above. An animator writes the angle it stopped at back
+            // to the property, and it does so after any handler that reacts to
+            // it stopping — so the icon cannot be shared: the button would come
+            // out of a load with its check mark frozen at 37°, which reads as a
+            // rendering fault rather than a result. Kept apart, that leftover
+            // angle lands on an item that is hidden by then.
+            Icon {
+                id: _spinner
+                name:    Icons.spinner
+                weight:  root.iconWeight
+                size:    root._iconSize
+                color:   root._fg
+                visible: root.loading
                 anchors.verticalCenter: parent.verticalCenter
 
                 RotationAnimator on rotation {
-                    running: root.loading
+                    running: _spinner.visible
                     from: 0; to: 360
                     duration: 800
                     loops: Animation.Infinite
-                }
-
-                // The animator stops wherever it happened to be, and the icon
-                // that replaces the spinner inherits that angle — a tilted
-                // check mark on a button that just finished.
-                Connections {
-                    target: root
-                    function onLoadingChanged(): void {
-                        if (!root.loading) _icon.rotation = 0
-                    }
                 }
             }
 

@@ -5,6 +5,10 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.12
+
+- **Fix** The spinner reset shipped in 0.45.11 did not work, and `Button` and `CodeEditor` still came out of a load with the icon that replaces the spinner tilted. A `RotationAnimator` writes the angle it stopped at back to the property *after* any handler that reacts to it stopping, so a handler can never win: whatever it assigns is overwritten by the leftover angle. The spinner is now an `Icon` of its own in both components, hidden the moment the load ends, so the angle it stops at lands on an item nobody sees
+
 ## 0.45.11
 
 - **Feat** `CodeEditor` gutter decorations can mark work in progress, not only its outcome. A decoration carrying `spin: true` rotates, so a line running a long statement is marked from the moment it starts instead of showing an empty gutter for the whole wait and then, suddenly, a result. The gutter is where a line's outcome already appears, so it is where "still working" belongs too
