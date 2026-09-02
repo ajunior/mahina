@@ -14,12 +14,15 @@ import Mahina
 //       anchor: moreBtn
 //       model: [
 //           { label: "Edit",      icon: Icons.pencil                  },
-//           { label: "Duplicate", icon: Icons.copy,   shortcut: "⌘D"  },
+//           { label: "Duplicate", icon: Icons.copy,   shortcut: "Ctrl+D" },
 //           null,                                                        // divider
 //           { label: "Delete",    icon: Icons.trash,  danger: true    },
 //       ]
 //       onTriggered: (index, item) => console.log(item.label)
 //   }
+//
+//   A shortcut is written the way the binding is declared — "Ctrl+D" — and
+//   rendered through KeyLabels, so the same item reads "⌘D" on macOS.
 //
 //   // String shorthand (no icons):
 //   Menu { anchor: btn; model: ["Cut", "Copy", "Paste"] }
@@ -219,7 +222,7 @@ Item {
                 // Shortcut hint
                 Text {
                     visible:        _itemRoot._shortcut !== ""
-                    text:           _itemRoot._shortcut
+                    text:           KeyLabels.sequence(_itemRoot._shortcut)
                     color:          Theme.textDisabled
                     font.family:    Theme.fontFamilyMono
                     font.pixelSize: Theme.textXs

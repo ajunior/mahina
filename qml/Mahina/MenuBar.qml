@@ -114,7 +114,7 @@ Item {
 
                                         Text {
                                             id:             _shLbl
-                                            text:           _rq2.modelData.shortcut || ""
+                                            text:           KeyLabels.sequence(_rq2.modelData.shortcut || "")
                                             color:          Theme.textDisabled
                                             font.family:    Theme.fontFamily
                                             font.pixelSize: Theme.textXs

@@ -131,7 +131,8 @@ Item {
 
                             Text {
                                 visible:        !_rq1.isDivider && _rq1.modelData.shortcut !== undefined
-                                text:           !_rq1.isDivider && _rq1.modelData.shortcut ? _rq1.modelData.shortcut : ""
+                                text:           !_rq1.isDivider && _rq1.modelData.shortcut
+                                                ? KeyLabels.sequence(_rq1.modelData.shortcut) : ""
                                 color:          Theme.textDisabled
                                 font.family:    Theme.fontFamily
                                 font.pixelSize: Theme.textXs

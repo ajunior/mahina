@@ -9,9 +9,9 @@ import Mahina
 //   CommandPalette {
 //       id: palette
 //       model: [
-//           { label: "New file",      icon: Icons.file,        shortcut: "⌘N", group: "File"     },
+//           { label: "New file",      icon: Icons.file,        shortcut: "Ctrl+N", group: "File"     },
 //           { label: "Toggle theme",  icon: Icons.moonStars,                   group: "Settings" },
-//           { label: "Open terminal", icon: Icons.terminal,    shortcut: "⌘`", group: "Tools"    },
+//           { label: "Open terminal", icon: Icons.terminal,    shortcut: "Ctrl+`", group: "Tools"    },
 //       ]
 //       onTriggered: (item) => executeCommand(item)
 //   }

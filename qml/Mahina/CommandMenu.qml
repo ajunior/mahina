@@ -232,7 +232,7 @@ Item {
                                         Item { width: 1; height: 1 }
                                         Text {
                                             visible:        (_rq2.modelData.shortcut || "") !== ""
-                                            text:           _rq2.modelData.shortcut || ""
+                                            text:           KeyLabels.sequence(_rq2.modelData.shortcut || "")
                                             color:          Theme.textDisabled
                                             font.family:    Theme.fontFamilyMono
                                             font.pixelSize: Theme.textXs

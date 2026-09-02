@@ -967,7 +967,7 @@ Window {
                                 anchor: _menuBtn
                                 model: [
                                     { label: "Edit",      icon: Icons.pencil                  },
-                                    { label: "Duplicate", icon: Icons.copy,   shortcut: "⌘D"  },
+                                    { label: "Duplicate", icon: Icons.copy,   shortcut: "Ctrl+D" },
                                     { label: "Share",     icon: Icons.shareNetwork             },
                                     null,
                                     { label: "Delete",    icon: Icons.trash,  danger: true     },
@@ -985,12 +985,12 @@ Window {
                                 id:     _fileMenu
                                 anchor: _menuBtn2
                                 model: [
-                                    { label: "New",    shortcut: "⌘N" },
-                                    { label: "Open",   shortcut: "⌘O" },
-                                    { label: "Save",   shortcut: "⌘S" },
-                                    { label: "Save As…", shortcut: "⌘⇧S" },
+                                    { label: "New",    shortcut: "Ctrl+N" },
+                                    { label: "Open",   shortcut: "Ctrl+O" },
+                                    { label: "Save",   shortcut: "Ctrl+S" },
+                                    { label: "Save As…", shortcut: "Ctrl+Shift+S" },
                                     null,
-                                    { label: "Close",  shortcut: "⌘W" },
+                                    { label: "Close",  shortcut: "Ctrl+W" },
                                 ]
                                 onTriggered: (i, item) => console.log("File:", item.label)
                             }
