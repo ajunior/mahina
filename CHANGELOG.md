@@ -5,6 +5,10 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.14
+
+- **Fix** `Menu`'s popup was a fixed 220 px, so an item wider than that elided regardless of how much room the window had. That is harmless for a menu of verbs, which are short and known in advance, and wrong for one whose items are data — file names, workspace names — where the elided tail is exactly what tells two rows apart, and picking from the list means guessing. The popup is now as wide as its widest item, measured the way the delegate lays one out (icon, label, shortcut, check mark), clamped between the new `minWidth` and `maxWidth`. `minWidth` defaults to the old 220, so a menu whose items already fitted keeps the width it had; set `menuWidth` to a positive number to pin it instead, as `ContextMenu` allows
+
 ## 0.45.13
 
 - **Fix** Five components printed a shortcut hint exactly as the caller wrote it, so a menu on macOS advertised "Ctrl+1" — a key that keyboard does not have in that position. `Menu`, `ContextMenu`, `CommandMenu`, `CommandBar` and `MenuBar` now render the hint through `KeyLabels`, the way `CommandPalette`, `Kbd` and `ShortcutHint` already did, so the same item reads "⌘1" there and "Ctrl+1" everywhere else. A caller that already passed a glyph is unaffected: `KeyLabels.sequence` returns anything it does not recognise unchanged, so running a converted label through it a second time cannot mangle it
