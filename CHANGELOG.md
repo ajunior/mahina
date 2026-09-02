@@ -5,6 +5,11 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.15
+
+- **Fix** `CodeEditor` painted its background, its gutter and its text in hardcoded GitHub greys — `#f6f8fa`/`#eaeef2`/`#24292f` in light, `#0d1117`/`#161b22`/`#c9d1d9` in dark — so it was the one component that did not move with the palette. Sampled from a screenshot under two different themes, the gutter rendered the same `EAEEF2` both times: passable beside a theme whose `panel` token happens to land near that grey, and a cold blue-grey slab inside a warm cream page beside one that does not. It now reads `Theme.surface`, `Theme.panel` and `Theme.textPrimary`, which is the rule `SchemaBrowser` already followed — chrome is `panel`, content is `surface` — so a theme that wants a flat editor sets the two equal instead of asking the component to
+- **Feat** `CodeEditor` and `SchemaBrowser` take `framed`. Both drew an unconditional 1 px border, which is right on a page of their own and wrong inside a `SplitPane`, where the divider draws that line already and the two stack into a 2 px seam beside the 1 px ones elsewhere in the window. `framed: false` says the seam is not the panel's to draw; it defaults to `true`, so standalone use is unchanged
+
 ## 0.45.14
 
 - **Fix** `Menu`'s popup was a fixed 220 px, so an item wider than that elided regardless of how much room the window had. That is harmless for a menu of verbs, which are short and known in advance, and wrong for one whose items are data — file names, workspace names — where the elided tail is exactly what tells two rows apart, and picking from the list means guessing. The popup is now as wide as its widest item, measured the way the delegate lays one out (icon, label, shortcut, check mark), clamped between the new `minWidth` and `maxWidth`. `minWidth` defaults to the old 220, so a menu whose items already fitted keeps the width it had; set `menuWidth` to a positive number to pin it instead, as `ContextMenu` allows
