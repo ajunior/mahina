@@ -5,6 +5,10 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.13
+
+- **Fix** Five components printed a shortcut hint exactly as the caller wrote it, so a menu on macOS advertised "Ctrl+1" — a key that keyboard does not have in that position. `Menu`, `ContextMenu`, `CommandMenu`, `CommandBar` and `MenuBar` now render the hint through `KeyLabels`, the way `CommandPalette`, `Kbd` and `ShortcutHint` already did, so the same item reads "⌘1" there and "Ctrl+1" everywhere else. A caller that already passed a glyph is unaffected: `KeyLabels.sequence` returns anything it does not recognise unchanged, so running a converted label through it a second time cannot mangle it
+
 ## 0.45.12
 
 - **Fix** The spinner reset shipped in 0.45.11 did not work, and `Button` and `CodeEditor` still came out of a load with the icon that replaces the spinner tilted. A `RotationAnimator` writes the angle it stopped at back to the property *after* any handler that reacts to it stopping, so a handler can never win: whatever it assigns is overwritten by the leftover angle. The spinner is now an `Icon` of its own in both components, hidden the moment the load ends, so the angle it stops at lands on an item nobody sees

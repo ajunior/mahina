@@ -188,7 +188,7 @@ Item {
                             Text {
                                 visible:        (_rq1.modelData.shortcut ?? "") !== ""
                                 anchors.verticalCenter: parent.verticalCenter
-                                text:           _rq1.modelData.shortcut ?? ""
+                                text:           KeyLabels.sequence(_rq1.modelData.shortcut ?? "")
                                 color:          Theme.textDisabled
                                 font.family:    Theme.fontFamilyMono
                                 font.pixelSize: Theme.textXs
