@@ -15,9 +15,16 @@ Item {
     property string fontFamily:      Theme.fontFamilyMono
     property int    fontSize:        Theme.textSm
     property int    fontWeight:      Font.Normal
-    property color  backgroundColor:    Theme.dark ? "#0d1117" : "#f6f8fa"
+    property color  backgroundColor:    Theme.surface
     property bool  highlightCurrentLine: false
     property real  lineHeight:           1.0
+
+    // A frame of its own is right when this sits on a page by itself and
+    // wrong inside a SplitPane, where the divider already draws that line:
+    // the two together make a 2px seam sitting next to the 1px ones the rest
+    // of the window uses. The host turns it off, and the seam then belongs to
+    // whatever is between the panels rather than to the panels themselves.
+    property bool   framed: true
 
     // Each entry: { line: <int>, icon: <Icons.*>, color: <color> }
     // Lines are 1-indexed. Only entries with a matching line are shown.
@@ -175,7 +182,7 @@ Item {
         anchors.fill: parent
         color:        root.backgroundColor
         border.color: Theme.border
-        border.width: 1
+        border.width: root.framed ? 1 : 0
         radius:       0
         clip:         true
 
@@ -203,7 +210,7 @@ Item {
                 visible: root.lineNumbers || root.lineDecorations.length > 0
                 width:   root._gutterW
                 height:  parent.height
-                color:   Theme.dark ? "#161b22" : "#eaeef2"
+                color:   Theme.panel
                 Rectangle { width: 1; color: Theme.border; anchors { right: parent.right; top: parent.top; bottom: parent.bottom } }
 
                 Flickable {
@@ -306,7 +313,7 @@ Item {
                     width:         Math.max(_codeFlick.width, _codeFlick.contentWidth)
                     padding:       Theme.sp3
                     text:          root.code
-                    color:         Theme.dark ? "#c9d1d9" : "#24292f"
+                    color:         Theme.textPrimary
                     font {
                         family:    root.fontFamily
                         pixelSize: root.fontSize

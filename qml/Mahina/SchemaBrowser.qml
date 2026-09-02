@@ -16,6 +16,13 @@ Item {
     property string searchText:       ""
     property bool   showBrowseAction: false
 
+    // A frame of its own is right when this sits on a page by itself and
+    // wrong inside a SplitPane, where the divider already draws that line:
+    // the two together make a 2px seam sitting next to the 1px ones the rest
+    // of the window uses. The host turns it off, and the seam then belongs to
+    // whatever is between the panels rather than to the panels themselves.
+    property bool   framed: true
+
     signal tableSelected(string name)
     signal columnClicked(string table, string column)
     signal tableDoubleClicked(string name)
@@ -98,7 +105,7 @@ Item {
         anchors.fill: parent
         color:        Theme.surface
         border.color: Theme.border
-        border.width: 1
+        border.width: root.framed ? 1 : 0
         radius:       0
         clip:         true
 
