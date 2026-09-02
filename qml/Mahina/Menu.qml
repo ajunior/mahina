@@ -24,6 +24,9 @@ import Mahina
 //   A shortcut is written the way the binding is declared — "Ctrl+D" — and
 //   rendered through KeyLabels, so the same item reads "⌘D" on macOS.
 //
+//   The popup is as wide as its widest item, between minWidth and maxWidth.
+//   Set menuWidth to a positive number to pin it instead.
+//
 //   // String shorthand (no icons):
 //   Menu { anchor: btn; model: ["Cut", "Copy", "Paste"] }
 //
@@ -40,6 +43,14 @@ Item {
     property var    model:    []
     property int    position: Menu.Position.Bottom
 
+    // Width. The widest item decides, within these bounds. A menu whose items
+    // are data rather than verbs — file names, workspace names — cannot use one
+    // fixed width without eliding the very part that tells two rows apart.
+    // Set menuWidth to a positive number to pin it, as ContextMenu does.
+    property real   minWidth:  220
+    property real   maxWidth:  460
+    property real   menuWidth: -1
+
     // Real index of triggered item (skips dividers)
     signal triggered(int index, var item)
 
@@ -47,6 +58,62 @@ Item {
     function close(): void { _popup.close() }
 
     width: 0; height: 0
+
+    // ── Content measurement ───────────────────────────────────────────────────
+    // Mirrors the item delegate's RowLayout below. Recomputed when the model is
+    // replaced, which is how callers change a menu.
+    readonly property real _chrome: Theme.sp1 * 2 + Theme.sp3 * 2
+
+    property real _measuredWidth: minWidth
+
+    onModelChanged:        _remeasure()
+    Component.onCompleted: _remeasure()
+
+    function _remeasure(): void {
+        let widest = 0
+        const items = root.model ?? []
+        for (let i = 0; i < items.length; ++i) {
+            const it = items[i]
+            if (it === null || it === undefined) continue          // divider
+            const isStr = typeof it === "string"
+            if (!isStr && typeof it !== "object") continue
+            if (!isStr && it.divider === true) continue
+
+            _labelMetrics.text = isStr ? it : (it.label ?? "")
+            let w = _labelMetrics.advanceWidth
+
+            if (!isStr) {
+                if ((it.icon ?? "") !== "")     w += 16 + Theme.sp2
+                if ((it.shortcut ?? "") !== "") {
+                    _shortcutMetrics.text = KeyLabels.sequence(it.shortcut)
+                    w += _shortcutMetrics.advanceWidth + Theme.sp2
+                }
+                if (it.checked === true)        w += 14 + Theme.sp2
+            }
+            widest = Math.max(widest, w)
+        }
+        _measuredWidth = Math.max(root.minWidth,
+                                  Math.min(root.maxWidth, Math.ceil(widest) + _chrome))
+    }
+
+    // A theme may carry its own typeface, which changes what the items measure.
+    Connections {
+        target: Theme
+        function onFontFamilyChanged():     void { root._remeasure() }
+        function onFontFamilyMonoChanged(): void { root._remeasure() }
+    }
+
+    TextMetrics {
+        id:             _labelMetrics
+        font.family:    Theme.fontFamily
+        font.pixelSize: Theme.textSm
+    }
+
+    TextMetrics {
+        id:             _shortcutMetrics
+        font.family:    Theme.fontFamilyMono
+        font.pixelSize: Theme.textXs
+    }
 
     // ── Popup ─────────────────────────────────────────────────────────────────
     QQC.Popup {
@@ -56,7 +123,7 @@ Item {
         closePolicy: QQC.Popup.CloseOnEscape | QQC.Popup.CloseOnPressOutside
         focus:       true
 
-        width: 220
+        width: root.menuWidth > 0 ? root.menuWidth : root._measuredWidth
 
         x: {
             switch (root.position) {
