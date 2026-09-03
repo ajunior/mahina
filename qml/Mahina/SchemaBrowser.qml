@@ -234,7 +234,11 @@ Item {
                                         anchors.verticalCenter: parent.verticalCenter
                                         Behavior on rotation { NumberAnimation { duration: Theme.durationFast } }
                                     }
-                                    Icon { name: Icons.database; size: 13; color: Theme.primary; anchors.verticalCenter: parent.verticalCenter }
+                                    // A schema is not a database. The two rows sat under the
+                                    // same cylinder, so the tree read as a database holding
+                                    // databases — and the one thing a reader needs from this
+                                    // row is which of the two levels they are looking at.
+                                    Icon { name: Icons.treeStructure; size: 13; color: Theme.primary; anchors.verticalCenter: parent.verticalCenter }
                                     Text {
                                         text:  _sDel._sName
                                         color: Theme.textPrimary
