@@ -37,6 +37,21 @@ import Mahina
 //
 // Selected row index:   modelTable.selectedRow  (-1 = none)
 // Clear selection:      modelTable.clearSelection()
+//
+// ── Column widths ─────────────────────────────────────────────────────────────
+// Columns share the width evenly until somebody says otherwise. A user drags a
+// header edge, or double-clicks it to fit that column to its contents; a host
+// can ask for the same from a menu of its own:
+//
+//   fitColumn(column)       — the column takes the width of its widest value
+//   fitColumns()            — the same for every column
+//   resetColumnWidths()     — back to the even split
+//   maxFitWidth             — ceiling for a fit (default 600)
+//   fitSampleRows           — rows a fit measures (default 500)
+//
+// For a host that wants a header context menu, columnAt(x) and isInHeader(y)
+// answer where a click landed, in this item's coordinates — which is what
+// ContextMenu's opening() signal reports.
 Item {
     id: root
 
@@ -46,6 +61,22 @@ Item {
     property real rowHeight:      36
     property real headerHeight:   38
     property real minColumnWidth: 80
+
+    // ── Fitting a column to its contents ──────────────────────────────────────
+    // Columns share the width evenly until somebody says otherwise: dragging a
+    // header edge, double-clicking one, or calling the functions below. A fit
+    // measures the widest value in the column and hands the column exactly
+    // that, so a table of two-letter codes stops spending a third of the window
+    // on each of them and a column of long text stops being read three
+    // characters at a time.
+
+    // Ceiling for a fit. A cell holding a page of JSON has a natural width no
+    // window can show, and a column that wide buries every column after it.
+    property real maxFitWidth:   600
+    // Rows a fit measures. The whole model would be correct and, on a result
+    // set of a million rows, would freeze the window; the widest of the first
+    // few hundred is the same answer in every table anyone reads.
+    property int  fitSampleRows: 500
 
     readonly property int selectedRow: _sel.hasSelection
         ? _sel.selectedIndexes[0].row : -1
@@ -62,6 +93,100 @@ Item {
     }
 
     function _relayout(): void { _tv.forceLayout() }
+
+    // Width one column needs to show its widest value whole, clamped to
+    // [minColumnWidth, maxFitWidth]. -1 when there is nothing to measure.
+    function _fitWidth(column: var): real {
+        if (!root.model || column < 0 || column >= _tv.columns) return -1
+
+        const rows = Math.min(_tv.rows, root.fitSampleRows)
+        let longest = ""
+        for (let r = 0; r < rows; r++) {
+            const v = root.model.data(root.model.index(r, column), Qt.DisplayRole)
+            const t = (v === undefined || v === null) ? "" : String(v)
+            // Values are drawn monospaced, so the longest string is the
+            // widest one and one measurement stands in for every row.
+            if (t.length > longest.length) longest = t
+        }
+        _fitCellText.text = longest
+
+        const head = root.model.headerData
+                   ? root.model.headerData(column, Qt.Horizontal, Qt.DisplayRole) : ""
+        _fitHeadText.text = (head === undefined || head === null) ? "" : String(head)
+
+        const cell = _fitCellText.advanceWidth + Theme.sp3 * 2
+        // The header pays for the sort arrow whether or not it is showing one:
+        // a column fitted while unsorted must not clip its own name the moment
+        // it is sorted.
+        const head_ = _fitHeadText.advanceWidth + Theme.sp3 + Theme.sp1 + 20
+        return Math.max(root.minColumnWidth,
+                        Math.min(Math.max(cell, head_), root.maxFitWidth))
+    }
+
+    // Give one column the width its contents ask for.
+    function fitColumn(column: var): void {
+        const w = root._fitWidth(column)
+        if (w < 0) return
+        const cw = Object.assign({}, root._colWidths)
+        cw[column] = w
+        root._colWidths = cw
+        root._relayout()
+    }
+
+    // The same for every column at once. Built as one map so the view lays out
+    // once rather than once per column.
+    function fitColumns(): void {
+        if (_tv.columns <= 0) return
+        const cw = Object.assign({}, root._colWidths)
+        for (let c = 0; c < _tv.columns; c++) {
+            const w = root._fitWidth(c)
+            if (w >= 0) cw[c] = w
+        }
+        root._colWidths = cw
+        root._relayout()
+    }
+
+    // Back to the even split.
+    function resetColumnWidths(): void {
+        root._colWidths = {}
+        root._relayout()
+    }
+
+    // Width of one column as the view is currently laying it out: a dragged or
+    // fitted override, else the even split.
+    function _widthOf(column: var): real {
+        if (root._colWidths[column]) return root._colWidths[column]
+        if (_tv.columns <= 0) return root.minColumnWidth
+        return Math.max(root.minColumnWidth, _tv.width / _tv.columns)
+    }
+
+    // Hit-testing for a host building a header menu: which column an x lands
+    // in (-1 past the last one), and whether a y is over the header at all.
+    // Both take coordinates in this item, which is what ContextMenu reports.
+    function columnAt(x: var): int {
+        if (_tv.columns <= 0) return -1
+        let edge = -_tv.contentX
+        for (let c = 0; c < _tv.columns; c++) {
+            edge += root._widthOf(c)
+            if (x < edge) return c
+        }
+        return -1
+    }
+
+    function isInHeader(y: var): bool {
+        return root.showHeader && y >= 0 && y < root.headerHeight
+    }
+
+    // Measuring rules for the two fonts the table draws with. Off-screen: a
+    // TextMetrics is not an Item and never lays out.
+    TextMetrics {
+        id:   _fitCellText
+        font { family: Theme.fontFamilyMono; pixelSize: Theme.textSm }
+    }
+    TextMetrics {
+        id:   _fitHeadText
+        font { family: Theme.fontFamily; pixelSize: Theme.textSm; weight: Theme.weightSemibold }
+    }
 
     signal rowClicked(int row)
     signal cellClicked(int row, int column, string value)
@@ -189,6 +314,10 @@ Item {
                     _startX = mapToItem(null, mouse.x, 0).x
                     _startW = _hCell.width
                 }
+                // Double-clicking the edge between two columns fits the one
+                // to its left — the gesture every spreadsheet has taught.
+                onDoubleClicked: _hCell._table.fitColumn(_hCell.column)
+
                 onPositionChanged: (mouse) => {
                     if (!_resizeHandle.pressed) return
                     const t      = _hCell._table
@@ -243,12 +372,7 @@ Item {
 
         rowHeightProvider: function() { return root.rowHeight }
 
-        columnWidthProvider: function(col) {
-            if (root._colWidths[col]) return root._colWidths[col]
-            if (_tv.columns <= 0) return root.minColumnWidth
-            const even = _tv.width / _tv.columns
-            return Math.max(root.minColumnWidth, even)
-        }
+        columnWidthProvider: function(col) { return root._widthOf(col) }
 
         QQC.ScrollBar.vertical: QQC.ScrollBar {
             policy: QQC.ScrollBar.AsNeeded
