@@ -1066,7 +1066,7 @@ Window {
                         }
                         Text {
                             Layout.fillWidth: true
-                            text: "Backed by QAbstractItemModel — rows stay in the C++ model, nothing is copied to JS. The model must expose \"display\" and \"isNull\" roles; click a header to sort. Note NULL (italic) renders differently from an empty string."
+                            text: "Backed by QAbstractItemModel — rows stay in the C++ model, nothing is copied to JS. The model must expose \"display\" and \"isNull\" roles; click a header to sort. Note NULL (italic) renders differently from an empty string. Drag the edge of a header to resize a column, or double-click that edge to fit the column to its contents."
                             color: Theme.textSecondary; font.family: Theme.fontFamily
                             font.pixelSize: Theme.textSm; wrapMode: Text.WordWrap
                         }
