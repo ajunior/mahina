@@ -39,6 +39,11 @@ Item {
     signal tableQuickBrowseRequested(string schema, string name)
     signal tableStatsRequested(string schema, string name)
     signal tableDdlRequested(string schema, string name)
+    // The host owns the clipboard: a browser that reaches for it would be
+    // deciding, on the host's behalf, whether the name it copies is worth
+    // qualifying with its schema.
+    signal tableCopyNameRequested(string schema, string name)
+    signal schemaCopyNameRequested(string schema)
 
     // ── Internal ──────────────────────────────────────────────────────────────
     readonly property int _tableCount: {
@@ -252,6 +257,38 @@ Item {
                                     // row is left exactly as it was found.
                                     onDoubleClicked: _sDel._sb.schemaDoubleClicked(_sDel._sName)
                                 }
+
+                                // ··· menu (hover-only), matching the table rows.
+                                // Declared after the row's MouseArea so it sits on
+                                // top of it: a click here must not also collapse
+                                // the schema underneath.
+                                Rectangle {
+                                    id: _schMoreBtn
+                                    visible: _schHov.hovered
+                                    anchors { right: parent.right; rightMargin: 6; verticalCenter: parent.verticalCenter }
+                                    width: 22; height: 22; radius: Theme.radiusSm
+                                    color: _schMoreHov.hovered ? Theme.hover : "transparent"
+                                    HoverHandler { id: _schMoreHov }
+                                    Icon { anchors.centerIn: parent; name: Icons.dotsThree; size: 13; color: Theme.textSecondary }
+                                    MouseArea {
+                                        anchors.fill: parent; cursorShape: Qt.PointingHandCursor
+                                        onClicked: (mouse) => {
+                                            mouse.accepted = true
+                                            _schMoreMenu.open()
+                                        }
+                                    }
+                                    Menu {
+                                        id:     _schMoreMenu
+                                        anchor: _schMoreBtn
+                                        model: [
+                                            { label: "Copy name", icon: Icons.copy, act: "copy" },
+                                        ]
+                                        onTriggered: (index, item) => {
+                                            if (item.act === "copy")
+                                                _sDel._sb.schemaCopyNameRequested(_sDel._sName)
+                                        }
+                                    }
+                                }
                             }
 
                             // ── Tables (visible when schema expanded) ─────────
@@ -352,12 +389,21 @@ Item {
                                                     id:     _moreMenu
                                                     anchor: _moreBtn
                                                     model: [
-                                                        { label: "Statistics", icon: Icons.chartBar    },
-                                                        { label: "View DDL",   icon: Icons.code        },
+                                                        { label: "Copy name",  icon: Icons.copy,     act: "copy"  },
+                                                        { label: "Statistics", icon: Icons.chartBar, act: "stats" },
+                                                        { label: "View DDL",   icon: Icons.code,     act: "ddl"   },
                                                     ]
+                                                    // On the act rather than the index: the
+                                                    // handler used to say "index 0 means
+                                                    // Statistics", which stops being true the
+                                                    // moment an entry is added above it.
                                                     onTriggered: (index, item) => {
-                                                        if (index === 0) _tDel._sb.tableStatsRequested(_tDel._sName, _tDel._tName)
-                                                        else             _tDel._sb.tableDdlRequested(_tDel._sName, _tDel._tName)
+                                                        const sb = _tDel._sb
+                                                        switch (item.act) {
+                                                        case "copy":  sb.tableCopyNameRequested(_tDel._sName, _tDel._tName); break
+                                                        case "stats": sb.tableStatsRequested(_tDel._sName, _tDel._tName);    break
+                                                        case "ddl":   sb.tableDdlRequested(_tDel._sName, _tDel._tName);      break
+                                                        }
                                                     }
                                                 }
                                             }
