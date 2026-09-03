@@ -32,6 +32,12 @@ Item {
 
     signal triggered(int index, var item)
 
+    // Emitted with the click position (in the anchor's coordinates) just before
+    // the menu opens, so a host can bring the thing under the pointer into the
+    // state the menu is about to act on — a text editor moves its caret to the
+    // click, which is what makes "Paste" paste where you right-clicked.
+    signal opening(real x, real y)
+
     // Zero-size host — doesn't participate in layout
     width: 0; height: 0; visible: false
 
@@ -46,6 +52,7 @@ Item {
                 propagateComposedEvents: true
                 onClicked: (mouse) => {
                     if (mouse.button === Qt.RightButton) {
+                        root.opening(mouse.x, mouse.y)
                         _popup.x = mouse.x
                         _popup.y = mouse.y
                         _popup.open()
