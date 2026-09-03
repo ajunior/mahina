@@ -5,6 +5,14 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.19
+
+- **Feat** A `NetworkGraph` can be panned and zoomed: drag the background, wheel about the pointer, and `resetView()`, `zoomBy()` and `zoomAt()` for a toolbar to drive. It drew everything at 1:1 inside whatever rectangle it was given, which past a few dozen nodes is a picture with no way to get closer to it. Edges take the transform on the 2D context rather than on the `Canvas` item, so a zoomed-in line is drawn sharp instead of magnified
+- **Feat** `NetworkGraph` labels appear only where a node has room to carry one — roughly 4000 px² of view area each, counted as the view's area times zoom² over the node count. A crowded graph shows plain nodes and zooming in brings the labels back as the nodes separate, instead of `showLabels` turning text on over a thicket. Labels are also drawn outside the scaled hierarchy, so they stay legible at every zoom rather than growing with the graph
+- **Feat** `SchemaBrowser`'s schema row menu gains **Schema graph**, reported as `schemaGraphRequested(schema)`. A whole connection is the one scope a graph cannot draw; a schema is usually the one it can
+- **Fix** Schema rows in `SchemaBrowser` have an icon of their own (tree-structure) instead of the database cylinder the connection header above them already carries. Under one glyph, a tree of schemas read as a database holding databases — and telling those two levels apart is the whole job of that row
+- **Docs** `NetworkGraph`'s header states what its layout costs: the relaxation is O(n²) per tick on the GUI thread, comfortable into the low hundreds of nodes and not to be handed a thousand
+
 ## 0.45.18
 
 - **Fix** `ModelTable`'s columns can be resized. The header carried a 6 px drag handle from the first commit and it never worked: a `HorizontalHeaderView` is a `TableView` is a `Flickable`, and a horizontal drag inside a Flickable is a flick until something says otherwise, so the Flickable stole the grab about ten pixels in. A column jumped a sliver and then froze however far you kept dragging, which reads as "columns cannot be resized" rather than as a stolen grab — which is why it survived this long. Measured on the real component with a synthetic 60 px drag: 200 px → 215 px before, 200 px → 260 px after. `HorizontalHeaderView.resizableColumns`, which defaults to true, was the other suspect and was not the thief
