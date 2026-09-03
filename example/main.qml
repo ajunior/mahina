@@ -5244,6 +5244,14 @@ Window {
                                     SidebarEntry { width: parent.width; label: "production"; detail: "12 ms";   severity: "success" }
                                     SidebarEntry { width: parent.width; label: "staging";    detail: "310 ms";  severity: "warning" }
                                     SidebarEntry { width: parent.width; label: "legacy";     detail: "timeout"; severity: "error"   }
+                                    SidebarEntry {
+                                        width:  parent.width
+                                        label:  "with a hover action"
+                                        detail: "the trash button appears on hover"
+                                        actionIcon:      Icons.trash
+                                        actionTooltip:   "Remove"
+                                        onActionClicked: label = "removed"
+                                    }
                                 }
                             }
                         }
