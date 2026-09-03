@@ -5,6 +5,10 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.17
+
+- **Break** `SchemaBrowser`'s signals carry the schema the row lives under: `tableSelected`, `tableDoubleClicked`, `tableQuickBrowseRequested`, `tableStatsRequested` and `tableDdlRequested` take `(schema, name)`, `columnClicked` and `columnDoubleClicked` take `(schema, table, column)`, and the new `schemaDoubleClicked(schema)` fires on a schema row. The tree knew each row's schema — it drew them grouped under it — and told the host only the table's name, which is not an address: two schemas may each hold a `users`, and a host that has to run a query about one of them cannot recover a schema the tree had and did not pass on. The visible half of the same gap was `activeTable`, which highlighted a name in every schema at once; it is now paired with `activeSchema` and highlights the one row that was clicked. Update handlers to the new arity — an old one-argument handler still receives the schema in that first slot
+
 ## 0.45.16
 
 - **Feat** `SidebarEntry` takes `actionIcon` / `actionTooltip` and emits `actionClicked()`. A sidebar list almost always grows one per-row verb — usually removing the row — and there was nowhere to put it, so a consumer that needed one had to stop using `SidebarEntry` and rebuild the row around a button. The button is a ghost icon at the trailing edge, revealed on hover so a long list still reads as text rather than as a column of buttons, and the label reserves its width whether or not it is showing, because text that reflowed under the pointer would be worse than a gap. Rows that set nothing are unchanged
