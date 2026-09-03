@@ -12,7 +12,11 @@ Item {
     property var schemas: []
 
     property string databaseName:     ""
+    // The selected table, as the pair that actually identifies one: two schemas
+    // may each hold a "users", and highlighting both was the visible half of a
+    // tree that only ever reported the table's name to its host.
     property string activeTable:      ""
+    property string activeSchema:     ""
     property string searchText:       ""
     property bool   showBrowseAction: false
 
@@ -23,13 +27,18 @@ Item {
     // whatever is between the panels rather than to the panels themselves.
     property bool   framed: true
 
-    signal tableSelected(string name)
-    signal columnClicked(string table, string column)
-    signal tableDoubleClicked(string name)
-    signal columnDoubleClicked(string table, string column)
-    signal tableQuickBrowseRequested(string name)
-    signal tableStatsRequested(string name)
-    signal tableDdlRequested(string name)
+    // Every one of these carries the schema the row lives under. A bare table
+    // name is not an address: the host has to qualify it before it can put it
+    // in an editor or run it, and it cannot recover a schema the tree knew and
+    // did not pass on.
+    signal schemaDoubleClicked(string schema)
+    signal tableSelected(string schema, string name)
+    signal columnClicked(string schema, string table, string column)
+    signal tableDoubleClicked(string schema, string name)
+    signal columnDoubleClicked(string schema, string table, string column)
+    signal tableQuickBrowseRequested(string schema, string name)
+    signal tableStatsRequested(string schema, string name)
+    signal tableDdlRequested(string schema, string name)
 
     // ── Internal ──────────────────────────────────────────────────────────────
     readonly property int _tableCount: {
@@ -238,6 +247,10 @@ Item {
                                 MouseArea {
                                     anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                                     onClicked: _sDel._sb._toggleSchema(_sDel._sName)
+                                    // The two clicks that precede it have already
+                                    // toggled the schema open and shut again, so the
+                                    // row is left exactly as it was found.
+                                    onDoubleClicked: _sDel._sb.schemaDoubleClicked(_sDel._sName)
                                 }
                             }
 
@@ -259,6 +272,7 @@ Item {
                                         readonly property string _tName:     modelData.name
                                         readonly property string _sName:     _sDel._sName
                                         readonly property bool   _active:    modelData.name === root.activeTable
+                                                                                 && _sDel._sName === root.activeSchema
                                         readonly property bool   _tExpanded: root._isTableExpanded(_sName, _tName)
                                         readonly property int    _indent:    Theme.sp4 + Theme.sp2
 
@@ -307,10 +321,11 @@ Item {
                                                 anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                                                 onClicked: {
                                                     _tDel._sb._toggleTable(_tDel._sName, _tDel._tName)
-                                                    _tDel._sb.activeTable = _tDel._tName
-                                                    _tDel._sb.tableSelected(_tDel._tName)
+                                                    _tDel._sb.activeTable  = _tDel._tName
+                                                    _tDel._sb.activeSchema = _tDel._sName
+                                                    _tDel._sb.tableSelected(_tDel._sName, _tDel._tName)
                                                 }
-                                                onDoubleClicked: _tDel._sb.tableDoubleClicked(_tDel._tName)
+                                                onDoubleClicked: _tDel._sb.tableDoubleClicked(_tDel._sName, _tDel._tName)
                                             }
 
                                             // ··· context menu button (hover-only)
@@ -341,8 +356,8 @@ Item {
                                                         { label: "View DDL",   icon: Icons.code        },
                                                     ]
                                                     onTriggered: (index, item) => {
-                                                        if (index === 0) _tDel._sb.tableStatsRequested(_tDel._tName)
-                                                        else             _tDel._sb.tableDdlRequested(_tDel._tName)
+                                                        if (index === 0) _tDel._sb.tableStatsRequested(_tDel._sName, _tDel._tName)
+                                                        else             _tDel._sb.tableDdlRequested(_tDel._sName, _tDel._tName)
                                                     }
                                                 }
                                             }
@@ -361,7 +376,7 @@ Item {
                                                     anchors.fill: parent; cursorShape: Qt.PointingHandCursor
                                                     onClicked: (mouse) => {
                                                         mouse.accepted = true
-                                                        _tDel._sb.tableQuickBrowseRequested(_tDel._tName)
+                                                        _tDel._sb.tableQuickBrowseRequested(_tDel._sName, _tDel._tName)
                                                     }
                                                 }
                                             }
@@ -419,8 +434,8 @@ Item {
 
                                                     MouseArea {
                                                         anchors.fill: parent; cursorShape: Qt.PointingHandCursor
-                                                        onClicked:       _cDel._sb.columnClicked(_tDel._tName, _cDel.modelData.name)
-                                                        onDoubleClicked: _cDel._sb.columnDoubleClicked(_tDel._tName, _cDel.modelData.name)
+                                                        onClicked:       _cDel._sb.columnClicked(_tDel._sName, _tDel._tName, _cDel.modelData.name)
+                                                        onDoubleClicked: _cDel._sb.columnDoubleClicked(_tDel._sName, _tDel._tName, _cDel.modelData.name)
                                                     }
                                                 }
                                             }

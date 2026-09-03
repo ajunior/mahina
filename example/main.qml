@@ -5045,8 +5045,9 @@ Window {
                                         ]},
                                     ]},
                                 ]
-                                onTableSelected:  (t) => toaster.show("Table: " + t, Toaster.Type.Info, 800)
-                                onColumnClicked:  (t, c) => toaster.show(t + "." + c, Toaster.Type.Info, 800)
+                                onSchemaDoubleClicked: (s) => toaster.show("Schema: " + s, Toaster.Type.Info, 800)
+                                onTableSelected:  (s, t) => toaster.show("Table: " + s + "." + t, Toaster.Type.Info, 800)
+                                onColumnClicked:  (s, t, c) => toaster.show(s + "." + t + "." + c, Toaster.Type.Info, 800)
                             }
     
                             // ── KeyframeEditor ────────────────────────────────────
