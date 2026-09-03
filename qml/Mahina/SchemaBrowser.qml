@@ -139,17 +139,29 @@ Item {
                 Rectangle { anchors { left: parent.left; right: parent.right; bottom: parent.bottom } height: 1; color: Theme.border }
 
                 Row {
-                    anchors { left: parent.left; leftMargin: Theme.sp3; verticalCenter: parent.verticalCenter }
+                    id: _hdrRow
+                    anchors { left: parent.left; right: parent.right
+                              leftMargin: Theme.sp3; rightMargin: Theme.sp3
+                              verticalCenter: parent.verticalCenter }
                     spacing: Theme.sp2
-                    Icon { name: Icons.database; size: 14; color: Theme.primary; anchors.verticalCenter: parent.verticalCenter }
+                    Icon { id: _hdrIcon; name: Icons.database; size: 14; color: Theme.primary; anchors.verticalCenter: parent.verticalCenter }
                     Text {
                         text:  root.databaseName || "Schemas"
                         color: Theme.textPrimary
                         font { family: Theme.fontFamily; pixelSize: Theme.textSm; weight: Font.Medium }
                         anchors.verticalCenter: parent.verticalCenter
                         elide: Text.ElideRight
+                        // Elide needs a width to elide against: on an unbounded
+                        // Text it does nothing at all and the name runs off the
+                        // panel. Natural width until the panel is too narrow
+                        // for it, so the count stays beside the name rather
+                        // than at the far edge.
+                        width: Math.min(implicitWidth,
+                                        Math.max(0, _hdrRow.width - _hdrIcon.width
+                                                    - _hdrCount.width - _hdrRow.spacing * 2))
                     }
                     Text {
+                        id:    _hdrCount
                         text:  "(" + root.schemas.length + ")"
                         color: Theme.textDisabled
                         font { family: Theme.fontFamily; pixelSize: 11 }
@@ -228,10 +240,18 @@ Item {
                                 Rectangle { anchors { left: parent.left; right: parent.right; bottom: parent.bottom } height: 1; color: Theme.border }
 
                                 Row {
-                                    anchors { left: parent.left; leftMargin: Theme.sp2; verticalCenter: parent.verticalCenter }
+                                    id: _schRow
+                                    anchors { left: parent.left; right: parent.right
+                                              leftMargin: Theme.sp2
+                                              // The ··· button's lane, reserved whether or not
+                                              // the row is hovered: a name that reflowed under
+                                              // the pointer would be worse than a gap.
+                                              rightMargin: 6 + 22 + Theme.sp2
+                                              verticalCenter: parent.verticalCenter }
                                     spacing: Theme.sp2
 
                                     Icon {
+                                        id:       _schCaret
                                         name:     Icons.caretRight
                                         size:     10
                                         color:    Theme.textSecondary
@@ -243,14 +263,19 @@ Item {
                                     // same cylinder, so the tree read as a database holding
                                     // databases — and the one thing a reader needs from this
                                     // row is which of the two levels they are looking at.
-                                    Icon { name: Icons.treeStructure; size: 13; color: Theme.primary; anchors.verticalCenter: parent.verticalCenter }
+                                    Icon { id: _schIcon; name: Icons.treeStructure; size: 13; color: Theme.primary; anchors.verticalCenter: parent.verticalCenter }
                                     Text {
                                         text:  _sDel._sName
                                         color: Theme.textPrimary
                                         font { family: Theme.fontFamilyMono; pixelSize: Theme.textSm; weight: Font.Medium }
                                         anchors.verticalCenter: parent.verticalCenter
+                                        elide: Text.ElideRight
+                                        width: Math.min(implicitWidth,
+                                                        Math.max(0, _schRow.width - _schCaret.width - _schIcon.width
+                                                                    - _schCount.width - _schRow.spacing * 3))
                                     }
                                     Text {
+                                        id:    _schCount
                                         text:  "(" + _sDel._sTables.length + ")"
                                         color: Theme.textDisabled
                                         font  { family: Theme.fontFamily; pixelSize: 10 }
@@ -335,10 +360,18 @@ Item {
                                             Rectangle { anchors { left: parent.left; right: parent.right; bottom: parent.bottom } height: 1; color: Theme.border }
 
                                             Row {
-                                                anchors { left: parent.left; leftMargin: _tDel._indent; verticalCenter: parent.verticalCenter }
+                                                id: _tblRow
+                                                anchors { left: parent.left; right: parent.right
+                                                          leftMargin: _tDel._indent
+                                                          // The ··· button, plus the browse button
+                                                          // beside it where the host asked for one.
+                                                          // Reserved on every row, hovered or not.
+                                                          rightMargin: (root.showBrowseAction ? 32 + 22 : 6 + 22) + Theme.sp2
+                                                          verticalCenter: parent.verticalCenter }
                                                 spacing: Theme.sp2
 
                                                 Icon {
+                                                    id:       _tblCaret
                                                     name:     Icons.caretRight
                                                     size:     10
                                                     color:    Theme.textSecondary
@@ -347,6 +380,7 @@ Item {
                                                     Behavior on rotation { NumberAnimation { duration: Theme.durationFast } }
                                                 }
                                                 Icon {
+                                                    id:    _tblIcon
                                                     name:  root._tableIcon(_tDel.modelData.type)
                                                     size:  13
                                                     color: _tDel.modelData.type === "view" ? Theme.info : Theme.primary
@@ -357,8 +391,13 @@ Item {
                                                     color: _tDel._active ? Theme.primary : Theme.textPrimary
                                                     font  { family: Theme.fontFamilyMono; pixelSize: Theme.textSm; weight: _tDel._active ? Font.Medium : Font.Normal }
                                                     anchors.verticalCenter: parent.verticalCenter
+                                                    elide: Text.ElideRight
+                                                    width: Math.min(implicitWidth,
+                                                                    Math.max(0, _tblRow.width - _tblCaret.width - _tblIcon.width
+                                                                                - _tblCount.width - _tblRow.spacing * 3))
                                                 }
                                                 Text {
+                                                    id:    _tblCount
                                                     text:  _tDel.modelData.columns ? "(" + _tDel.modelData.columns.length + ")" : ""
                                                     color: Theme.textDisabled
                                                     font  { family: Theme.fontFamily; pixelSize: 10 }
@@ -459,10 +498,15 @@ Item {
                                                     Rectangle { anchors { left: parent.left; right: parent.right; bottom: parent.bottom } height: 1; color: Theme.border; opacity: 0.5 }
 
                                                     Row {
-                                                        anchors { left: parent.left; leftMargin: _tDel._indent + 24; verticalCenter: parent.verticalCenter }
+                                                        id: _colRow
+                                                        anchors { left: parent.left; right: parent.right
+                                                                  leftMargin: _tDel._indent + 24
+                                                                  rightMargin: Theme.sp2
+                                                                  verticalCenter: parent.verticalCenter }
                                                         spacing: Theme.sp2
 
                                                         Text {
+                                                            id:    _colGlyph
                                                             text:  root._colIcon(_cDel.modelData)
                                                             color: _cDel.modelData.pk ? Theme.warning : (_cDel.modelData.fk ? Theme.info : Theme.textDisabled)
                                                             font.pixelSize: 9
@@ -474,14 +518,25 @@ Item {
                                                             color: Theme.textPrimary
                                                             font  { family: Theme.fontFamilyMono; pixelSize: 12 }
                                                             anchors.verticalCenter: parent.verticalCenter
+                                                            elide: Text.ElideRight
+                                                            // The name gives way before the type does:
+                                                            // a type is short and fixed, and a column
+                                                            // called `created_at` says most of what it
+                                                            // is from its first eight letters.
+                                                            width: Math.min(implicitWidth,
+                                                                            Math.max(0, _colRow.width - _colGlyph.width - _colType.width
+                                                                                        - (_colNull.visible ? _colNull.width + _colRow.spacing : 0)
+                                                                                        - _colRow.spacing * 2))
                                                         }
                                                         Text {
+                                                            id:    _colType
                                                             text:  _cDel.modelData.type || ""
                                                             color: Theme.textDisabled
                                                             font  { family: Theme.fontFamily; pixelSize: 10 }
                                                             anchors.verticalCenter: parent.verticalCenter
                                                         }
                                                         Text {
+                                                            id:      _colNull
                                                             visible: _cDel.modelData.nullable === false
                                                             text:    "NOT NULL"
                                                             color:   Theme.error
