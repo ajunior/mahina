@@ -25,7 +25,8 @@ Item {
     implicitWidth:  400
     implicitHeight: 240
 
-    readonly property real _yMax: {
+    // The tallest value in the data, and whether the data is all whole numbers.
+    readonly property real _yPeak: {
         var m = 1
         for (var si = 0; si < series.length; si++)
             for (var vi = 0; vi < (series[si].values ?? []).length; vi++) {
@@ -34,6 +35,32 @@ Item {
             }
         return m
     }
+    readonly property bool _yWhole: {
+        for (var si = 0; si < series.length; si++)
+            for (var vi = 0; vi < (series[si].values ?? []).length; vi++)
+                if (!Number.isInteger(series[si].values[vi] ?? 0)) return false
+        return true
+    }
+
+    // The gap between gridlines, rounded to a 1-2-5 figure so the labels are
+    // numbers a reader recognises. The axis used to run from 0 to the tallest
+    // value in four equal parts and print every label whole: a chart topping
+    // out at 2 drew its lines at 0, 0.5, 1, 1.5 and 2, and the axis read
+    // 0, 1, 1, 2, 2. Counts have no meaningful half, so a series of whole
+    // numbers gets whole steps even where a finer one would have divided
+    // evenly; anything else keeps the fraction and prints it below.
+    readonly property real _yStep: {
+        var raw = root._yPeak / 4
+        if (!(raw > 0)) return 1
+        var mag  = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10))
+        var norm = raw / mag
+        var step = (norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10) * mag
+        return root._yWhole ? Math.max(1, Math.round(step)) : step
+    }
+    readonly property real _yMax:   Math.ceil(root._yPeak / root._yStep) * root._yStep
+    readonly property int  _yLines: Math.max(1, Math.round(root._yMax / root._yStep))
+    readonly property int  _yDec:   root._yStep >= 1 ? 0
+                                  : Math.min(6, Math.ceil(-Math.log(root._yStep) / Math.LN10))
 
     Canvas {
         id:           _canvas
@@ -67,13 +94,13 @@ Item {
             if (root.showGrid) {
                 ctx.font      = "10px '" + Theme.fontFamily + "'"
                 ctx.textAlign = "right"
-                for (var g = 0; g <= 4; g++) {
-                    var gv = (g / 4) * yMax
+                for (var g = 0; g <= root._yLines; g++) {
+                    var gv = g * root._yStep
                     var gy = fy(gv)
                     ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(padL + plotW, gy)
                     ctx.strokeStyle = Theme.border.toString(); ctx.lineWidth = 1; ctx.stroke()
                     ctx.fillStyle = Theme.textDisabled.toString()
-                    ctx.fillText(gv.toFixed(0), padL - 4, gy + 4)
+                    ctx.fillText(gv.toFixed(root._yDec), padL - 4, gy + 4)
                 }
             }
 
