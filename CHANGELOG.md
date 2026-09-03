@@ -5,6 +5,10 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.22
+
+- **Fix** The Y axis of a `BarChart` or an `AreaChart` prints labels that are actually different numbers. It drew five gridlines at fixed quarters of the tallest value and printed each with `toFixed(0)`, so a chart topping out at 2 put its lines at 0, 0.5, 1, 1.5 and 2 and captioned them 0, 1, 1, 2, 2 — the same label twice, against gridlines that are not at the same height, and any peak that is not a multiple of 4 hits it. The step is chosen first now, snapped to a 1-2-5 figure so the labels are numbers a reader recognises, and the axis top is raised to a multiple of it rather than stopping wherever the data happened to peak; the line count follows from the step instead of always being four, and the decimals follow from it too, so a step of 0.25 prints `0.25` instead of `0`. A series of whole numbers is held to whole steps even where a finer one would have divided evenly, because a count has no meaningful half
+
 ## 0.45.21
 
 - **Fix** Selecting the text in a `CodeEditor` and typing over it no longer freezes the app. The right-click menu's `model` was a binding over the editor's live state — `canUndo`, `canRedo`, `canPaste`, `selectedText`, `text` — and a binding reevaluates wherever those change. Qt changes `canUndo` from *inside* `QTextCursor::insertText`: replacing a selection removes it first, and `QTextDocumentPrivate::remove` emits `undoAvailable()` from the middle of the removal, before the fragment map it is rewriting is consistent again. Reading `selectedText` there builds a `QTextDocumentFragment` off that half-rewritten document and the copy never terminates, so the GUI thread never comes back — Ctrl+A and one keystroke, from a cold start. The menu is closed the whole time it is being asked, so this was state nobody could see: it builds its items once, in `onOpening`, where the document is between operations and the answers are the ones about to be shown
