@@ -5,6 +5,11 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.16
+
+- **Feat** `SidebarEntry` takes `actionIcon` / `actionTooltip` and emits `actionClicked()`. A sidebar list almost always grows one per-row verb — usually removing the row — and there was nowhere to put it, so a consumer that needed one had to stop using `SidebarEntry` and rebuild the row around a button. The button is a ghost icon at the trailing edge, revealed on hover so a long list still reads as text rather than as a column of buttons, and the label reserves its width whether or not it is showing, because text that reflowed under the pointer would be worse than a gap. Rows that set nothing are unchanged
+- **Fix** `SidebarEntry` read its hover from the row's `MouseArea`, which cannot survive a button on top of it: a `MouseArea` beneath another item that accepts hover stops reporting `containsMouse` there, so the row background would blink off and the new action button would pull itself out from under the pointer reaching for it. Hover now comes from a `HoverHandler`, which nested handlers do not block — the same reason `Button` reads hover from one rather than from `AbstractButton.hovered`
+
 ## 0.45.15
 
 - **Fix** `CodeEditor` painted its background, its gutter and its text in hardcoded GitHub greys — `#f6f8fa`/`#eaeef2`/`#24292f` in light, `#0d1117`/`#161b22`/`#c9d1d9` in dark — so it was the one component that did not move with the palette. Sampled from a screenshot under two different themes, the gutter rendered the same `EAEEF2` both times: passable beside a theme whose `panel` token happens to land near that grey, and a cold blue-grey slab inside a warm cream page beside one that does not. It now reads `Theme.surface`, `Theme.panel` and `Theme.textPrimary`, which is the rule `SchemaBrowser` already followed — chrome is `panel`, content is `surface` — so a theme that wants a flat editor sets the two equal instead of asking the component to
