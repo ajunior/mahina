@@ -45,6 +45,11 @@ Item {
     signal tableCopyNameRequested(string schema, string name)
     signal schemaCopyNameRequested(string schema)
 
+    // The graph of one schema's tables and the foreign keys between them. It is
+    // asked for from the schema row because the schema is the scope that fits
+    // on a screen — a whole connection is a picture nobody can read.
+    signal schemaGraphRequested(string schema)
+
     // ── Internal ──────────────────────────────────────────────────────────────
     readonly property int _tableCount: {
         var n = 0
@@ -285,11 +290,14 @@ Item {
                                         id:     _schMoreMenu
                                         anchor: _schMoreBtn
                                         model: [
-                                            { label: "Copy name", icon: Icons.copy, act: "copy" },
+                                            { label: "Copy name",    icon: Icons.copy,  act: "copy"  },
+                                            { label: "Schema graph", icon: Icons.graph, act: "graph" },
                                         ]
                                         onTriggered: (index, item) => {
                                             if (item.act === "copy")
                                                 _sDel._sb.schemaCopyNameRequested(_sDel._sName)
+                                            else if (item.act === "graph")
+                                                _sDel._sb.schemaGraphRequested(_sDel._sName)
                                         }
                                     }
                                 }
