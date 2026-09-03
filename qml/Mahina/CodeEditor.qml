@@ -148,6 +148,27 @@ Item {
         }
     }
 
+    // Item shapes for the right-click menu, read once per open.
+    function _contextItems(): var {
+        const hasSel = _edit.selectedText !== ""
+        return [
+            { label: "Undo", act: "undo",  icon: Icons.arrowCounterClockwise, shortcut: "Ctrl+Z",
+              disabled: root.readOnly || !_edit.canUndo },
+            { label: "Redo", act: "redo",  icon: Icons.arrowClockwise, shortcut: "Ctrl+Shift+Z",
+              disabled: root.readOnly || !_edit.canRedo },
+            null,
+            { label: "Cut", act: "cut",   icon: Icons.scissors, shortcut: "Ctrl+X",
+              disabled: root.readOnly || !hasSel },
+            { label: "Copy", act: "copy",  icon: Icons.copy, shortcut: "Ctrl+C",
+              disabled: !hasSel },
+            { label: "Paste", act: "paste", icon: Icons.clipboard, shortcut: "Ctrl+V",
+              disabled: root.readOnly || !_edit.canPaste },
+            null,
+            { label: "Select all", act: "selectAll", icon: Icons.selectionAll, shortcut: "Ctrl+A",
+              disabled: _edit.text === "" },
+        ]
+    }
+
     function _selectCurrent(): void {
         if (_curIdx < 0 || _curIdx >= _matches.length) return
         var pos = _matches[_curIdx]
@@ -384,6 +405,7 @@ Item {
         // Anchored to the text rather than to the whole editor, so the gutter
         // stays free for whatever a host wants to put on a line number.
         ContextMenu {
+            id: _editMenu
             anchor: _edit
             menuWidth: 200
 
@@ -396,24 +418,19 @@ Item {
                 if (pos < _edit.selectionStart || pos > _edit.selectionEnd)
                     _edit.cursorPosition = pos
                 _edit.forceActiveFocus()
+                _editMenu.model = root._contextItems()
             }
 
-            model: [
-                { label: "Undo", act: "undo",  icon: Icons.arrowCounterClockwise, shortcut: "Ctrl+Z",
-                  disabled: root.readOnly || !_edit.canUndo },
-                { label: "Redo", act: "redo",  icon: Icons.arrowClockwise, shortcut: "Ctrl+Shift+Z",
-                  disabled: root.readOnly || !_edit.canRedo },
-                null,
-                { label: "Cut", act: "cut",   icon: Icons.scissors, shortcut: "Ctrl+X",
-                  disabled: root.readOnly || _edit.selectedText === "" },
-                { label: "Copy", act: "copy",  icon: Icons.copy, shortcut: "Ctrl+C",
-                  disabled: _edit.selectedText === "" },
-                { label: "Paste", act: "paste", icon: Icons.clipboard, shortcut: "Ctrl+V",
-                  disabled: root.readOnly || !_edit.canPaste },
-                null,
-                { label: "Select all", act: "selectAll", icon: Icons.selectionAll, shortcut: "Ctrl+A",
-                  disabled: _edit.text === "" },
-            ]
+            // Filled in when the menu opens, never bound. A binding on
+            // canUndo/selectedText re-evaluates wherever those change, and Qt
+            // changes them *inside* QTextCursor::insertText: replacing a
+            // selection removes it first, and the removal emits
+            // undoAvailable() while the document is still half-edited. Reading
+            // selectedText there walks a fragment map that the remove is in the
+            // middle of rewriting, and the GUI thread never comes back — select
+            // all, type one character, and the editor is frozen. A closed menu
+            // has no use for the state anyway.
+            model: []
 
             onTriggered: (index, item) => {
                 switch (item.act) {
