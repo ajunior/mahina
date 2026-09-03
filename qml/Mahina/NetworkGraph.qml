@@ -4,6 +4,17 @@ import Mahina
 
 // Force-directed node-edge graph. Runs a spring simulation to position nodes.
 //
+// Drag the background to pan, wheel to zoom; `resetView()` puts it back.
+// Labels appear only when the nodes have enough room on screen to carry one
+// without landing on each other, so zooming in reveals them rather than a
+// switch turning them on over a thicket.
+//
+// The simulation compares every node against every other node on each of its
+// 60 ticks, which is fine into the low hundreds of nodes and is not fine at a
+// thousand: the cost is quadratic and it runs on the GUI thread, so past that
+// the window stops repainting until it settles. A host with an unbounded node
+// count should decide what to draw before handing it over.
+//
 // Usage:
 //   NetworkGraph {
 //       nodes: [
@@ -23,16 +34,53 @@ Item {
     property bool showLabels: true
     property color edgeColor: Theme.border
 
+    // ── View transform ────────────────────────────────────────────────────────
+    property real zoom:    1.0
+    property real panX:    0
+    property real panY:    0
+    property real minZoom: 0.25
+    property real maxZoom: 4.0
+
     signal nodeSelected(var node)
+
+    function resetView(): void { root.zoom = 1.0; root.panX = 0; root.panY = 0 }
+
+    // Zoom by `factor` keeping the graph point under (x, y) where it is, so the
+    // thing you pointed at is the thing you zoomed into.
+    function zoomAt(x: real, y: real, factor: real): void {
+        const next = Math.max(root.minZoom, Math.min(root.maxZoom, root.zoom * factor))
+        if (next === root.zoom) return
+        root.panX = x - (x - root.panX) * (next / root.zoom)
+        root.panY = y - (y - root.panY) * (next / root.zoom)
+        root.zoom = next
+    }
+
+    // Zoom about the middle of the view — what a toolbar button does.
+    function zoomBy(factor: real): void { root.zoomAt(root.width / 2, root.height / 2, factor) }
 
     implicitWidth:  400
     implicitHeight: 300
 
     property var nodePos: []
 
+    // Graph coordinates → view coordinates.
+    function _sx(v: real): real { return v * root.zoom + root.panX }
+    function _sy(v: real): real { return v * root.zoom + root.panY }
+
+    // A label is about 70×14 px on screen and sits under its node, so it needs
+    // roughly 4000 px² to itself before it stops overlapping its neighbours.
+    // The area each node has is the view, times zoom², over the node count —
+    // which is why zooming in brings the labels back.
+    readonly property bool _labelsVisible:
+        root.showLabels && root.nodes.length > 0 &&
+        (root.width * root.height * root.zoom * root.zoom) / root.nodes.length > 4000
+
     onNodesChanged:  _initPositions()
     onWidthChanged:  { if (width > 0 && height > 0 && nodePos.length !== nodes.length) _initPositions() }
     onHeightChanged: { if (width > 0 && height > 0 && nodePos.length !== nodes.length) _initPositions() }
+    onZoomChanged:   _canvas.requestPaint()
+    onPanXChanged:   _canvas.requestPaint()
+    onPanYChanged:   _canvas.requestPaint()
 
     function _initPositions(): void {
         if (width <= 0 || height <= 0 || nodes.length === 0) return
@@ -103,6 +151,37 @@ Item {
         onRunningChanged: if (running) iterCount = 0
     }
 
+    // Pan. The nodes carry a MouseArea each, so a drag that starts on one is
+    // a drag on the background as far as this is concerned — the handler takes
+    // the grab once the press turns out to be a drag, and the node keeps the
+    // clicks.
+    DragHandler {
+        target: null
+        cursorShape: Qt.ClosedHandCursor
+        property real _fromX: 0
+        property real _fromY: 0
+        onActiveChanged: {
+            if (active) { _fromX = root.panX; _fromY = root.panY }
+        }
+        onTranslationChanged: {
+            if (!active) return
+            root.panX = _fromX + activeTranslation.x
+            root.panY = _fromY + activeTranslation.y
+        }
+    }
+
+    WheelHandler {
+        target: null
+        acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+        onWheel: (event) => {
+            if (event.angleDelta.y === 0) return
+            root.zoomAt(event.x, event.y, event.angleDelta.y > 0 ? 1.15 : 1 / 1.15)
+        }
+    }
+
+    // Edges are painted at view resolution with the transform applied to the
+    // context rather than to the item, so a zoomed-in line is drawn sharp
+    // instead of a magnified 1.5 px one.
     Canvas {
         id:           _canvas
         anchors.fill: parent
@@ -117,8 +196,11 @@ Item {
             ctx.clearRect(0, 0, width, height)
             var pos = root.nodePos
             if (pos.length === 0) return
+            ctx.save()
+            ctx.translate(root.panX, root.panY)
+            ctx.scale(root.zoom, root.zoom)
             ctx.strokeStyle = root.edgeColor.toString()
-            ctx.lineWidth   = 1.5
+            ctx.lineWidth   = 1.5 / root.zoom
             for (var e = 0; e < root.edges.length; e++) {
                 var s = root.edges[e].source
                 var t = root.edges[e].target
@@ -128,6 +210,7 @@ Item {
                 ctx.lineTo(pos[t].x, pos[t].y)
                 ctx.stroke()
             }
+            ctx.restore()
         }
     }
 
@@ -138,10 +221,11 @@ Item {
             required property int index
             property var npos:  index < root.nodePos.length ? root.nodePos[index] : ({x:0, y:0})
             property var ndata: index < root.nodes.length   ? root.nodes[index]   : null
-            x: npos.x - root.nodeRadius
-            y: npos.y - root.nodeRadius
-            width:  root.nodeRadius * 2
-            height: root.nodeRadius * 2
+            readonly property real r: root.nodeRadius * root.zoom
+            x: root._sx(npos.x) - r
+            y: root._sy(npos.y) - r
+            width:  r * 2
+            height: r * 2
 
             Rectangle {
                 anchors.fill: parent
@@ -151,7 +235,7 @@ Item {
                 border.width: 2
             }
             Text {
-                visible:        root.showLabels && _dg.ndata !== null
+                visible:        root._labelsVisible && _dg.ndata !== null
                 text:           _dg.ndata ? (_dg.ndata.label ?? "") : ""
                 color:          Theme.textPrimary
                 font.family:    Theme.fontFamily
