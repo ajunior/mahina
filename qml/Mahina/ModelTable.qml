@@ -174,6 +174,13 @@ Item {
                 // Without this containsMouse never becomes true, and the resize
                 // indicator below it stayed transparent for the handle's whole life.
                 hoverEnabled: true
+                // The header is a TableView, and a TableView is a Flickable: a
+                // horizontal drag inside one is a flick until somebody says
+                // otherwise. Without this the Flickable stole the grab after
+                // about ten pixels, so a column jumped a sliver and then froze
+                // however far you kept dragging — which reads as "columns
+                // cannot be resized" rather than as a stolen grab.
+                preventStealing: true
 
                 property real _startX: 0
                 property real _startW: 0

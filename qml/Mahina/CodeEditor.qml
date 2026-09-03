@@ -380,6 +380,54 @@ Item {
             }
         }
 
+        // ── Right-click menu ──────────────────────────────────────────────────
+        // Anchored to the text rather than to the whole editor, so the gutter
+        // stays free for whatever a host wants to put on a line number.
+        ContextMenu {
+            anchor: _edit
+            menuWidth: 200
+
+            // Right-clicking somewhere else and then choosing Paste has to
+            // paste there, not wherever the caret happened to be left. A click
+            // inside an existing selection keeps it: that is the one case where
+            // the menu is about to act on the selection, not on the caret.
+            onOpening: (x, y) => {
+                const pos = _edit.positionAt(x, y)
+                if (pos < _edit.selectionStart || pos > _edit.selectionEnd)
+                    _edit.cursorPosition = pos
+                _edit.forceActiveFocus()
+            }
+
+            model: [
+                { label: "Undo", act: "undo",  icon: Icons.arrowCounterClockwise, shortcut: "Ctrl+Z",
+                  disabled: root.readOnly || !_edit.canUndo },
+                { label: "Redo", act: "redo",  icon: Icons.arrowClockwise, shortcut: "Ctrl+Shift+Z",
+                  disabled: root.readOnly || !_edit.canRedo },
+                null,
+                { label: "Cut", act: "cut",   icon: Icons.scissors, shortcut: "Ctrl+X",
+                  disabled: root.readOnly || _edit.selectedText === "" },
+                { label: "Copy", act: "copy",  icon: Icons.copy, shortcut: "Ctrl+C",
+                  disabled: _edit.selectedText === "" },
+                { label: "Paste", act: "paste", icon: Icons.clipboard, shortcut: "Ctrl+V",
+                  disabled: root.readOnly || !_edit.canPaste },
+                null,
+                { label: "Select all", act: "selectAll", icon: Icons.selectionAll, shortcut: "Ctrl+A",
+                  disabled: _edit.text === "" },
+            ]
+
+            onTriggered: (index, item) => {
+                switch (item.act) {
+                case "undo":      _edit.undo();      break
+                case "redo":      _edit.redo();      break
+                case "cut":       _edit.cut();       break
+                case "copy":      _edit.copy();      break
+                case "paste":     _edit.paste();     break
+                case "selectAll": _edit.selectAll(); break
+                }
+                _edit.forceActiveFocus()
+            }
+        }
+
         // ── Find / Replace bar ────────────────────────────────────────────────
         Rectangle {
             id:      _findBar
