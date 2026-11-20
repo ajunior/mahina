@@ -56,7 +56,7 @@ Switch {
                 anchors.fill:   parent
                 radius:         parent.radius
                 color:          "transparent"
-                border.color:   "#00000018"
+                border.color:   "#18000000"
                 border.width:   1
             }
         }
