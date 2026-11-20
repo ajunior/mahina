@@ -5,6 +5,10 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.25
+
+- **Fix** A `StatusBar` item marked `clickable: false` no longer shows the hand cursor. 0.45.24 switched the item's `MouseArea` off with `enabled: false`, and on a `MouseArea` that is its own property: it stops the area handling clicks, but the item stays enabled as far as Qt Quick is concerned, and the cursor is taken from any visible, enabled item under the pointer that has one set. The hover tint and `itemClicked` went away as intended, but the hand stayed, which was most of the point. The `MouseArea` is hidden instead, which takes it out of cursor lookup as well
+
 ## 0.45.24
 
 - **Feat** A `StatusBar` item can say it does nothing when clicked: `{ text: "UTF-8", clickable: false }`. Every item got a hand cursor and a hover tint whether or not anything listened to `itemClicked`, so a read-only label — a connection state, a port name, a message rate — looked like a button and did nothing when pressed. An item marked `clickable: false` gets no cursor, no tint and no `itemClicked`. The key defaults to `true`, so existing status bars are unchanged
