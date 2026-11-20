@@ -64,6 +64,9 @@ Item {
         opacity:          0
         scale:            0.96
 
+        // Swallow clicks on the box so they don't reach the backdrop and close it.
+        MouseArea { anchors.fill: parent }
+
         ColumnLayout {
             id:      _col
             width:   parent.width
@@ -119,7 +122,7 @@ Item {
 
                 Button {
                     text:    root.confirmText
-                    variant: root.danger ? Button.Variant.Danger : Button.Variant.Primary
+                    variant: root.danger ? Button.Variant.Danger : Button.Variant.Filled
                     onClicked: { root.close(); root.confirmed() }
                 }
             }
