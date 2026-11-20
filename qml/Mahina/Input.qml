@@ -83,8 +83,9 @@ TextField {
                 anchors.verticalCenter: parent.verticalCenter
             }
 
-            // Border rect
+            // Border rect (z: -1 so it stays behind the icons)
             Rectangle {
+                z: -1
                 anchors.fill: parent
                 color:        Theme.surface
                 radius:       Theme.radiusSm
