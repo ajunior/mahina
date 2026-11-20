@@ -57,7 +57,9 @@ Item {
                 var b = root.bars[i]
                 var v = b.value ?? 0
                 if ((b.type ?? "") === "total") {
-                    tops.push({ base: 0, top: v })
+                    // A total runs from zero, down as well as up: a negative one
+                    // had its top below its base and drew as a 1 px sliver.
+                    tops.push({ base: Math.min(0, v), top: Math.max(0, v) })
                     running = v
                 } else {
                     var newRun = running + v
@@ -68,18 +70,46 @@ Item {
                 if (tops[i].base < yMin) yMin = tops[i].base
             }
 
-            var range = yMax - yMin || 1
+            // A 1-2-5 step close to raw: labels read as numbers people recognise,
+            // and gridlines land on them. Whole-number data gets whole steps — a
+            // count has no meaningful half. (Same rule as BarChart/AreaChart.)
+            function niceStep(raw: real, whole: bool): real {
+                if (!(raw > 0)) return 1
+                var mag  = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10))
+                var norm = raw / mag
+                var step = (norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10) * mag
+                return whole ? Math.max(1, Math.round(step)) : step
+            }
+            function decimals(step: real): int {
+                return step >= 1 ? 0 : Math.min(6, Math.ceil(-Math.log(step) / Math.LN10 - 1e-9))
+            }
+
+            // The axis used to split [yMin, yMax] into four and print each label
+            // whole, so a small or fractional range repeated labels (0, 1, 1, 2, 2).
+            // Choose the step first, then widen the range out to multiples of it:
+            // the bottom snapped down, the top up, so both ends are labelled values.
+            var whole = true
+            for (var wi = 0; wi < n; wi++)
+                if (!Number.isInteger(root.bars[wi].value ?? 0)) { whole = false; break }
+            var yStep  = niceStep((yMax - yMin) / 4, whole)
+            yMin = Math.floor(yMin / yStep + 1e-9) * yStep
+            yMax = Math.ceil(yMax / yStep - 1e-9) * yStep
+            if (yMax <= yMin) yMax = yMin + yStep
+            var yLines = Math.round((yMax - yMin) / yStep)
+            var yDec   = decimals(yStep)
+
+            var range = yMax - yMin
             function fy(v: var): var { return padT + plotH - ((v - yMin) / range) * plotH }
 
             // Grid
             ctx.font = "10px '" + Theme.fontFamily + "'"; ctx.textAlign = "right"
-            for (var g = 0; g <= 4; g++) {
-                var gv = yMin + (g / 4) * range
+            for (var g = 0; g <= yLines; g++) {
+                var gv = yMin + g * yStep
                 var gy = fy(gv)
                 ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(padL + plotW, gy)
                 ctx.strokeStyle = Theme.border.toString(); ctx.lineWidth = 1; ctx.stroke()
                 ctx.fillStyle = Theme.textDisabled.toString()
-                ctx.fillText(gv.toFixed(0), padL - 4, gy + 4)
+                ctx.fillText(gv.toFixed(yDec), padL - 4, gy + 4)
             }
 
             // Bars
