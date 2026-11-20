@@ -57,11 +57,13 @@ Item {
                         height: root.implicitHeight
                         width:  _lir.implicitWidth + Theme.sp3 * 2
                         // Opt out per item with clickable: false — no hand cursor, no hover tint, no itemClicked.
+                        // visible, not enabled: MouseArea.enabled only stops it handling clicks; the
+                        // item stays enabled and still sets the cursor.
                         readonly property bool clickable: modelData.clickable ?? true
                         color:  _lbh.hovered && _rq1.clickable ? Theme.hover : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _lbh }
-                        MouseArea { anchors.fill: parent; enabled: _rq1.clickable; cursorShape: Qt.PointingHandCursor; onClicked: root.itemClicked("left", _rq1.index) }
+                        MouseArea { anchors.fill: parent; visible: _rq1.clickable; cursorShape: Qt.PointingHandCursor; onClicked: root.itemClicked("left", _rq1.index) }
                         Row {
                             id: _lir; anchors.centerIn: parent; spacing: Theme.sp1
                             Icon { visible: (_rq1.modelData.icon ?? "") !== ""; anchors.verticalCenter: parent.verticalCenter; name: _rq1.modelData.icon ?? ""; size: 11; color: _rq1.modelData.color ?? Theme.textSecondary }
@@ -87,11 +89,13 @@ Item {
                         height: root.implicitHeight
                         width:  _cir.implicitWidth + Theme.sp3 * 2
                         // Opt out per item with clickable: false — no hand cursor, no hover tint, no itemClicked.
+                        // visible, not enabled: MouseArea.enabled only stops it handling clicks; the
+                        // item stays enabled and still sets the cursor.
                         readonly property bool clickable: modelData.clickable ?? true
                         color:  _cbh.hovered && _rq2.clickable ? Theme.hover : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _cbh }
-                        MouseArea { anchors.fill: parent; enabled: _rq2.clickable; cursorShape: Qt.PointingHandCursor; onClicked: root.itemClicked("center", _rq2.index) }
+                        MouseArea { anchors.fill: parent; visible: _rq2.clickable; cursorShape: Qt.PointingHandCursor; onClicked: root.itemClicked("center", _rq2.index) }
                         Row {
                             id: _cir; anchors.centerIn: parent; spacing: Theme.sp1
                             Icon { visible: (_rq2.modelData.icon ?? "") !== ""; anchors.verticalCenter: parent.verticalCenter; name: _rq2.modelData.icon ?? ""; size: 11; color: _rq2.modelData.color ?? Theme.textSecondary }
@@ -117,11 +121,13 @@ Item {
                         height: root.implicitHeight
                         width:  _rir.implicitWidth + Theme.sp3 * 2
                         // Opt out per item with clickable: false — no hand cursor, no hover tint, no itemClicked.
+                        // visible, not enabled: MouseArea.enabled only stops it handling clicks; the
+                        // item stays enabled and still sets the cursor.
                         readonly property bool clickable: modelData.clickable ?? true
                         color:  _rbh.hovered && _rq3.clickable ? Theme.hover : "transparent"
                         Behavior on color { ColorAnimation { duration: Theme.durationFast } }
                         HoverHandler { id: _rbh }
-                        MouseArea { anchors.fill: parent; enabled: _rq3.clickable; cursorShape: Qt.PointingHandCursor; onClicked: root.itemClicked("right", _rq3.index) }
+                        MouseArea { anchors.fill: parent; visible: _rq3.clickable; cursorShape: Qt.PointingHandCursor; onClicked: root.itemClicked("right", _rq3.index) }
                         Row {
                             id: _rir; anchors.centerIn: parent; spacing: Theme.sp1
                             Icon { visible: (_rq3.modelData.icon ?? "") !== ""; anchors.verticalCenter: parent.verticalCenter; name: _rq3.modelData.icon ?? ""; size: 11; color: _rq3.modelData.color ?? Theme.textSecondary }
