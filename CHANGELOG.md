@@ -5,6 +5,10 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.23
+
+- **Fix** `Input` shows its `leadingIcon` and `trailingIcon`. The field box declared its border rectangle after the two icons, and siblings at the same `z` paint in declaration order, so the opaque rectangle (filled with `Theme.surface`) covered both and neither was ever visible — while the padding reserved for them still pushed the text right, leaving an empty gap where the icon should be. The rectangle sits at `z: -1` now, behind the icons; its fill, border and focus/hover/error states are unchanged
+
 ## 0.45.22
 
 - **Fix** The Y axis of a `BarChart` or an `AreaChart` prints labels that are actually different numbers. It drew five gridlines at fixed quarters of the tallest value and printed each with `toFixed(0)`, so a chart topping out at 2 put its lines at 0, 0.5, 1, 1.5 and 2 and captioned them 0, 1, 1, 2, 2 — the same label twice, against gridlines that are not at the same height, and any peak that is not a multiple of 4 hits it. The step is chosen first now, snapped to a 1-2-5 figure so the labels are numbers a reader recognises, and the axis top is raised to a multiple of it rather than stopping wherever the data happened to peak; the line count follows from the step instead of always being four, and the decimals follow from it too, so a step of 0.25 prints `0.25` instead of `0`. A series of whole numbers is held to whole steps even where a finer one would have divided evenly, because a count has no meaningful half
