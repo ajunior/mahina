@@ -5,6 +5,11 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.26
+
+- **Fix** The Y axis of a `ComboChart` or a `WaterfallChart` prints labels that are actually different numbers — the fix 0.45.22 made to `BarChart` and `AreaChart`. Both split their range into four equal parts and printed each gridline at a fixed precision, `toFixed(0)` (and `toFixed(1)` on `ComboChart`'s right axis), so a small or fractional range repeated itself — a `ComboChart` topping out at 2 read `0, 1, 1, 2, 2` — and anything else got labels like `-8.0, 2.8, 13.5, 24.3`. The step is chosen first now, snapped to a 1-2-5 figure, and the range is widened out to multiples of it; the gridline count and the decimals follow from the step, and whole-number data gets whole steps. A `WaterfallChart` can run below zero, so its bottom is snapped down as well, which also puts zero on a gridline. `ComboChart`'s right-hand axis has to share the left one's gridlines, so it takes the smallest 1-2-5 step that covers the line data in exactly that many intervals
+- **Fix** A negative total in a `WaterfallChart` draws as a bar running down from zero. Its top was below its base, so it came out as a 1 px sliver
+
 ## 0.45.25
 
 - **Fix** A `StatusBar` item marked `clickable: false` no longer shows the hand cursor. 0.45.24 switched the item's `MouseArea` off with `enabled: false`, and on a `MouseArea` that is its own property: it stops the area handling clicks, but the item stays enabled as far as Qt Quick is concerned, and the cursor is taken from any visible, enabled item under the pointer that has one set. The hover tint and `itemClicked` went away as intended, but the hand stayed, which was most of the point. The `MouseArea` is hidden instead, which takes it out of cursor lookup as well
