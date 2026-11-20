@@ -5,6 +5,13 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.27
+
+- **Fix** Clicking inside a `Dialog` or an `AlertDialog` no longer closes it. The box had nothing to take a click, so a click on a label or on empty space inside fell through to the backdrop's `MouseArea`, which closes the dialog — reading a dialog's text and clicking it, or missing a field by a few pixels, dismissed it and dropped whatever was typed. The box swallows its own clicks now; only a click on the backdrop closes it, as before
+- **Feat** A `Dialog` closes on Esc when `closeable`, like its × and a backdrop click. `open()` takes keyboard focus, unless something inside the dialog already has it — a field focused on `visibleChanged` keeps it, and Esc still reaches the dialog from there — and `close()` hands focus back to whatever had it before. An app that closed its dialogs with its own Esc `Shortcut` can drop it; leaving it in place does no harm
+- **Fix** `AlertDialog`'s confirm button asked for `Button.Variant.Primary`, which doesn't exist, so every alert logged *Unable to assign [undefined] to int* and the button fell back to the default variant. It asks for `Filled` now, which is that same default, so it looks the same
+- **Docs** The `Dialog` entry says how a dialog closes and what `closeable` turns off, and its example closes through a footer instead of an `onAccepted` handler that `Dialog` never had. The install snippet and the version on the docs page had stayed at `v0.45.0` since that release and now follow the current one
+
 ## 0.45.26
 
 - **Fix** The Y axis of a `ComboChart` or a `WaterfallChart` prints labels that are actually different numbers — the fix 0.45.22 made to `BarChart` and `AreaChart`. Both split their range into four equal parts and printed each gridline at a fixed precision, `toFixed(0)` (and `toFixed(1)` on `ComboChart`'s right axis), so a small or fractional range repeated itself — a `ComboChart` topping out at 2 read `0, 1, 1, 2, 2` — and anything else got labels like `-8.0, 2.8, 13.5, 24.3`. The step is chosen first now, snapped to a 1-2-5 figure, and the range is widened out to multiples of it; the gridline count and the decimals follow from the step, and whole-number data gets whole steps. A `WaterfallChart` can run below zero, so its bottom is snapped down as well, which also puts zero on a gridline. `ComboChart`'s right-hand axis has to share the left one's gridlines, so it takes the smallest 1-2-5 step that covers the line data in exactly that many intervals
