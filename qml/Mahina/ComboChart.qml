@@ -64,6 +64,51 @@ Item {
             if (!isFinite(linMin)) { linMin = 0; linMax = 1 }
             if (linMax === linMin) linMax = linMin + 1
 
+            // A 1-2-5 step close to raw: labels read as numbers people recognise,
+            // and gridlines land on them. Whole-number data gets whole steps — a
+            // count has no meaningful half. (Same rule as BarChart/AreaChart.)
+            function niceStep(raw: real, whole: bool): real {
+                if (!(raw > 0)) return 1
+                var mag  = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10))
+                var norm = raw / mag
+                var step = (norm <= 1 ? 1 : norm <= 2 ? 2 : norm <= 5 ? 5 : 10) * mag
+                return whole ? Math.max(1, Math.round(step)) : step
+            }
+            function decimals(step: real): int {
+                return step >= 1 ? 0 : Math.min(6, Math.ceil(-Math.log(step) / Math.LN10 - 1e-9))
+            }
+
+            function allWhole(series: var): bool {
+                for (var i = 0; i < series.length; i++) {
+                    var vs = series[i].values || []
+                    for (var j = 0; j < vs.length; j++)
+                        if (!Number.isInteger(vs[j])) return false
+                }
+                return true
+            }
+
+            // Left (bar) axis: choose the step first, then widen the range out to
+            // multiples of it. It used to split the range into four and print the
+            // labels whole, so a chart topping out at 2 read 0, 1, 1, 2, 2.
+            var barStep = niceStep((barMax - barMin) / 4, allWhole(root.bars))
+            barMin = Math.floor(barMin / barStep + 1e-9) * barStep
+            barMax = Math.ceil(barMax / barStep - 1e-9) * barStep
+            if (barMax <= barMin) barMax = barMin + barStep
+            var gridN  = Math.max(1, Math.round((barMax - barMin) / barStep))
+            var barDec = decimals(barStep)
+
+            // Right (line) axis shares the left one's gridlines, so it has to come
+            // out in exactly gridN steps: take the smallest 1-2-5 step whose
+            // multiples cover the data in gridN or fewer, and pad the top. Its
+            // labels used to be toFixed(1) over arbitrary quarters.
+            var linWhole = allWhole(root.lines)
+            var linStep  = niceStep((linMax - linMin) / gridN, linWhole)
+            while (Math.ceil(linMax / linStep - 1e-9) - Math.floor(linMin / linStep + 1e-9) > gridN)
+                linStep = niceStep(linStep * 1.5, linWhole)
+            linMin = Math.floor(linMin / linStep + 1e-9) * linStep
+            linMax = linMin + gridN * linStep
+            var linDec = decimals(linStep)
+
             function pyBar(v: var): var { return padT + plotH - (v - barMin) / (barMax - barMin) * plotH }
             function pyLin(v: var): var { return padT + plotH - (v - linMin) / (linMax - linMin) * plotH }
             function px(i: var, off: var, total: var): var {
@@ -81,18 +126,18 @@ Item {
             if (root.showGrid) {
                 ctx.strokeStyle = Qt.color(Theme.border).toString()
                 ctx.lineWidth   = 0.7
-                for (var g = 0; g <= 4; g++) {
-                    var gy = padT + plotH - g * plotH / 4
+                for (var g = 0; g <= gridN; g++) {
+                    var gy = padT + plotH - g * plotH / gridN
                     ctx.beginPath(); ctx.moveTo(padL, gy); ctx.lineTo(padL + plotW, gy); ctx.stroke()
                     ctx.fillStyle   = Qt.color(Theme.textDisabled).toString()
                     ctx.textAlign   = "right"; ctx.font = "10px '" + Theme.fontFamily + "'"
-                    var labVal = barMin + (barMax - barMin) * g / 4
-                    ctx.fillText(labVal.toFixed(0), padL - 4, gy + 4)
+                    var labVal = barMin + g * barStep
+                    ctx.fillText(labVal.toFixed(barDec), padL - 4, gy + 4)
                     // Right axis labels (lines)
                     if (root.lines.length > 0) {
                         ctx.textAlign = "left"
-                        var rVal = linMin + (linMax - linMin) * g / 4
-                        ctx.fillText(rVal.toFixed(1), padL + plotW + 4, gy + 4)
+                        var rVal = linMin + g * linStep
+                        ctx.fillText(rVal.toFixed(linDec), padL + plotW + 4, gy + 4)
                     }
                 }
             }
