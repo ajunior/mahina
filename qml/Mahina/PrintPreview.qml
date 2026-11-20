@@ -48,7 +48,7 @@ Item {
                     // Prev page
                     Rectangle {
                         width: 28; height: 28; radius: 4
-                        color: _ppH.hovered && root.currentPage > 1 ? "#ffffff22" : "transparent"
+                        color: _ppH.hovered && root.currentPage > 1 ? "#22ffffff" : "transparent"
                         HoverHandler { id: _ppH }
                         Text { anchors.centerIn: parent; text: "◀"; color: root.currentPage > 1 ? "#ffffff" : "#666"; font.pixelSize: 11 }
                         MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: { if (root.currentPage > 1) { root.currentPage--; root.pageChanged(root.currentPage) } } }
@@ -64,7 +64,7 @@ Item {
                     // Next page
                     Rectangle {
                         width: 28; height: 28; radius: 4
-                        color: _npH.hovered && root.currentPage < root.pageCount ? "#ffffff22" : "transparent"
+                        color: _npH.hovered && root.currentPage < root.pageCount ? "#22ffffff" : "transparent"
                         HoverHandler { id: _npH }
                         Text { anchors.centerIn: parent; text: "▶"; color: root.currentPage < root.pageCount ? "#ffffff" : "#666"; font.pixelSize: 11 }
                         MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: { if (root.currentPage < root.pageCount) { root.currentPage++; root.pageChanged(root.currentPage) } } }
@@ -75,7 +75,7 @@ Item {
                     // Zoom out
                     Rectangle {
                         width: 28; height: 28; radius: 4
-                        color: _zoH.hovered ? "#ffffff22" : "transparent"
+                        color: _zoH.hovered ? "#22ffffff" : "transparent"
                         HoverHandler { id: _zoH }
                         Text { anchors.centerIn: parent; text: "−"; color: "#cccccc"; font.pixelSize: 14 }
                         MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.previewScale = Math.max(0.2, root.previewScale - 0.1) }
@@ -92,7 +92,7 @@ Item {
                     // Zoom in
                     Rectangle {
                         width: 28; height: 28; radius: 4
-                        color: _ziH.hovered ? "#ffffff22" : "transparent"
+                        color: _ziH.hovered ? "#22ffffff" : "transparent"
                         HoverHandler { id: _ziH }
                         Text { anchors.centerIn: parent; text: "+"; color: "#cccccc"; font.pixelSize: 14 }
                         MouseArea { anchors.fill: parent; cursorShape: Qt.PointingHandCursor; onClicked: root.previewScale = Math.min(3.0, root.previewScale + 0.1) }
@@ -124,7 +124,7 @@ Item {
                     x:      (parent.width  - root._pw) / 2 + 4
                     y:      (parent.height - root._ph) / 2 + 4
                     width:  root._pw; height: root._ph
-                    color:  "#00000060"
+                    color:  "#60000000"
                     radius: 2
                 }
 
