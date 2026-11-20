@@ -36,12 +36,24 @@ Item {
     signal closed()
 
     function open(): void {
+        // Remember who had focus, to hand it back on close; then take it so Esc
+        // reaches the box. Focus already inside the dialog (a field focused on
+        // visibleChanged) is left alone — Esc still bubbles up to the box.
+        root._returnFocus = root.Window.activeFocusItem
         root.visible = true
+        if (!root._hasFocusInside()) _box.forceActiveFocus()
         _openAnim.start()
     }
 
     function close(): void {
         _closeAnim.start()
+    }
+
+    property Item _returnFocus: null
+    function _hasFocusInside(): bool {
+        for (var it = root.Window.activeFocusItem; it; it = it.parent)
+            if (it === _box) return true
+        return false
     }
 
     // ── Root covers the whole parent ──────────────────────────────────────────
@@ -74,6 +86,17 @@ Item {
         border.width:   1
         opacity:        0
         scale:          0.96
+
+        // Esc closes, like the × and a click outside (all gated on closeable).
+        Keys.onEscapePressed: (event) => {
+            if (root.closeable) { root.close(); event.accepted = true }
+        }
+
+        // Swallow clicks on the box itself. Without this, a click anywhere in
+        // the dialog that isn't on a control fell through to the backdrop's
+        // MouseArea, which closes it: clicking a label or empty space dismissed
+        // the dialog.
+        MouseArea { anchors.fill: parent }
 
         ColumnLayout {
             id:      _col
@@ -194,6 +217,8 @@ Item {
         }
         onFinished: {
             root.visible = false
+            if (root._returnFocus && root._returnFocus.visible) root._returnFocus.forceActiveFocus()
+            root._returnFocus = null
             root.closed()
         }
     }
