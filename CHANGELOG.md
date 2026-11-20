@@ -5,6 +5,12 @@ All notable changes to Mahina are documented here.
 Entry prefixes: **New** (new component or asset), **Feat** (new capability on an
 existing component), **Fix** (bug fix), **Break** (breaking change), **Docs**.
 
+## 0.45.24
+
+- **Feat** A `StatusBar` item can say it does nothing when clicked: `{ text: "UTF-8", clickable: false }`. Every item got a hand cursor and a hover tint whether or not anything listened to `itemClicked`, so a read-only label — a connection state, a port name, a message rate — looked like a button and did nothing when pressed. An item marked `clickable: false` gets no cursor, no tint and no `itemClicked`. The key defaults to `true`, so existing status bars are unchanged
+- **Fix** Translucent colours are written in Qt's `#AARRGGBB` order. A few were written CSS-style, `#RRGGBBAA`, so the intended alpha landed in the blue channel and the first byte became the alpha. The dark `Theme.overlay` (`#00000099`) came out fully transparent, so a `Dialog` or `Drawer` in dark mode did not dim the page behind it at all, and the light one (`#1E203066`) was a faint blue tint instead of a dim. In `PrintPreview` the toolbar hover (`#ffffff22`) flashed opaque yellow and the page shadow (`#00000060`) was invisible. The edge on `Toggle`'s thumb (`#00000018`) was invisible too, so a pale thumb on a pale track had no outline. All of them are the same tints, alpha first now: `#99000000`, `#661E2030`, `#22ffffff`, `#60000000`, `#18000000`. An app that passes its own `overlay` to `Theme.load()` keeps it, so if it wrote that value CSS-style too, it needs the same flip
+- **Docs** The token table and `docs/themes/dark.json` carried the CSS-order overlay values and now use Qt's
+
 ## 0.45.23
 
 - **Fix** `Input` shows its `leadingIcon` and `trailingIcon`. The field box declared its border rectangle after the two icons, and siblings at the same `z` paint in declaration order, so the opaque rectangle (filled with `Theme.surface`) covered both and neither was ever visible — while the padding reserved for them still pushed the text right, leaving an empty gap where the icon should be. The rectangle sits at `z: -1` now, behind the icons; its fill, border and focus/hover/error states are unchanged
